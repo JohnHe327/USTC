@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/hechu/CLionProjects/wl/main.cpp
+cstdio
+-
+cstdlib
+-
+ctime
+-
+memory.h
+-
+cmath
+-
+
