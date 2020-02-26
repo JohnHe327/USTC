@@ -1,0 +1,85 @@
+.toolbar-font {
+  font-family: PingFangSC-Regular, "PingFang SC", sans-serif;
+  font-size: 16px;
+}
+
+.timer-font {
+  font-family: PTMono-Bold, "PT Mono", monospace;
+  font-weight: 700;
+  color: #333333;
+  font-size: 200px;
+  line-height: 200px;
+}
+
+body {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.background {
+  height: 510px;
+  width: 1220px;
+  position: static;
+  top: 0;
+  left: 0;
+  padding: 0;
+  background: #f2f4f7;
+}
+
+.toolbar {
+  height: 70px;
+  width: 1220px;
+  display: block;
+  padding: 15px 40px;
+  background: #97a5bc;
+  box-shadow: 0 2px 4px 0;
+  color: rgba(0, 0, 0, 0.10);
+}
+
+.toolbar > div {
+  border-radius: 5px;
+  padding: 9px;
+  font-size: 16px;
+  box-shadow: 0 2px 4px 0;
+  height: 40px;
+  color: rgba(0, 0, 0, 0.10);
+}
+
+.start-time {
+  float: left;
+  margin-right: 20px;
+  background: #ffffff;
+  width: 70px;
+}
+
+.number {
+  float: left;
+  color: #afafaf;
+}
+
+.unit {
+  float: right;
+  color: #222222;
+}
+
+.starter {
+  float: left;
+  margin-right: 20px;
+  background: #2188e9;
+  width: 98px;
+}
+
+.starter > div {
+  color: #ffffff;
+}
+
+.timer {
+  height: 440px;
+  width: 1140px;
+  position: relative;
+  left: 40px;
+  padding: 127px 90px 113px;
+}
