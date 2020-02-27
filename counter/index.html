@@ -7,29 +7,36 @@
     <body>
         <div class="background">
             <div class="toolbar">
-                <div class="start-time">
+                <div class="start-time display-block">
                     <div class="number toolbar-font">
-                        <input type="number" id="hour" value="0" size="1" maxlength="2">
+                        <input type="text" id="hour" placeholder="0" value="">
                     </div>
-                    <div class="unit toolbar-font">时</div>
+                    <label class="unit toolbar-font" for="hour">时</label>
                 </div>
-                <div class="start-time">
-                    <div class="number toolbar-font">0</div>
-                    <div class="unit toolbar-font">分</div>
+                <div class="start-time display-block">
+                    <div class="number toolbar-font">
+                        <input type="text" id="minute" placeholder="0" value="">
+                    </div>
+                    <label class="unit toolbar-font" for="minute">分</label>
                 </div>
-                <div class="start-time">
-                    <div class="number toolbar-font">0</div>
-                    <div class="unit toolbar-font">秒</div>
+                <div class="start-time display-block">
+                    <div class="number toolbar-font">
+                        <input type="text" id="second" placeholder="0" value="">
+                    </div>
+                    <label class="unit toolbar-font" for="second">秒</label>
                 </div>
-                <div class="starter">
-                    <button id="countup" class="toolbar-font">开始正计时</button>
+                <div class="hint-holder display-none">
+                    <div id="hint" class="hint">正在倒计时 12:20:00</div>
                 </div>
-                <div class="starter">
-                    <button id="countdown" class="toolbar-font">开始倒计时</button>
-                </div>
+                <button id="countup" class="starter toolbar-font display-block">开始正计时</button>
+                <button id="countdown" class="starter toolbar-font display-block">开始倒计时</button>
+                <button id="pause" class="starter toolbar-font display-none">暂停计时器</button>
+                <button id="resume" class="starter toolbar-font display-none">恢复计时器</button>
+                <button id="restart" class="restarter toolbar-font display-none">重新再计时</button>
+                <button id="clear" class="cleaner toolbar-font display-none">清空倒计时</button>
             </div>
             <div class="timer">
-                <div class="timer-font">00:00:00</div>
+                <div id="time" class="timer-font">00:00:00</div>
             </div>
         </div>
         <script src="./app.js"></script>

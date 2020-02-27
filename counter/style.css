@@ -20,6 +20,14 @@ body {
   box-sizing: border-box;
 }
 
+.dispaly-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
 .background {
   height: 510px;
   width: 1220px;
@@ -33,7 +41,6 @@ body {
 .toolbar {
   height: 70px;
   width: 1220px;
-  display: block;
   padding: 15px 40px;
   background: #97a5bc;
   box-shadow: 0 2px 4px 0;
@@ -41,19 +48,18 @@ body {
 }
 
 .toolbar > div {
-  border-radius: 5px;
-  padding: 9px;
-  font-size: 16px;
-  box-shadow: 0 2px 4px 0;
-  height: 40px;
-  color: rgba(0, 0, 0, 0.10);
+  float: left;
+  margin-right: 20px;
 }
 
 .start-time {
-  float: left;
-  margin-right: 20px;
   background: #ffffff;
+  padding: 9px;
+  height: 40px;
   width: 70px;
+  color: rgba(0, 0, 0, 0.10);
+  box-shadow: 0 2px 4px 0;
+  border-radius: 5px;
 }
 
 .number {
@@ -61,23 +67,55 @@ body {
   color: #afafaf;
 }
 
+input {
+  border: none;
+  height: 22px;
+  width: 30px;
+}
+
 .unit {
   float: right;
   color: #222222;
+}
+
+.hint-holder {
+  padding: 9px 0;
+  width: 167px;
+  height: 40px;
+}
+
+.hint {
+  font-family: PingFangSC-Regular, "PingFang SC", sans-serif;
+  font-size: 16px;
+  line-height: 22px;
+  color: #ffffff;
+}
+
+button {
+  color: #ffffff;
+  height: 40px;
+  width: 98px;
+  border: none;
+  padding: 9;
+  border-radius: 5px;
 }
 
 .starter {
   float: left;
   margin-right: 20px;
   background: #2188e9;
-  width: 98px;
 }
 
-button {
-  color: #ffffff;
-  background: rgba(0, 0, 0, 0);
-  border: 0;
-  padding: 0;
+.cleaner {
+  float: right;
+  margin-left: 20px;
+  background: #dd2e1d;
+}
+
+.restarter {
+  float: right;
+  margin-left: 20px;
+  background: #ffb020;
 }
 
 .timer {
