@@ -73,8 +73,11 @@ body {
   width: 98px;
 }
 
-.starter > div {
+button {
   color: #ffffff;
+  background: rgba(0, 0, 0, 0);
+  border: 0;
+  padding: 0;
 }
 
 .timer {
