@@ -22,46 +22,54 @@ let timer;
 
 countup.onclick = clickCountup;
 
-countdown.onclick = function() {
-    clear.innerText="清空倒计时";
-    upStatus = 0;
-    runStatus = 1;
-    passedTime = 0;
-    setStartupButton();
-    calculateTime();
-    hint.innerText = "正在倒计时 "+prefixZero(hh)+":"+prefixZero(mm)+":"+prefixZero(ss);
-    clearInput();
-    timer = setInterval("runtime()", 100);
-}
+countdown.onclick = function () {
+    if (runStatus === 0) {
+        clear.innerText = "清空倒计时";
+        upStatus = 0;
+        runStatus = 1;
+        passedTime = 0;
+        setStartupButton();
+        calculateTime();
+        hint.innerText = "正在倒计时 " + prefixZero(hh) + ":" + prefixZero(mm) + ":" + prefixZero(ss);
+        clearInput();
+        timer = setInterval("runtime()", 100);
+    }
+};
 
 pause.onclick = clickPause;
 
 resume.onclick = clickResume;
 
-restart.onclick = function() {
-    showPause();
-    if (upStatus === 1) {
-        hint.innerText = "正在正计时 "+prefixZero(hh)+":"+prefixZero(mm)+":"+prefixZero(ss);
-    } else {
-        hint.innerText = "正在倒计时 "+prefixZero(hh)+":"+prefixZero(mm)+":"+prefixZero(ss);
+restart.onclick = function () {
+    if (runStatus !== 0) {
+        showPause();
+        if (upStatus === 1) {
+            hint.innerText = "正在正计时 " + prefixZero(hh) + ":" + prefixZero(mm) + ":" + prefixZero(ss);
+        } else {
+            hint.innerText = "正在倒计时 " + prefixZero(hh) + ":" + prefixZero(mm) + ":" + prefixZero(ss);
+        }
+        setStartupButton();
+        passedTime = 0;
+        clearInterval(timer);
+        runStatus = 1;
+        timer = setInterval("runtime()", 100);
     }
-    setStartupButton();
-    passedTime = 0;
-    clearInterval(timer);
-    runStatus = 1;
-    timer = setInterval("runtime()", 100);
-}
+};
 
-clear.onclick = function() {
-    resetButton();
-    clearInput();
-    clearInterval(timer);
-    time.innerText = "00:00:00"
-    runStatus = 0;
-}
+clear.onclick = function () {
+    if (runStatus !== 0) {
+        resetButton();
+        clearInput();
+        clearInterval(timer);
+        time.innerText = "00:00:00";
+        runStatus = 0;
+    }
+};
 
-function calculateTime() {
-    if (hour.value > 0) {
+function calculateTime () {
+    if (hour.value > 99) {
+        hh = 99;
+    } else if (hour.value > 0) {
         hh = parseInt(hour.value);
     } else {
         hh = 0;
@@ -84,11 +92,11 @@ function calculateTime() {
     totalTime *= 1000;
 }
 
-function prefixZero(num) {
+function prefixZero (num) {
     return (Array(3).join("0") + num).slice(-2);
 }
 
-function setStartupButton() {
+function setStartupButton () {
     restart.classList.remove("display-none");
     restart.classList.add("display-block");
     clear.classList.remove("display-none");
@@ -100,13 +108,13 @@ function setStartupButton() {
     countup.classList.add("display-none");
     hintHolder[0].classList.remove("display-none");
     hintHolder[0].classList.add("display-block");
-    for (let item of startTime) {
+    for (const item of startTime) {
         item.classList.remove("display-block");
         item.classList.add("display-none");
     }
 }
 
-function resetButton() {
+function resetButton () {
     countdown.classList.remove("display-none");
     countdown.classList.add("display-block");
     countup.classList.remove("display-none");
@@ -121,48 +129,52 @@ function resetButton() {
     clear.classList.add("display-none");
     hintHolder[0].classList.remove("display-block");
     hintHolder[0].classList.add("display-none");
-    for (let item of startTime) {
+    for (const item of startTime) {
         item.classList.remove("display-none");
         item.classList.add("display-block");
     }
 }
 
-function showPause() {
+function showPause () {
     pause.classList.remove("display-none");
     pause.classList.add("display-block");
     resume.classList.remove("display-block");
     resume.classList.add("display-none");
 }
 
-function showResume() {
+function showResume () {
     resume.classList.remove("display-none");
     resume.classList.add("display-block");
     pause.classList.remove("display-block");
     pause.classList.add("display-none");
 }
 
-function clearInput() {
+function clearInput () {
     hour.value = "";
     minute.value = "";
     second.value = "";
 }
 
-function runtime() {
+function runtime () {
     if (passedTime < totalTime) {
-        passedTime += 100;
-        let showH, showM, showS, showTime;
+        passedTime  += 100;
+        let showTime = 0;
         if (upStatus === 1) {
             showTime = passedTime;
         } else {
             showTime = totalTime - passedTime;
         }
-        showH = Math.floor(showTime / 3600000);
-        showM = Math.floor((showTime - showH * 3600000) / 60000);
-        showS = Math.floor((showTime - showH * 3600000 - showM * 60000) / 1000);
-        time.innerText = prefixZero(showH)+":"+prefixZero(showM)+":"+prefixZero(showS);
+        const showH = Math.floor(showTime / 3600000);
+        const showM = Math.floor((showTime - showH * 3600000) / 60000);
+        const showS = Math.floor((showTime - showH * 3600000 - showM * 60000) / 1000);
+        time.innerText = prefixZero(showH) + ":" + prefixZero(showM) + ":" + prefixZero(showS);
     }
     if (passedTime >= totalTime) {
-        hint.innerText = hint.innerText.slice(2,14) + " 已结束";
+        if (upStatus === 1) {
+            hint.innerText = "正计时 " + prefixZero(hh) + ":" + prefixZero(mm) + ":" + prefixZero(ss) + " 已结束";
+        } else {
+            hint.innerText = "倒计时 " + prefixZero(hh) + ":" + prefixZero(mm) + ":" + prefixZero(ss) + " 已结束";
+        }
         clearInterval(timer);
         pause.classList.remove("display-block");
         pause.classList.add("display-none");
@@ -172,35 +184,43 @@ function runtime() {
     }
 }
 
-function clickCountup() {
-    clear.innerText="清空正计时";
-    upStatus = 1;
-    runStatus = 1;
-    passedTime = 0;
-    setStartupButton();
-    calculateTime();
-    hint.innerText = "正在正计时 "+prefixZero(hh)+":"+prefixZero(mm)+":"+prefixZero(ss);
-    clearInput();
-    timer = setInterval("runtime()", 100);
+function clickCountup () {
+    if (runStatus === 0) {
+        clear.innerText = "清空正计时";
+        upStatus = 1;
+        runStatus = 1;
+        passedTime = 0;
+        setStartupButton();
+        calculateTime();
+        hint.innerText = "正在正计时 " + prefixZero(hh) + ":" + prefixZero(mm) + ":" + prefixZero(ss);
+        clearInput();
+        timer = setInterval("runtime()", 100);
+    }
 }
 
-function clickPause() {
-    showResume();
-    hint.innerText = "暂停" + hint.innerText.slice(2);
-    clearInterval(timer);
-    runStatus = 2;
+function clickPause () {
+    if (runStatus === 1) {
+        showResume();
+        hint.innerText = "暂停" + hint.innerText.slice(2);
+        clearInterval(timer);
+        runStatus = 2;
+    }
 }
 
-function clickResume() {
-    showPause();
-    hint.innerText = "正在" + hint.innerText.slice(2);
-    timer = setInterval("runtime()", 100);
-    runStatus = 1;
+function clickResume () {
+    if (runStatus === 2) {
+        showPause();
+        hint.innerText = "正在" + hint.innerText.slice(2);
+        timer = setInterval("runtime()", 100);
+        runStatus = 1;
+    }
 }
 
-document.addEventListener("keypress",function(event) {
+document.addEventListener("keydown", function (event) {
     if (event.keyCode === 13) {
-        clickCountup();
+        if (runStatus === 0) {
+            clickCountup();
+        }
     } else if (event.keyCode === 32) {
         if (runStatus === 1) {
             clickPause();
