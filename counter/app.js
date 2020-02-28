@@ -32,8 +32,9 @@ countdown.onclick = function () {
         calculateTime();
         hint.innerText = "正在倒计时 " + prefixZero(hh) + ":" + prefixZero(mm) + ":" + prefixZero(ss);
         clearInput();
-        timer = setInterval("runtime()", 100);
+        timer = setInterval(runtime, 100);
     }
+    countdown.blur();
 };
 
 pause.onclick = clickPause;
@@ -52,8 +53,9 @@ restart.onclick = function () {
         passedTime = 0;
         clearInterval(timer);
         runStatus = 1;
-        timer = setInterval("runtime()", 100);
+        timer = setInterval(runtime, 100);
     }
+    restart.blur();
 };
 
 clear.onclick = function () {
@@ -64,6 +66,7 @@ clear.onclick = function () {
         time.innerText = "00:00:00";
         runStatus = 0;
     }
+    clear.blur();
 };
 
 function calculateTime () {
@@ -194,8 +197,9 @@ function clickCountup () {
         calculateTime();
         hint.innerText = "正在正计时 " + prefixZero(hh) + ":" + prefixZero(mm) + ":" + prefixZero(ss);
         clearInput();
-        timer = setInterval("runtime()", 100);
+        timer = setInterval(runtime, 100);
     }
+    countup.blur();
 }
 
 function clickPause () {
@@ -205,15 +209,17 @@ function clickPause () {
         clearInterval(timer);
         runStatus = 2;
     }
+    pause.blur();
 }
 
 function clickResume () {
     if (runStatus === 2) {
         showPause();
         hint.innerText = "正在" + hint.innerText.slice(2);
-        timer = setInterval("runtime()", 100);
+        timer = setInterval(runtime, 100);
         runStatus = 1;
     }
+    resume.blur();
 }
 
 document.addEventListener("keydown", function (event) {
@@ -228,4 +234,4 @@ document.addEventListener("keydown", function (event) {
             clickResume();
         }
     }
-})
+});
