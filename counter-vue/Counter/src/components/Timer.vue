@@ -3,13 +3,9 @@
 </template>
 
 <script>
-import Countup from './Countup'
 export default {
   name: 'Timer',
-  props: ['time'],
-  components: {
-    Countup
-  }
+  props: ['time']
 }
 </script>
 
