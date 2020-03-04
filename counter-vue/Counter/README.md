@@ -5,6 +5,13 @@
 ## Build Setup
 
 ``` bash
+sudo apt-get install nodejs
+sudo apt-get install npm
+
+sudo npm install -g @vue/cli
+
+npm install -g @vue/cli-init
+cd 'Project'
 # install dependencies
 npm install
 

@@ -73,3 +73,9 @@ export default {
   padding: 127px 90px 113px;
 }
 </style>
+
+<style>
+body {
+  margin: 0;
+}
+</style>
