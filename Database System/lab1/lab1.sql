@@ -77,19 +77,19 @@ insert into borrow values ('bid3', 'rid1', '2019-1-1', '2019-1-2');
 insert into borrow values ('bid4', 'rid1', '2020-1-1', '2020-1-2');
 insert into borrow (book_id, reader_id, borrow_date) values ('bid5', 'rid1', '2020-1-1');
 
--- 1
+-- 1 检索读者"hcw"的读者号和地址
 select id, address
 from reader
 where name = 'hcw';
 
--- 2
+-- 2 检索读者"hcw"所借阅读书（包括已还和未还图书）的图书名和借期
 select book.name, borrow.borrow_date, borrow.return_date
 from reader, borrow, book
 where reader.name = 'hcw'
     and reader.id = borrow.reader_id
     and borrow.book_id = book.id;
 
--- 3
+-- 3 检索未借阅图书的读者姓名（当前）
 select reader.name
 from reader
 where name not in ( select reader.name
@@ -97,12 +97,12 @@ where name not in ( select reader.name
                     where reader.id = borrow.reader_id
                         and borrow.return_date is null);
 
--- 4
+-- 4 检索"Ullman"所写的书的书名和单价
 select name, price
 from book
 where author = 'Ullman';
 
--- 5
+-- 5 检索读者"lilin"借阅未还的图书的图书号和书名
 select book.id, book.name
 from reader, borrow, book
 where reader.name = 'lilin'
@@ -110,7 +110,7 @@ where reader.name = 'lilin'
     and borrow.return_date is null
     and borrow.book_id = book.id;
 
--- 6
+-- 6 检索借阅图书数目超过3本的读者姓名（建馆以来）
 select reader.name
 from reader
 where reader.id in (select reader_id
@@ -118,7 +118,7 @@ where reader.id in (select reader_id
                     group by reader_id
                     having count(book_id) > 3);
 
--- 7
+-- 7 检索没有借阅读者"lilin"所借的任何一本书的读者姓名和读者号（建馆以来）
 select reader.name, reader.id
 from reader
 where reader.id not in (select distinct reader_id
@@ -128,18 +128,18 @@ where reader.id not in (select distinct reader_id
                                             where reader.name = 'lilin'
                                                 and reader.id = borrow.reader_id));
 
--- 8
+-- 8 检索书名中包含"MySQL"的图书书名及图书号（不区分大小写）
 select name, id
 from book
 where lower(name) like '%mysql%';
 
--- 9
+-- 9.1 创建一个读者借书信息的视图，该视图包含读者号、姓名、所借图书号、图书名和借期
 create view `record` (`reader_id`, `reader_name`, `book_id`, `book_name`, `borrow_date`, `return_date`)
 as select reader.id, reader.name, book.id, book.name, borrow_date, return_date
 from reader, book, borrow
 where reader.id = reader_id
     and book_id = book.id;
-
+-- 9.2 并使用该视图查询最近一年所有读者的读者号以及所借阅的不同图书数（重复借阅仍计入次数）
 select count(reader_id)
 from record
 where borrow_date >= date_sub(curdate(), interval 1 year);
