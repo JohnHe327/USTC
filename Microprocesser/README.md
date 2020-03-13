@@ -126,15 +126,15 @@
 
 # 实验教程
 
-1. 在非中文目录下解压`/MASM`
+1. 在非中文目录下解压`./MASM/`
 
 2. 安装DOSBOX，运行`%DOSBOX%/DOSBox 0.74 Options.bat`
 
-3. 找到`[autoexec]`，添加行`MOUNT C %MASM%`，保存后退出
+3. 在弹出的`.conf`文件中找到`[autoexec]`，添加行`MOUNT C "%MASM%"`，保存后退出
 
 4. 编写`.asm`文件，放入%MASM%
 
-5. 启动DOSBOX，输入挂载的盘符号，这里是`C:`
+5. 启动DOSBOX，输入第3步挂载的盘符号，这里是`C:`
 
 6. 输入`masm`运行MASM，输入要编译的`.asm`文件名（不加后缀），按提示完成编译，生成`.obj`文件
 
