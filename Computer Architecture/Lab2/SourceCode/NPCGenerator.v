@@ -33,8 +33,7 @@ module NPC_Generator(
     output reg [31:0] NPC
     );
 
-    // TODO: Complete this module
-    // Done
+    // DONE: Complete this module
     always@(*)
     begin
         if (jal == 1'b1)
