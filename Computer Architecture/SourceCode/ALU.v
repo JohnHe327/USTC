@@ -43,8 +43,7 @@ module ALU(
             `AND : ALU_out <= op1 & op2;
             `SLT : ALU_out <= (op1[31] & ~op2[31]) ? 32'd1 :
                                     (~op1[31] & op2[31]) ? 32'd0 :
-                                        (op1[31] & op2[31]) ? (op1 > op2 ? 32'd1 : 32'd0) :
-                                            (op1 < op2) ? 32'd1 : 32'd0;
+                                        (op1 < op2) ? 32'd1 : 32'd0;
             `SLTU: ALU_out <= (op1 < op2) ? 32'd1 : 32'd0;
             `LUI : ALU_out <= op2;
             default: ALU_out <= 32'dz;
