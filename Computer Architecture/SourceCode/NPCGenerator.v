@@ -42,11 +42,11 @@ module NPC_Generator(
         end
         else if (jalr == 1'b1)
         begin
-            NPC <= jal_target;
+            NPC <= jalr_target;
         end
         else if (br == 1'b1)
         begin
-            NPC <= br_target
+            NPC <= br_target;
         end
         else
         begin
