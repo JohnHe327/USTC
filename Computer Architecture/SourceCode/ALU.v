@@ -32,7 +32,7 @@ module ALU(
     // DONE: Complete this module
     always@(*)
     begin
-        case(ALU_func)
+        case (ALU_func)
             `SLL : ALU_out <= op1 << op2[4:0];
             `SRL : ALU_out <= op1 >> op2[4:0];
             `SRA : ALU_out <= op1 >>> op2[4:0];
@@ -47,6 +47,7 @@ module ALU(
                                             (op1 < op2) ? 32'd1 : 32'd0;
             `SLTU: ALU_out <= (op1 < op2) ? 32'd1 : 32'd0;
             `LUI : ALU_out <= op2;
+            default: ALU_out <= 32'dz;
         endcase
     end
 
