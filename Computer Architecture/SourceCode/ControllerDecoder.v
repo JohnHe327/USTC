@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company: USTC ESLAB
 // Engineer: Huang Yifan (hyf15@mail.ustc.edu.cn)
-// 
+//           John He (hechunwang2000327@hotmail.com)
 // Design Name: RV32I Core
 // Module Name: Controller Decoder
 // Tool Versions: Vivado 2017.4.1
@@ -53,5 +53,88 @@ module ControllerDecoder(
     );
 
     // TODO: Complete this module
+    wire [6:0] opcode;
+    wire [3:0] func3;
+    wire [6:0] func7;
+
+    assign opcode = inst[6:0];
+    assign func3 = inst[14:12];
+    assign func7 = inst[31:25];
+
+    always@(*)
+    begin
+        case (opcode)
+            `opcode_OPIMM  : 
+                case (func3)
+                    `func3_ADD  :
+                    `func3_SLT  :
+                    `func3_SLTU :
+                    `func3_AND  :
+                    `func3_OR   :
+                    `func3_XOR  :
+                    `func3_SLL  :
+                    `func3_SR   :
+                        case (func7)
+                            `func7_SRL : 
+                            `func7_SRA : 
+                            default:
+                        endcase
+                    default: 
+                endcase
+            `opcode_OP     : 
+                case (func3)
+                    `func3_ADD  :
+                        case (func7)
+                            `func7_ADD : 
+                            `func7_SUB : 
+                            default: 
+                        endcase
+                    `func3_SLT  :
+                    `func3_SLTU :
+                    `func3_AND  :
+                    `func3_OR   :
+                    `func3_XOR  :
+                    `func3_SLL  :
+                    `func3_SR   :
+                        case (func7)
+                            `func7_SRL : 
+                            `func7_SRA :
+                            default: 
+                        endcase
+                    default: 
+                endcase
+            `opcode_AUIPC  : 
+            `opcode_LUI    : 
+            `opcode_JALR   : 
+            `opcode_JAL    : 
+            `opcode_BRANCH :
+                case (func3)
+                    `func3_BEQ  :
+                    `func3_BNE  :
+                    `func3_BLT  :
+                    `func3_BLTU :
+                    `func3_BGE  :
+                    `func3_BGEU :
+                    default: 
+                endcase
+            `opcode_LOAD   : 
+                case (func3)
+                    `func3_BYTE :
+                    `func3_HIGH :
+                    `func3_WORD :
+                    `func3_BU   :
+                    `func3_HU   :
+                    default: 
+                endcase
+            `opcode_STORE  :
+                case (func3)
+                    `func3_BYTE :
+                    `func3_HIGH :
+                    `func3_WORD :
+                    default: 
+                endcase
+            default: 
+        endcase
+    end
 
 endmodule
