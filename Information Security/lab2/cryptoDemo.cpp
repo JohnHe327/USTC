@@ -7,7 +7,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "openssl\aes.h"
+#include "openssl/aes.h"
 
 #pragma comment(lib, "libeay32.lib")
 
