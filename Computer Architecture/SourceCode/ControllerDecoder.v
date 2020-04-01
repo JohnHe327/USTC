@@ -52,7 +52,7 @@ module ControllerDecoder(
     output reg [2:0] imm_type
     );
 
-    // TODO: Complete this module
+    // DONE: Complete this module
     wire [6:0] opcode;
     wire [3:0] func3;
     wire [6:0] func7;
@@ -61,79 +61,172 @@ module ControllerDecoder(
     assign func3 = inst[14:12];
     assign func7 = inst[31:25];
 
+    assign jal  = (opcode == `opcode_JAL) ? 1 : 0;
+    assign jalr = (opcode == `opcode_JALR) ? 1 : 0;
+    assign op2_src = (opcode == `opcode_OP) ? 0 : 1;
+    assign load_npc = (opcode == `opcode_JAL || opcode == `opcode_JALR) ? 1 : 0;
+    assign wb_select = (opcode == `opcode_LOAD) ? 1 : 0;
+    assign alu_src1 = (opcode == `opcode_AUIPC) ? 1 : 0;
+    assign alu_src2 = (opcode == `opcode_OP) ? 2'b00 : 2'b10;
+
     always@(*)
     begin
         case (opcode)
             `opcode_OPIMM  : 
+            begin
                 case (func3)
-                    `func3_ADD  :
-                    `func3_SLT  :
-                    `func3_SLTU :
-                    `func3_AND  :
-                    `func3_OR   :
-                    `func3_XOR  :
-                    `func3_SLL  :
+                    `func3_ADD  : ALU_func <= `ADD;
+                    `func3_SLT  : ALU_func <= `SLT;
+                    `func3_SLTU : ALU_func <= `SLTU;
+                    `func3_AND  : ALU_func <= `AND;
+                    `func3_OR   : ALU_func <= `OR;
+                    `func3_XOR  : ALU_func <= `XOR;
+                    `func3_SLL  : ALU_func <= `SLL;
                     `func3_SR   :
                         case (func7)
-                            `func7_SRL : 
-                            `func7_SRA : 
-                            default:
+                            `func7_SRL :  ALU_func <= `SRL;
+                            `func7_SRA :  ALU_func <= `SRA;
+                            default: ALU_func <= `ERROR;
                         endcase
-                    default: 
+                    default: ALU_func <= `ERROR;
                 endcase
+                br_type <= `NOBRANCH;
+                load_type <= `NOREGWRITE;
+                src_reg_en <= 2'b10;
+                reg_write_en <= 1;
+                cache_write_en <= 4'b0;
+                imm_type <= `ITYPE;
+            end
             `opcode_OP     : 
+            begin
                 case (func3)
                     `func3_ADD  :
                         case (func7)
-                            `func7_ADD : 
-                            `func7_SUB : 
-                            default: 
+                            `func7_ADD : ALU_func <= `ADD;
+                            `func7_SUB : ALU_func <= `SUB;
+                            default: ALU_func <= `ERROR;
                         endcase
-                    `func3_SLT  :
-                    `func3_SLTU :
-                    `func3_AND  :
-                    `func3_OR   :
-                    `func3_XOR  :
-                    `func3_SLL  :
+                    `func3_SLT  : ALU_func <= `SLT;
+                    `func3_SLTU : ALU_func <= `SLTU;
+                    `func3_AND  : ALU_func <= `AND;
+                    `func3_OR   : ALU_func <= `OR;
+                    `func3_XOR  : ALU_func <= `XOR;
+                    `func3_SLL  : ALU_func <= `SLL;
                     `func3_SR   :
                         case (func7)
-                            `func7_SRL : 
-                            `func7_SRA :
-                            default: 
+                            `func7_SRL : ALU_func <= `SRL;
+                            `func7_SRA : ALU_func <= `SRA;
+                            default: ALU_func <= `ERROR;
                         endcase
-                    default: 
+                    default: ALU_func <= `ERROR;
                 endcase
+                br_type <= `NOBRANCH;
+                load_type <= `NOREGWRITE;
+                src_reg_en <= 2'b11;
+                reg_write_en <= 1;
+                cache_write_en <= 4'b0;
+                imm_type <= `RTYPE;
+            end
             `opcode_AUIPC  : 
+            begin
+                ALU_func <= `ADD;
+                br_type <= `NOBRANCH;
+                load_type <= `NOREGWRITE;
+                src_reg_en <= 2'b00;
+                reg_write_en <= 1;
+                cache_write_en <= 4'b0;
+                imm_type <= `UTYPE;
+            end
             `opcode_LUI    : 
+            begin
+                ALU_func <= `LUI;
+                br_type <= `NOBRANCH;
+                load_type <= `NOREGWRITE;
+                src_reg_en <= 2'b00;
+                reg_write_en <= 1;
+                cache_write_en <= 4'b0;
+                imm_type <= `UTYPE;
+            end
             `opcode_JALR   : 
+            begin
+                ALU_func <= `ADD;
+                br_type <= `NOBRANCH;
+                load_type <= `NOREGWRITE;
+                src_reg_en <= 2'b10;
+                reg_write_en <= 1;
+                cache_write_en <= 4'b0;
+                imm_type <= `ITYPE;
+            end
             `opcode_JAL    : 
+            begin
+                ALU_func <= `NOOP;
+                br_type <= `NOBRANCH;
+                load_type <= `NOREGWRITE;
+                src_reg_en <= 2'b00;
+                reg_write_en <= 1;
+                cache_write_en <= 4'b0;
+                imm_type <= `JTYPE;
+            end
             `opcode_BRANCH :
+            begin
+                ALU_func <= `NOOP;
                 case (func3)
-                    `func3_BEQ  :
-                    `func3_BNE  :
-                    `func3_BLT  :
-                    `func3_BLTU :
-                    `func3_BGE  :
-                    `func3_BGEU :
-                    default: 
+                    `func3_BEQ  : br_type <= `BEQ ;
+                    `func3_BNE  : br_type <= `BNE ;
+                    `func3_BLT  : br_type <= `BLT ;
+                    `func3_BLTU : br_type <= `BLTU;
+                    `func3_BGE  : br_type <= `BGE ;
+                    `func3_BGEU : br_type <= `BGEU;
+                    default: br_type <= `NOBRANCH;
                 endcase
+                load_type <= `NOREGWRITE;
+                src_reg_en <= 2'b11;
+                reg_write_en <= 0;
+                cache_write_en <= 4'b0;
+                imm_type <= `BTYPE;
+            end
             `opcode_LOAD   : 
+            begin
+                ALU_func <= `ADD;
+                br_type <= `NOBRANCH;
                 case (func3)
-                    `func3_BYTE :
-                    `func3_HIGH :
-                    `func3_WORD :
-                    `func3_BU   :
-                    `func3_HU   :
-                    default: 
+                    `func3_BYTE : load_type <= `LB;
+                    `func3_HIGH : load_type <= `LH;
+                    `func3_WORD : load_type <= `LW;
+                    `func3_BU   : load_type <= `LBU;
+                    `func3_HU   : load_type <= `LHU;
+                    default: load_type <= `NOREGWRITE;
                 endcase
+                src_reg_en <= 2'b10;
+                reg_write_en <= 1;
+                cache_write_en <= 4'b0;
+                imm_type <= `ITYPE;
+            end
             `opcode_STORE  :
+            begin
+                ALU_func <= `ADD;
+                br_type <= `NOBRANCH;
+                load_type <= `NOREGWRITE;
+                src_reg_en <= 2'b11;
+                reg_write_en <= 0;
                 case (func3)
-                    `func3_BYTE :
-                    `func3_HIGH :
-                    `func3_WORD :
-                    default: 
+                    `func3_BYTE : cache_write_en <= 4'b0001;
+                    `func3_HIGH : cache_write_en <= 4'b0011;
+                    `func3_WORD : cache_write_en <= 4'b1111;
+                    default: cache_write_en <= 4'b0;
                 endcase
+                imm_type <= `STYPE;
+            end
             default: 
+            begin
+                ALU_func <= `ERROR;
+                br_type <= `NOBRANCH;
+                load_type <= `NOREGWRITE;
+                src_reg_en <= 2'b00;
+                reg_write_en <= 0;
+                cache_write_en <= 4'b0;
+                imm_type <= `RTYPE;
+            end
         endcase
     end
 
