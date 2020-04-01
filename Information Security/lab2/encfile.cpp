@@ -32,11 +32,11 @@ void encFileAES(char *sourceFile, FILE *fpIn, long fileSize, char *passwd, int p
     {
         aes_keybuf[i] = passwd[i];
     }
-    
+
     // set encrypt key
     AES_KEY aeskey;
     AES_set_encrypt_key(aes_keybuf, 256, &aeskey);
-    
+
     // separate input file
     int nLoop, nRes, nPadding;
     nLoop = fileSize / 16 + 1;
@@ -102,7 +102,7 @@ void decFileAES(char *sourceFile, FILE *fpIn, long fileSize, char *passwd, int p
         else
         {
             int nPadding = (int)buf2[15];
-	    fwrite(buf2, sizeof(char), 16 - nPadding, fpOut);
+            fwrite(buf2, sizeof(char), 16 - nPadding, fpOut);
         }
     }
 
@@ -134,10 +134,10 @@ int main(int argc, char *argv[]) // encfile enc/dec filename pwd
         return 0;
     }
 
-    if(strcmp(encMode, "enc") == 0)
+    if (strcmp(encMode, "enc") == 0)
     {
         FILE *fp = fopen(filename, "rb");
-        if(fp != NULL)
+        if (fp != NULL)
         {
             long fileSize = file_length(filename);
             printf("Encrypting %s (%ld bytes) using %s\n", filename, fileSize, passwd);
@@ -151,12 +151,12 @@ int main(int argc, char *argv[]) // encfile enc/dec filename pwd
     else if (strcmp(encMode, "dec") == 0)
     {
         FILE *fp = fopen(filename, "rb");
-        if(fp != NULL)
+        if (fp != NULL)
         {
             long fileSize = file_length(filename);
             printf("Decrypting %s (%ld bytes) using %s\n", filename, fileSize, passwd);
             decFileAES(filename, fp, fileSize, passwd, strlen(passwd));
-    }
+        }
         else
         {
             printf("Error in opening file %s.\n", filename);
