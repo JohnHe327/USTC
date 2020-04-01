@@ -29,6 +29,8 @@
     `define SLT  4'd8
     `define SLTU  4'd9
     `define LUI  4'd10
+    `define NOOP 4'd14
+    `define ERROR 4'd15
 // br_type[2:0]
     `define NOBRANCH  3'd0
     `define BEQ  3'd1
