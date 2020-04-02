@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company: USTC ESLAB
 // Engineer: Huang Yifan (hyf15@mail.ustc.edu.cn)
-// 
+//           John He (hechunwang2000327@hotmail.com)
 // Design Name: RV32I Core
 // Module Name: Data Extend
 // Tool Versions: Vivado 2017.4.1
@@ -16,7 +16,6 @@
     // data              cache读出的数据
     // addr              字节地址
     // load_type         load的类型
-    // ALU_func          运算类型
 // 输出
     // dealt_data        扩展完的数据
 // 实验要求
@@ -32,6 +31,42 @@ module DataExtend(
     output reg [31:0] dealt_data
     );
 
-    // TODO: Complete this module
+    // DONE: Complete this module
+    always@(*)
+    begin
+        case (load_type)
+            `LB :
+                case (addr)
+                    2'b00: dealt_data <= data[7:0] >>> 24; 
+                    2'b01: dealt_data <= data[15:8] >>> 24;
+                    2'b10: dealt_data <= data[23:16] >>> 24;
+                    2'b11: dealt_data <= data[31:24] >>> 24;
+                    default: dealt_data <= 32'b0;
+                endcase
+            `LH :
+                case (addr)
+                    2'b00: dealt_data <= data[15:0] >>> 16;
+                    2'b10: dealt_data <= data[31:16] >>> 16;
+                    default: dealt_data <= 32'b0;
+                endcase
+            `LW : dealt_data <= data;
+            `LBU:
+                case (addr)
+                    2'b00: dealt_data <= data[7:0] >> 24; 
+                    2'b01: dealt_data <= data[15:8] >> 24;
+                    2'b10: dealt_data <= data[23:16] >> 24;
+                    2'b11: dealt_data <= data[31:24] >> 24;
+                    default: dealt_data <= 32'b0;
+                endcase
+            `LHU:
+                case (addr)
+                    2'b00: dealt_data <= data[15:0] >> 16;
+                    2'b10: dealt_data <= data[31:16] >> 16;
+                    default: dealt_data <= 32'b0;
+                endcase
+            `NOREGWRITE: dealt_data <= 32'b0;
+            default: dealt_data <= 32'b0;
+        endcase
+    end
 
 endmodule
