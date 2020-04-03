@@ -35,7 +35,7 @@ module ALU(
         case (ALU_func)
             `SLL : ALU_out <= op1 << op2[4:0];
             `SRL : ALU_out <= op1 >> op2[4:0];
-            `SRA : ALU_out <= op1 >>> op2[4:0];
+            `SRA : ALU_out <= $signed(op1) >>> op2[4:0];
             `ADD : ALU_out <= op1 + op2;
             `SUB : ALU_out <= op1 - op2;
             `XOR : ALU_out <= op1 ^ op2;
