@@ -37,31 +37,31 @@ module DataExtend(
         case (load_type)
             `LB :
                 case (addr)
-                    2'b00: dealt_data <= data[7:0] >>> 24; 
-                    2'b01: dealt_data <= data[15:8] >>> 24;
-                    2'b10: dealt_data <= data[23:16] >>> 24;
-                    2'b11: dealt_data <= data[31:24] >>> 24;
+                    2'b00: dealt_data <= {{24{data[7]}}, data[7:0]};
+                    2'b01: dealt_data <= {{24{data[15]}}, data[15:8]};
+                    2'b10: dealt_data <= {{24{data[23]}}, data[23:16]};
+                    2'b11: dealt_data <= {{24{data[31]}}, data[31:24]};
                     default: dealt_data <= 32'b0;
                 endcase
             `LH :
                 case (addr)
-                    2'b00: dealt_data <= data[15:0] >>> 16;
-                    2'b10: dealt_data <= data[31:16] >>> 16;
+                    2'b00: dealt_data <= {{16{data[15]}}, data[15:0]};
+                    2'b10: dealt_data <= {{16{data[31]}}, data[31:16]};
                     default: dealt_data <= 32'b0;
                 endcase
             `LW : dealt_data <= data;
             `LBU:
                 case (addr)
-                    2'b00: dealt_data <= data[7:0] >> 24; 
-                    2'b01: dealt_data <= data[15:8] >> 24;
-                    2'b10: dealt_data <= data[23:16] >> 24;
-                    2'b11: dealt_data <= data[31:24] >> 24;
+                    2'b00: dealt_data <= {24'b0, data[7:0]};
+                    2'b01: dealt_data <= {24'b0, data[15:8]};
+                    2'b10: dealt_data <= {24'b0, data[23:16]};
+                    2'b11: dealt_data <= {24'b0, data[31:24]};
                     default: dealt_data <= 32'b0;
                 endcase
             `LHU:
                 case (addr)
-                    2'b00: dealt_data <= data[15:0] >> 16;
-                    2'b10: dealt_data <= data[31:16] >> 16;
+                    2'b00: dealt_data <= {16'b0, data[15:0]};
+                    2'b10: dealt_data <= {16'b0, data[31:16]};
                     default: dealt_data <= 32'b0;
                 endcase
             `NOREGWRITE: dealt_data <= 32'b0;
