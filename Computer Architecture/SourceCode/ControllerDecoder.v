@@ -54,10 +54,12 @@ module ControllerDecoder(
 
     // DONE: Complete this module
     wire [6:0] opcode;
+    wire [4:0] rd;
     wire [3:0] func3;
     wire [6:0] func7;
 
     assign opcode = inst[6:0];
+    assign rd = inst[11:7];
     assign func3 = inst[14:12];
     assign func7 = inst[31:25];
 
@@ -93,7 +95,7 @@ module ControllerDecoder(
                 br_type <= `NOBRANCH;
                 load_type <= `NOREGWRITE;
                 src_reg_en <= 2'b10;
-                reg_write_en <= 1;
+                reg_write_en <= (rd == 5'b0) ? 0 : 1;
                 cache_write_en <= 4'b0;
                 imm_type <= `ITYPE;
             end
@@ -123,7 +125,7 @@ module ControllerDecoder(
                 br_type <= `NOBRANCH;
                 load_type <= `NOREGWRITE;
                 src_reg_en <= 2'b11;
-                reg_write_en <= 1;
+                reg_write_en <= (rd == 5'b0) ? 0 : 1;
                 cache_write_en <= 4'b0;
                 imm_type <= `RTYPE;
             end
@@ -133,7 +135,7 @@ module ControllerDecoder(
                 br_type <= `NOBRANCH;
                 load_type <= `NOREGWRITE;
                 src_reg_en <= 2'b00;
-                reg_write_en <= 1;
+                reg_write_en <= (rd == 5'b0) ? 0 : 1;
                 cache_write_en <= 4'b0;
                 imm_type <= `UTYPE;
             end
@@ -143,7 +145,7 @@ module ControllerDecoder(
                 br_type <= `NOBRANCH;
                 load_type <= `NOREGWRITE;
                 src_reg_en <= 2'b00;
-                reg_write_en <= 1;
+                reg_write_en <= (rd == 5'b0) ? 0 : 1;
                 cache_write_en <= 4'b0;
                 imm_type <= `UTYPE;
             end
@@ -153,7 +155,7 @@ module ControllerDecoder(
                 br_type <= `NOBRANCH;
                 load_type <= `NOREGWRITE;
                 src_reg_en <= 2'b10;
-                reg_write_en <= 1;
+                reg_write_en <= (rd == 5'b0) ? 0 : 1;
                 cache_write_en <= 4'b0;
                 imm_type <= `ITYPE;
             end
@@ -163,7 +165,7 @@ module ControllerDecoder(
                 br_type <= `NOBRANCH;
                 load_type <= `NOREGWRITE;
                 src_reg_en <= 2'b00;
-                reg_write_en <= 1;
+                reg_write_en <= (rd == 5'b0) ? 0 : 1;
                 cache_write_en <= 4'b0;
                 imm_type <= `JTYPE;
             end
@@ -198,7 +200,7 @@ module ControllerDecoder(
                     default: load_type <= `NOREGWRITE;
                 endcase
                 src_reg_en <= 2'b10;
-                reg_write_en <= 1;
+                reg_write_en <= (rd == 5'b0) ? 0 : 1;
                 cache_write_en <= 4'b0;
                 imm_type <= `ITYPE;
             end
