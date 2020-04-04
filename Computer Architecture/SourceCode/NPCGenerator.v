@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company: USTC ESLAB
 // Engineer: Huang Yifan (hyf15@mail.ustc.edu.cn)
-// 
+//           John He (hechunwang2000327@hotmail.com)
 // Design Name: RV32I Core
 // Module Name: NPC Generator
 // Tool Versions: Vivado 2017.4.1
@@ -33,6 +33,25 @@ module NPC_Generator(
     output reg [31:0] NPC
     );
 
-    // TODO: Complete this module
+    // DONE: Complete this module
+    always@(*)
+    begin
+        if (jalr == 1'b1)
+        begin
+            NPC <= jalr_target;
+        end
+        else if (br == 1'b1)
+        begin
+            NPC <= br_target;
+        end
+        else if (jal == 1'b1)
+        begin
+            NPC <= jal_target;
+        end
+        else
+        begin
+            NPC <= PC;
+        end
+    end
 
 endmodule

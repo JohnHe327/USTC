@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company: USTC ESLAB
 // Engineer: Huang Yifan (hyf15@mail.ustc.edu.cn)
-// 
+//           John He (hechunwang2000327@hotmail.com)
 // Design Name: RV32I Core
 // Module Name: Immediate Extend
 // Tool Versions: Vivado 2017.4.1
@@ -32,8 +32,13 @@ module ImmExtend(
     begin
         case(imm_type)
             `ITYPE: imm <= {{21{inst[31]}}, inst[30:20]};
-            // TODO: complete left part
+            // DONE: complete left part
             // Parameters.v defines all immediate type
+            `STYPE: imm <= {{21{inst[31]}}, inst[30:25], inst[11:7]};
+            `BTYPE: imm <= {{20{inst[31]}}, inst[7], inst[30:25], inst[11:8], 1'b0};
+            `UTYPE: imm <= {inst[31:12], 12'b0};
+            `JTYPE: imm <= {{12{inst[31]}}, inst[19:12], inst[20], inst[30:21], 1'b0};
+            default: imm <= 32'b0;
         endcase
     end
     

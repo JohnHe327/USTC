@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company: USTC ESLAB
 // Engineer: Huang Yifan (hyf15@mail.ustc.edu.cn)
-// 
+//           John He (hechunwang2000327@hotmail.com)
 // Design Name: RV32I Core
 // Module Name: ALU
 // Tool Versions: Vivado 2017.4.1
@@ -29,7 +29,25 @@ module ALU(
     output reg [31:0] ALU_out
     );
 
-    // TODO: Complete this module
+    // DONE: Complete this module
+    always@(*)
+    begin
+        case (ALU_func)
+            `SLL : ALU_out <= op1 << op2[4:0];
+            `SRL : ALU_out <= op1 >> op2[4:0];
+            `SRA : ALU_out <= $signed(op1) >>> op2[4:0];
+            `ADD : ALU_out <= op1 + op2;
+            `SUB : ALU_out <= op1 - op2;
+            `XOR : ALU_out <= op1 ^ op2;
+            `OR  : ALU_out <= op1 | op2;
+            `AND : ALU_out <= op1 & op2;
+            `SLT : ALU_out <= (op1[31] & ~op2[31]) ? 32'd1 :
+                                    (~op1[31] & op2[31]) ? 32'd0 :
+                                        (op1 < op2) ? 32'd1 : 32'd0;
+            `SLTU: ALU_out <= (op1 < op2) ? 32'd1 : 32'd0;
+            `LUI : ALU_out <= op2;
+            default: ALU_out <= 32'd0;
+        endcase
+    end
 
 endmodule
-

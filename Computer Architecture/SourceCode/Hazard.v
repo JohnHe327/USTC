@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company: USTC ESLAB
 // Engineer: Huang Yifan (hyf15@mail.ustc.edu.cn)
-// 
+//           John He (hechunwang2000327@hotmail.com)
 // Design Name: RV32I Core
 // Module Name: Hazard Module
 // Tool Versions: Vivado 2017.4.1
@@ -62,6 +62,109 @@ module HarzardUnit(
     output reg [1:0] op1_sel, op2_sel, reg2_sel
     );
 
-    // TODO: Complete this module
+    // DONE: Complete this module
+    always@(*)
+    begin
+        if (rst) begin
+            flushF <= 1;
+            flushD <= 1;
+            flushE <= 1;
+            flushM <= 1;
+            flushW <= 1;
+            bubbleF <= 0;
+            bubbleD <= 0;
+            bubbleE <= 0;
+            bubbleM <= 0;
+            bubbleW <= 0;
+            op1_sel <= 2'h4;
+            op2_sel <= 2'h4;
+            reg2_sel <= 2'h3;
+        end else begin
+            // flushF
+            flushF <= 0;
+            
+            // flushD
+            if (br || jal || jalr) flushD <= 1;
+            else flushD <= 0;
+
+            // flushE
+            if (br || jalr
+            || (wb_select && reg_dstE != 5'b0
+                    && (reg1_srcD != 5'b0 && reg1_srcD == reg_dstE
+                        || reg2_srcD != 5'b0 && reg2_srcD == reg_dstE)))
+                flushE <= 1;
+            else flushE <= 0;
+
+            // flushM
+            if (br) flushM <= 1;
+            else flushM <= 0;
+            
+            // flushW
+            flushW <= 0;
+            
+            // bubbleF
+            // bubbleD
+            if (wb_select && reg_dstE != 5'b0
+                    && (reg1_srcD != 5'b0 && reg1_srcD == reg_dstE
+                        || reg2_srcD != 5'b0 && reg2_srcD == reg_dstE)) begin
+                bubbleF <= 1;
+                bubbleD <= 1;
+            end else begin
+                bubbleF <= 0;
+                bubbleD <= 0;
+            end
+            
+            // bubbleE
+            bubbleE <= 0;
+            // bubbleM
+            bubbleM <= 0;
+            // bubbleW
+            bubbleW <= 0;
+
+            // op1_sel
+            if (src_reg_en[1] && alu_src1 == 0) begin // reg1
+                if (reg1_srcE != 5'b0 && reg_dstM != 5'b0 && reg_write_en_MEM && reg1_srcE == reg_dstM) begin
+                    op1_sel <= 2'h0;
+                end else if (reg1_srcE != 5'b0 && reg_dstW != 5'b0 && reg_write_en_WB && reg1_srcE == reg_dstW) begin
+                    op1_sel <= 2'h1;
+                end else begin
+                    op1_sel <= 2'h3;
+                end
+            end else begin // PC
+                op1_sel <= 2'h2;
+            end
+
+            // op2_sel
+            if (src_reg_en[0] && alu_src2 == 2'b00) begin // reg2
+                if (reg2_srcE != 5'b0 && reg_dstM != 5'b0 && reg_write_en_MEM && reg2_srcE == reg_dstM) begin
+                    op2_sel <= 2'h0;
+                end else if (reg2_srcE != 5'b0 && reg_dstW != 5'b0 && reg_write_en_WB && reg2_srcE == reg_dstW) begin
+                    op2_sel <= 2'h1;
+                end else begin
+                    op2_sel <= 2'h3;
+                end
+            end else if (alu_src2 == 2'b01) begin //reg2src
+                op2_sel <= 2'h2;
+            end else if (alu_src2 == 2'b10) begin //imm
+                op2_sel <= 2'h3;
+            end else begin
+                op2_sel <= 2'h3;
+            end
+
+            // reg2_sel
+            if (src_reg_en[0]) begin
+                if (reg2_srcE != 5'b0 && reg_dstM != 5'b0 && reg_write_en_MEM && reg2_srcE == reg_dstM) begin
+                    reg2_sel <= 2'h0;
+                end else if (reg2_srcE != 5'b0 && reg_dstW != 5'b0 && reg_write_en_WB && reg2_srcE == reg_dstW) begin
+                    reg2_sel <= 2'h1;
+                end else begin
+                    reg2_sel <= 2'h2;
+                end
+            end else begin
+                reg2_sel <= 2'h2;
+            end
+        end
+        //zero
+    end
 
 endmodule
