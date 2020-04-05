@@ -56,25 +56,49 @@ void Input(FILE *fpIn)
     }
 }
 
+bool available(int row, int col, int num)
+{
+    return (takenRow[row][num] == false                     // num not in row
+        && takenCol[col][num] == false                      // num not in col
+        && takenBox[InBox(row, col)][num] == false          // num not in box
+        && ((row != col) || (takenX[0][num] == false))      // not '\' or num not in '\'
+        && ((row + col != 8) || (takenX[1][num] == false))  // not '/' or num not in '/'
+    );
+}
+
 int getNextPossibleAns(int row, int col, int start)
 {
     for (int i = start; i < 9; i++)
-        if (takenRow[row][i] == false                              // i not in row
-            && takenCol[col][i] == false                           // i not in col
-            && takenBox[InBox(row, col)][i] == false               // i not in box
-            && ((row == col) ? (takenX[0][i] == false) : true)     // not '\' or i not in '\'
-            && ((row + col == 8) ? (takenX[1][i] == false) : true) // not '/' or i not in '/'
-        )
+        if (available(row, col, i))
             return i;
     return -1;
 }
 
 int getNextUnsolved()
+// 0-80: unsolved
+// 81: all solved
 {
     int i;
     for (i = 0; i < 81; i++)
         if (!solved[i / 9][i % 9])
             break;
+    
+// heuristic: minimum remaining values
+    int degreei = 0;
+    for (int try = 0; try < 9; try++)
+        if (available(i / 9, i % 9, try))
+            degreei++;
+    for (int j = i + 1; j < 81; j++)
+        if (!solved[j / 9][j % 9]) // j unsolved
+        {
+            int degreej = 0;
+            for (int try = 0; try < 9; try++)
+                if (available(j / 9, j % 9, try))
+                    degreej++;
+            if (degreej < degreei)
+                i = j;
+        }
+    
     return i;
 }
 
