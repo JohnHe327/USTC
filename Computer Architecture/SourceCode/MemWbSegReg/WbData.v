@@ -2,6 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company: USTC ESLAB
 // Engineer: Huang Yifan (hyf15@mail.ustc.edu.cn)
+//           John He (hechunwang2000327@hotmail.com)
 // 
 // Design Name: RV32I Core
 // Module Name: Write-back Data seg reg
@@ -30,14 +31,15 @@
     // debug_out_data    Data Cache的debug读出数据
     // data_WB           传给下一流水段的写回寄存器内容
 // 实验要求  
-    // 无需修改
+    // 添加CSR
 
 module WB_Data_WB(
     input wire clk, bubbleW, flushW,
-    input wire wb_select,
+    input wire [1:0] wb_select,
     input wire [2:0] load_type,
     input  [3:0] write_en, debug_write_en,
     input  [31:0] addr,
+    input  [31:0] csr_data,
     input  [31:0] debug_addr,
     input  [31:0] in_data, debug_in_data,
     output wire [31:0] debug_out_data,
@@ -76,9 +78,10 @@ module WB_Data_WB(
 
     reg bubble_ff = 1'b0;
     reg flush_ff = 1'b0;
-    reg wb_select_old = 0;
+    reg [1:0] wb_select_old = 2'h0;
     reg [31:0] data_WB_old = 32'b0;
     reg [31:0] addr_old;
+    reg [31:0] csr_data_old;
     reg [2:0] load_type_old;
 
     DataExtend DataExtend1(
@@ -94,14 +97,16 @@ module WB_Data_WB(
         flush_ff <= flushW;
         data_WB_old <= data_WB;
         addr_old <= addr;
+        csr_data_old <= csr_data;
         wb_select_old <= wb_select;
         load_type_old <= load_type;
     end
 
     assign data_WB = bubble_ff ? data_WB_old :
                                  (flush_ff ? 32'b0 : 
-                                             (wb_select_old ? data_WB_raw :
-                                                          addr_old));
+                                             ((wb_select_old == 2'h0) ? addr_old :
+                                                                         ((wb_select_old == 2'h1) ? data_WB_raw :
+                                                                                                     csr_data_old)));
 
 
 
