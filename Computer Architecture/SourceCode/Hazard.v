@@ -25,7 +25,7 @@
     // jalr              是否jalr
     // jal               是否jal
     // src_reg_en        指令中的源reg1和源reg2地址是否有效
-    // wb_select         写回寄存器的值的来源（Cache内容或者ALU计算结果）
+    // wb_select         写回寄存器的值的来源（Cache内容或者ALU计算结果或CSR）
     // reg_write_en_MEM  MEM阶段的寄存器写使能信号
     // reg_write_en_WB   WB阶段的寄存器写使能信号
     // alu_src1          ALU操作数1来源：0表示来自reg1，1表示来自PC
@@ -53,7 +53,7 @@ module HarzardUnit(
     input wire [4:0] reg1_srcD, reg2_srcD, reg1_srcE, reg2_srcE, reg_dstE, reg_dstM, reg_dstW,
     input wire br, jalr, jal,
     input wire [1:0] src_reg_en,
-    input wire wb_select,
+    input wire [1:0] wb_select,
     input wire reg_write_en_MEM,
     input wire reg_write_en_WB,
     input wire alu_src1,
@@ -89,7 +89,7 @@ module HarzardUnit(
 
             // flushE
             if (br || jalr
-            || (wb_select && reg_dstE != 5'b0
+            || (wb_select == 2'h1 && reg_dstE != 5'b0
                     && (reg1_srcD != 5'b0 && reg1_srcD == reg_dstE
                         || reg2_srcD != 5'b0 && reg2_srcD == reg_dstE)))
                 flushE <= 1;
@@ -104,7 +104,7 @@ module HarzardUnit(
             
             // bubbleF
             // bubbleD
-            if (wb_select && reg_dstE != 5'b0
+            if (wb_select == 2'h1 && reg_dstE != 5'b0
                     && (reg1_srcD != 5'b0 && reg1_srcD == reg_dstE
                         || reg2_srcD != 5'b0 && reg2_srcD == reg_dstE)) begin
                 bubbleF <= 1;

@@ -21,7 +21,7 @@
     // ALU_func          ALU执行的运算类型
     // br_type           branch的判断条件，可以是不进行branch
     // load_npc          写回寄存器的值的来源（PC或者ALU计算结果）, load_npc == 1时选择PC
-    // wb_select         写回寄存器的值的来源（Cache内容或者ALU计算结果），wb_select == 1时选择cache内容
+    // wb_select         写回寄存器的值的来源，wb_select == 0时选择ALU计算结果，wb_select == 1时选择cache内容， wb_select == 2时选择CSR
     // load_type         load类型
     // src_reg_en        指令中src reg的地址是否有效，src_reg_en[1] == 1表示reg1被使用到了，src_reg_en[0]==1表示reg2被使用到了
     // reg_write_en      通用寄存器写使能，reg_write_en == 1表示需要写回reg
@@ -42,7 +42,7 @@ module ControllerDecoder(
     output reg [3:0] ALU_func,
     output reg [2:0] br_type,
     output wire load_npc,
-    output wire wb_select,
+    output wire [1:0] wb_select,
     output reg [2:0] load_type,
     output reg [1:0] src_reg_en,
     output reg reg_write_en,
@@ -67,7 +67,8 @@ module ControllerDecoder(
     assign jalr = (opcode == `opcode_JALR) ? 1 : 0;
     assign op2_src = (opcode == `opcode_OP) ? 0 : 1;
     assign load_npc = (opcode == `opcode_JAL || opcode == `opcode_JALR) ? 1 : 0;
-    assign wb_select = (opcode == `opcode_LOAD) ? 1 : 0;
+    assign wb_select = (opcode == `opcode_LOAD) ? 2'h1 :
+                                                  (opcode == `opcode_SYSTEM) ? 2'h2 : 2'h0;
     assign alu_src1 = (opcode == `opcode_AUIPC) ? 1 : 0;
     assign alu_src2 = (opcode == `opcode_OP) ? 2'b00 : 2'b10;
 

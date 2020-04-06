@@ -19,7 +19,7 @@
     // ALU_func_ID          ALU执行的运算类型
     // br_type_ID           branch的判断条件，可以是不进行branch
     // load_npc_ID          写回寄存器的值的来源（PC或者ALU计算结果）
-    // wb_select_ID         写回寄存器的值的来源（Cache内容或者ALU计算结果）
+    // wb_select_ID         写回寄存器的值的来源（Cache内容或者ALU计算结果或CSR）
     // load_type_ID         load类型
     // src_reg_en_ID        指令中src reg的地址是否有效
     // reg_write_en_ID      通用寄存器写使能
@@ -33,7 +33,7 @@
     // ALU_func_EX          传给下一流水段的ALU执行的运算类型
     // br_type_EX           传给下一流水段的branch的判断条件，可以是不进行branch
     // load_npc_EX          传给下一流水段的写回寄存器的值的来源（PC或者ALU计算结果）
-    // wb_select_EX         传给下一流水段的写回寄存器的值的来源（Cache内容或者ALU计算结果）
+    // wb_select_EX         传给下一流水段的写回寄存器的值的来源（Cache内容或者ALU计算结果或CSR）
     // load_type_EX         传给下一流水段的load类型
     // src_reg_en_EX        传给下一流水段的指令中src reg的地址是否有效
     // reg_write_en_EX      传给下一流水段的通用寄存器写使能
@@ -42,7 +42,7 @@
     // alu_src2_EX          传给下一流水段的alu操作数2来源
 
 // 实验要求  
-    // 无需修改
+    // 扩充wb_select
 
 
 
@@ -53,7 +53,7 @@ module Ctrl_EX(
     input wire [3:0] ALU_func_ID,
     input wire [2:0] br_type_ID,
     input wire load_npc_ID,
-    input wire wb_select_ID,
+    input wire [1:0] wb_select_ID,
     input wire [2:0] load_type_ID,
     input wire [1:0] src_reg_en_ID,
     input wire reg_write_en_ID,
@@ -64,7 +64,7 @@ module Ctrl_EX(
     output reg [3:0] ALU_func_EX,
     output reg [2:0] br_type_EX,
     output reg load_npc_EX,
-    output reg wb_select_EX,
+    output reg [1:0] wb_select_EX,
     output reg [2:0] load_type_EX,
     output reg [2:0] src_reg_en_EX,
     output reg reg_write_en_EX,
@@ -79,7 +79,7 @@ module Ctrl_EX(
         ALU_func_EX = 4'h0;
         br_type_EX = 3'h0;
         load_npc_EX = 0;
-        wb_select_EX = 0;
+        wb_select_EX = 2'h0;
         load_type_EX = 2'h0;
         src_reg_en_EX = 2'h0;
         reg_write_en_EX = 0;
@@ -97,7 +97,7 @@ module Ctrl_EX(
                 ALU_func_EX <= 4'h0;
                 br_type_EX <= 3'h0;
                 load_npc_EX <= 0;
-                wb_select_EX <= 0;
+                wb_select_EX <= 2'h0;
                 load_type_EX <= 2'h0;
                 src_reg_en_EX <= 2'h0;
                 reg_write_en_EX <= 0;

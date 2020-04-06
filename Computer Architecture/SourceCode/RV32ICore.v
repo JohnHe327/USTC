@@ -47,7 +47,7 @@ module RV32ICore(
     wire [3:0] ALU_func_ID, ALU_func_EX;
     wire [2:0] br_type_ID, br_type_EX;
     wire load_npc_ID, load_npc_EX;
-    wire wb_select_ID, wb_select_EX, wb_select_MEM;
+    wire [1:0] wb_select_ID, wb_select_EX, wb_select_MEM;
     wire [2:0] load_type_ID, load_type_EX, load_type_MEM;
     wire [1:0] src_reg_en_ID, src_reg_en_EX;
     wire [3:0] cache_write_en_ID, cache_write_en_EX, cache_write_en_MEM;
