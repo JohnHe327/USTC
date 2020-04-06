@@ -28,7 +28,7 @@
     // cache_write_en    按字节写入data cache
     // imm_type          指令中立即数类型
     // alu_src1          alu操作数1来源，alu_src1 == 0表示来自reg1，alu_src1 == 1表示来自PC
-    // alu_src2          alu操作数2来源，alu_src2 == 2’b00表示来自reg2，alu_src2 == 2'b01表示来自reg2地址，alu_src2 == 2'b10表示来自立即数
+    // alu_src2          alu操作数2来源，alu_src2 == 2’b00表示来自reg2，alu_src2 == 2'b01表示来自reg2地址，alu_src2 == 2'b10表示来自立即数，alu_src2 == 2'b11表示来自CSR
 // 实验要求
     // 补全模块
 
@@ -72,7 +72,8 @@ module ControllerDecoder(
     assign wb_select = (opcode == `opcode_LOAD) ? 2'h1 :
                                                   (opcode == `opcode_SYSTEM) ? 2'h2 : 2'h0;
     assign alu_src1 = (opcode == `opcode_AUIPC) ? 1 : 0;
-    assign alu_src2 = (opcode == `opcode_OP) ? 2'b00 : 2'b10;
+    assign alu_src2 = (opcode == `opcode_OP) ? 2'b00 :
+                                               (opcode == `opcode_SYSTEM) ? 2'b11 : 2'b10;
 
     always@(*)
     begin

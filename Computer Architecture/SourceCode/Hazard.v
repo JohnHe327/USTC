@@ -29,7 +29,7 @@
     // reg_write_en_MEM  MEM阶段的寄存器写使能信号
     // reg_write_en_WB   WB阶段的寄存器写使能信号
     // alu_src1          ALU操作数1来源：0表示来自reg1，1表示来自PC
-    // alu_src2          ALU操作数2来源：2’b00表示来自reg2，2'b01表示来自reg2地址，2'b10表示来自立即数
+    // alu_src2          ALU操作数2来源：2’b00表示来自reg2，2'b01表示来自reg2地址，2'b10表示来自立即数，2'b11表示来自CSR
 // 输出
     // flushF            IF阶段的flush信号
     // bubbleF           IF阶段的bubble信号
@@ -147,7 +147,7 @@ module HarzardUnit(
                 op2_sel <= 2'h2;
             end else if (alu_src2 == 2'b10) begin //imm
                 op2_sel <= 2'h3;
-            end else begin
+            end else begin //CSR
                 op2_sel <= 2'h3;
             end
 
