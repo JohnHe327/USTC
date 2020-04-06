@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company: USTC ESLAB
 // Engineer: Huang Yifan (hyf15@mail.ustc.edu.cn)
-// 
+//           John He (hechunwang2000327@hotmail.com)
 // Design Name: RV32I Core
 // Module Name: Register Address seg reg
 // Tool Versions: Vivado 2017.4.1
@@ -18,19 +18,23 @@
     // reg1_src_ID       ID阶段的源寄存器1地址
     // reg2_src_ID       ID阶段的源寄存器2地址
     // reg_dest_ID       ID阶段的目标寄存器地址
+    // csr_dest_ID       ID阶段的目标CSR地址
     // bubbleE           EX阶段的bubble信号
     // flushE            EX阶段的flush信号
 // 输出
     // reg1_src_EX       传给下一流水段的源寄存器1地址
     // reg2_src_EX       传给下一流水段的源寄存器2地址
     // reg_dest_EX       传给下一流水段的目标寄存器地址
+    // csr_dest_EX       传给下一流水段的目标CSR地址
 // 实验要求  
-    // 无需修改
+    // 添加CSR
 
 module Addr_EX(
     input wire clk, bubbleE, flushE,
     input wire [4:0] reg1_src_ID, reg2_src_ID, reg_dest_ID,
-    output reg [4:0] reg1_src_EX, reg2_src_EX, reg_dest_EX
+    input wire [11:0] csr_dest_ID,
+    output reg [4:0] reg1_src_EX, reg2_src_EX, reg_dest_EX,
+    output reg [11:0] csr_dest_EX
     );
 
     initial 
@@ -38,6 +42,7 @@ module Addr_EX(
         reg1_src_EX = 0;
         reg2_src_EX = 0;
         reg_dest_EX = 0;
+        csr_dest_EX = 0;
     end
     
     always@(posedge clk)
@@ -48,12 +53,14 @@ module Addr_EX(
                 reg1_src_EX <= 0;
                 reg2_src_EX <= 0;
                 reg_dest_EX <= 0;
+                csr_dest_EX <= 0;
             end
             else
             begin
                 reg1_src_EX <= reg1_src_ID;
                 reg2_src_EX <= reg2_src_ID;
                 reg_dest_EX <= reg_dest_ID;
+                csr_dest_EX <= csr_dest_ID;
             end
         end
     
