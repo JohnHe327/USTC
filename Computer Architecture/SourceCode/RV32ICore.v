@@ -43,7 +43,7 @@ module RV32ICore(
     wire [31:0] reg2, reg2_EX, reg2_MEM;
     wire [31:0] op2;
     wire [31:0] reg_or_imm;
-    wire op2_src;
+    wire [1:0] op2_src;
     wire [3:0] ALU_func_ID, ALU_func_EX;
     wire [2:0] br_type_ID, br_type_EX;
     wire load_npc_ID, load_npc_EX;
@@ -71,7 +71,10 @@ module RV32ICore(
     // Adder to compute PC + 4
     assign PC_4 = PC_IF + 4;
     // MUX for op2 source
-    assign op2 = op2_src ? imm : reg2;
+    assign op2 = (op2_src == 2'h0) ? reg2 :
+                                     (op2_src == 2'h1) ? imm :
+                                                         (op2_src == 2'h2) ? csr_data :
+                                                                             32'b0;
     // Adder to compute PC_ID + Imm - 4
     assign jal_target = PC_ID + op2 - 4;
     // MUX for ALU op1

@@ -17,7 +17,7 @@
 // 输出
     // jal               jal跳转指令
     // jalr              jalr跳转指令
-    // op2_src           ALU的第二个操作数来源。为1时，op2选择imm，为0时，op2选择reg2
+    // op2_src           ALU的第二个操作数来源。为0时op2选择reg2，为1时op2选择imm，为2时选择CSR，为3时选择0
     // ALU_func          ALU执行的运算类型
     // br_type           branch的判断条件，可以是不进行branch
     // load_npc          写回寄存器的值的来源（PC或者ALU计算结果）, load_npc == 1时选择PC
@@ -38,7 +38,7 @@ module ControllerDecoder(
     input wire [31:0] inst,
     output wire jal,
     output wire jalr,
-    output wire op2_src,
+    output wire [1:0] op2_src,
     output reg [3:0] ALU_func,
     output reg [2:0] br_type,
     output wire load_npc,
@@ -65,7 +65,9 @@ module ControllerDecoder(
 
     assign jal  = (opcode == `opcode_JAL) ? 1 : 0;
     assign jalr = (opcode == `opcode_JALR) ? 1 : 0;
-    assign op2_src = (opcode == `opcode_OP) ? 0 : 1;
+    assign op2_src = (opcode == `opcode_OP) ? 2'h0 :
+                                              (opcode == `opcode_SYSTEM) ? ((func3 == `func3_CSRRW || func3 == `func3_CSRRWI) ? 2'h3 : 2'h2) :
+                                                                           2'h1;
     assign load_npc = (opcode == `opcode_JAL || opcode == `opcode_JALR) ? 1 : 0;
     assign wb_select = (opcode == `opcode_LOAD) ? 2'h1 :
                                                   (opcode == `opcode_SYSTEM) ? 2'h2 : 2'h0;
