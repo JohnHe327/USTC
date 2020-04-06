@@ -46,6 +46,7 @@ module ALU(
                                         (op1 < op2) ? 32'd1 : 32'd0;
             `SLTU: ALU_out <= (op1 < op2) ? 32'd1 : 32'd0;
             `LUI : ALU_out <= op2;
+            `CSRRC: ALU_out <= (op1 == 32'b0) ? op2 : op1 & op2;
             default: ALU_out <= 32'd0;
         endcase
     end
