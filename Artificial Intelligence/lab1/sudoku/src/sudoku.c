@@ -58,11 +58,11 @@ void Input(FILE *fpIn)
 
 bool available(int row, int col, int num)
 {
-    return (takenRow[row][num] == false                     // num not in row
-        && takenCol[col][num] == false                      // num not in col
-        && takenBox[InBox(row, col)][num] == false          // num not in box
-        && ((row != col) || (takenX[0][num] == false))      // not '\' or num not in '\'
-        && ((row + col != 8) || (takenX[1][num] == false))  // not '/' or num not in '/'
+    return (takenRow[row][num] == false                        // num not in row
+            && takenCol[col][num] == false                     // num not in col
+            && takenBox[InBox(row, col)][num] == false         // num not in box
+            && ((row != col) || (takenX[0][num] == false))     // not '\' or num not in '\'
+            && ((row + col != 8) || (takenX[1][num] == false)) // not '/' or num not in '/'
     );
 }
 
@@ -77,28 +77,31 @@ int getNextPossibleAns(int row, int col, int start)
 int getNextUnsolved()
 // 0-80: unsolved
 // 81: all solved
+// -1: no answer
 {
     int i;
     for (i = 0; i < 81; i++)
         if (!solved[i / 9][i % 9])
             break;
     
-// heuristic: minimum remaining values
+    // heuristic: minimum remaining values
     int degreei = 0;
-    for (int try = 0; try < 9; try++)
+    for (int try = 0; try < 9; try ++)
         if (available(i / 9, i % 9, try))
             degreei++;
     for (int j = i + 1; j < 81; j++)
         if (!solved[j / 9][j % 9]) // j unsolved
         {
             int degreej = 0;
-            for (int try = 0; try < 9; try++)
+            for (int try = 0; try < 9; try ++)
                 if (available(j / 9, j % 9, try))
                     degreej++;
+            if (degreej == 0) // forward checking
+                return -1;
             if (degreej < degreei)
                 i = j;
         }
-    
+
     return i;
 }
 
@@ -106,7 +109,9 @@ void Solve()
 {
     int row, col;
     col = getNextUnsolved();
-    if (col == 81) // all solved
+    if (col == -1) // no answer
+        return;
+    else if (col == 81) // all solved
     {
         finish = true;
         return;
