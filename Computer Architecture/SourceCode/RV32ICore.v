@@ -61,6 +61,11 @@ module RV32ICore(
     wire [1:0] op1_sel, op2_sel, reg2_sel;
 
 
+    wire op1_src;
+    wire [31:0] op1;
+
+    // MUX for op1 source
+    assign op1 = op1_src ? reg1 : {27'b0, inst_ID[19:15]};
 
 
     // Adder to compute PC + 4
@@ -208,7 +213,7 @@ module RV32ICore(
         .clk(CPU_CLK),
         .bubbleE(bubbleE),
         .flushE(flushE),
-        .reg1(reg1),
+        .reg1(op1),
         .reg1_EX(reg1_EX)
     );
 
