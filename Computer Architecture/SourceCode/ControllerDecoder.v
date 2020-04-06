@@ -29,6 +29,9 @@
     // imm_type          指令中立即数类型
     // alu_src1          alu操作数1来源，alu_src1 == 0表示来自reg1，alu_src1 == 1表示来自PC
     // alu_src2          alu操作数2来源，alu_src2 == 2’b00表示来自reg2，alu_src2 == 2'b01表示来自reg2地址，alu_src2 == 2'b10表示来自立即数，alu_src2 == 2'b11表示来自CSR
+    // csr_read_en       CSR读使能
+    // csr_write_en      CSR写使能
+    // op1_src           ALU的第一个操作数来源，为0时选择inst[19:15]，为1时选择reg1
 // 实验要求
     // 补全模块
 
@@ -49,18 +52,23 @@ module ControllerDecoder(
     output reg [3:0] cache_write_en,
     output wire alu_src1,
     output wire [1:0] alu_src2,
-    output reg [2:0] imm_type
+    output reg [2:0] imm_type,
+    output wire csr_read_en,
+    output wire csr_write_en,
+    output wire op1_src
     );
 
     // DONE: Complete this module
     wire [6:0] opcode;
     wire [4:0] rd;
     wire [3:0] func3;
+    wire [4:0] rs1;
     wire [6:0] func7;
 
     assign opcode = inst[6:0];
     assign rd = inst[11:7];
     assign func3 = inst[14:12];
+    assign rs1 = inst[19:15];
     assign func7 = inst[31:25];
 
     assign jal  = (opcode == `opcode_JAL) ? 1 : 0;
@@ -74,6 +82,10 @@ module ControllerDecoder(
     assign alu_src1 = (opcode == `opcode_AUIPC) ? 1 : 0;
     assign alu_src2 = (opcode == `opcode_OP) ? 2'b00 :
                                                (opcode == `opcode_SYSTEM) ? 2'b11 : 2'b10;
+
+    assign csr_read_en = (func3 == `func3_CSRRWI && rd == 5'b0) ? 0 : 1;
+    assign csr_write_en = (rs1 == 5'b0 && func3 != `func3_CSRRW && func3 != `func3_CSRRWI) ? 0 : 1;
+    assign op1_src = (func3 == `func3_CSRRW || func3 == `func3_CSRRS || func3 == `func3_CSRRC) ? 1 : 0;
 
     always@(*)
     begin
@@ -222,6 +234,32 @@ module ControllerDecoder(
                     default: cache_write_en <= 4'b0;
                 endcase
                 imm_type <= `STYPE;
+            end
+            `opcode_SYSTEM :
+            begin
+                case (func3)
+                    `func3_CSRRW  : ALU_func <= `ADD;
+                    `func3_CSRRS  : ALU_func <= `OR;
+                    `func3_CSRRC  : ALU_func <= `CSRRC;
+                    `func3_CSRRWI : ALU_func <= `ADD;
+                    `func3_CSRRSI : ALU_func <= `OR;
+                    `func3_CSRRCI : ALU_func <= `AND;
+                    default: ALU_func <= `ERROR; 
+                endcase
+                br_type <= `NOBRANCH;
+                load_type <= `NOREGWRITE;
+                case (func3)
+                    `func3_CSRRW  : src_reg_en <= 2'b10;
+                    `func3_CSRRS  : src_reg_en <= 2'b10;
+                    `func3_CSRRC  : src_reg_en <= 2'b10;
+                    `func3_CSRRWI : src_reg_en <= 2'b00;
+                    `func3_CSRRSI : src_reg_en <= 2'b00;
+                    `func3_CSRRCI : src_reg_en <= 2'b00;
+                    default: src_reg_en <= 2'b00;
+                endcase
+                reg_write_en <= 1;
+                cache_write_en <= 4'b0;
+                imm_type <= `RTYPE;
             end
             default: 
             begin
