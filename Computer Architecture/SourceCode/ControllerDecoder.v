@@ -85,7 +85,8 @@ module ControllerDecoder(
 
     assign csr_read_en = ((func3 == `func3_CSRRW || func3 ==  `func3_CSRRWI) && rd == 5'b0) ? 0 : 1;
     assign csr_write_en = (rs1 == 5'b0 && func3 != `func3_CSRRW && func3 != `func3_CSRRWI) ? 0 : 1;
-    assign op1_src = (func3 == `func3_CSRRW || func3 == `func3_CSRRS || func3 == `func3_CSRRC) ? 1 : 0;
+    assign op1_src = (opcode == `opcode_SYSTEM
+                      && (func3 == `func3_CSRRWI || func3 == `func3_CSRRSI || func3 == `func3_CSRRCI)) ? 0 : 1;
 
     always@(*)
     begin
