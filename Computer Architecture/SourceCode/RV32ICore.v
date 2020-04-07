@@ -289,6 +289,7 @@ module RV32ICore(
         .load_type_ID(load_type_ID),
         .src_reg_en_ID(src_reg_en_ID),
         .reg_write_en_ID(reg_write_en_ID),
+        .csr_write_en_ID(csr_write_en_ID),
         .cache_write_en_ID(cache_write_en_ID),
         .alu_src1_ID(alu_src1_ID),
         .alu_src2_ID(alu_src2_ID),
@@ -300,6 +301,7 @@ module RV32ICore(
         .load_type_EX(load_type_EX),
         .src_reg_en_EX(src_reg_en_EX),
         .reg_write_en_EX(reg_write_en_EX),
+        .csr_write_en_EX(csr_write_en_EX),
         .cache_write_en_EX(cache_write_en_EX),
         .alu_src1_EX(alu_src1_EX),
         .alu_src2_EX(alu_src2_EX)
@@ -368,10 +370,12 @@ module RV32ICore(
         .wb_select_EX(wb_select_EX),
         .load_type_EX(load_type_EX),
         .reg_write_en_EX(reg_write_en_EX),
+        .csr_write_en_EX(csr_write_en_EX),
         .cache_write_en_EX(cache_write_en_EX),
         .wb_select_MEM(wb_select_MEM),
         .load_type_MEM(load_type_MEM),
         .reg_write_en_MEM(reg_write_en_MEM),
+        .csr_write_en_MEM(csr_write_en_MEM),
         .cache_write_en_MEM(cache_write_en_MEM)
     );
 
@@ -423,7 +427,9 @@ module RV32ICore(
         .bubbleW(bubbleW),
         .flushW(flushW),
         .reg_write_en_MEM(reg_write_en_MEM),
-        .reg_write_en_WB(reg_write_en_WB)
+        .csr_write_en_MEM(csr_write_en_MEM),
+        .reg_write_en_WB(reg_write_en_WB),
+        .csr_write_en_WB(csr_write_en_WB)
     );
 
 

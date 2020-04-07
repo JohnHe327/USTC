@@ -18,6 +18,7 @@
     // wb_select_EX         写回寄存器的值的来源（Cache内容或者ALU计算结果或CSR）
     // load_type_EX         load类型
     // reg_write_en_EX      通用寄存器写使能
+    // csr_write_en_EX      CSR写使能
     // cache_write_en_EX    按字节写入data cache
     // bubbleM              EX阶段的bubble信号
     // flushM               EX阶段的flush信号
@@ -25,10 +26,11 @@
     // wb_select_MEM        传给下一流水段的写回寄存器的值的来源（Cache内容或者ALU计算结果或CSR）
     // load_type_MEM        传给下一流水段的load类型
     // reg_write_en_MEM     传给下一流水段的通用寄存器写使能
+    // csr_write_en_MEM     传给下一流水段的CSR写使能
     // cache_write_en_MEM   传给下一流水段的按字节写入data cache
 
 // 实验要求  
-    // 扩充wb_select
+    // 添加CSR，扩充wb_select
 
 
 
@@ -37,10 +39,12 @@ module Ctrl_MEM(
     input wire [1:0] wb_select_EX,
     input wire [2:0] load_type_EX,
     input wire reg_write_en_EX,
+    input wire csr_write_en_EX,
     input wire [3:0] cache_write_en_EX,
     output reg [1:0] wb_select_MEM,
     output reg [2:0] load_type_MEM,
     output reg reg_write_en_MEM,
+    output reg csr_write_en_MEM,
     output reg [3:0] cache_write_en_MEM
     );
 
@@ -49,6 +53,7 @@ module Ctrl_MEM(
         wb_select_MEM = 2'h0;
         load_type_MEM = 3'h0;
         reg_write_en_MEM = 0;
+        csr_write_en_MEM = 0;
         cache_write_en_MEM = 4'h0;
     end
     
@@ -60,6 +65,7 @@ module Ctrl_MEM(
                 wb_select_MEM <= 2'h0;
                 load_type_MEM <= 3'h0;
                 reg_write_en_MEM <= 0;
+                csr_write_en_MEM <= 0;
                 cache_write_en_MEM <= 4'h0;
             end
             else
@@ -67,6 +73,7 @@ module Ctrl_MEM(
                 wb_select_MEM <= wb_select_EX;
                 load_type_MEM <= load_type_EX;
                 reg_write_en_MEM <= reg_write_en_EX;
+                csr_write_en_MEM <= csr_write_en_EX;
                 cache_write_en_MEM <= cache_write_en_EX;
             end
         end

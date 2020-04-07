@@ -23,6 +23,7 @@
     // load_type_ID         load类型
     // src_reg_en_ID        指令中src reg的地址是否有效
     // reg_write_en_ID      通用寄存器写使能
+    // csr_write_en_ID      CSR写使能
     // cache_write_en_ID    按字节写入data cache
     // alu_src1_ID          alu操作数1来源，alu_src1 == 0表示来自reg1，alu_src1 == 1表示来自PC
     // alu_src2_ID          alu操作数2来源，alu_src2 == 2’b00表示来自reg2，alu_src2 == 2'b01表示来自reg2地址，alu_src2 == 2'b10表示来自立即数
@@ -37,12 +38,13 @@
     // load_type_EX         传给下一流水段的load类型
     // src_reg_en_EX        传给下一流水段的指令中src reg的地址是否有效
     // reg_write_en_EX      传给下一流水段的通用寄存器写使能
+    // csr_write_en_EX      传给下一流水段的CSR写使能
     // cache_write_en_EX    传给下一流水段的按字节写入data cache
     // alu_src1_EX          传给下一流水段的alu操作数1来源
     // alu_src2_EX          传给下一流水段的alu操作数2来源
 
 // 实验要求  
-    // 扩充wb_select
+    // 添加CSR，扩充wb_select
 
 
 
@@ -57,6 +59,7 @@ module Ctrl_EX(
     input wire [2:0] load_type_ID,
     input wire [1:0] src_reg_en_ID,
     input wire reg_write_en_ID,
+    input wire csr_write_en_ID,
     input wire [3:0] cache_write_en_ID,
     input wire alu_src1_ID,
     input wire [1:0] alu_src2_ID,
@@ -68,6 +71,7 @@ module Ctrl_EX(
     output reg [2:0] load_type_EX,
     output reg [2:0] src_reg_en_EX,
     output reg reg_write_en_EX,
+    output reg csr_write_en_EX,
     output reg [3:0] cache_write_en_EX,
     output reg alu_src1_EX,
     output reg [1:0] alu_src2_EX
@@ -83,6 +87,7 @@ module Ctrl_EX(
         load_type_EX = 2'h0;
         src_reg_en_EX = 2'h0;
         reg_write_en_EX = 0;
+        csr_write_en_EX = 0;
         cache_write_en_EX = 3'h0;
         alu_src1_EX = 0;
         alu_src2_EX = 2'b0;
@@ -101,6 +106,7 @@ module Ctrl_EX(
                 load_type_EX <= 2'h0;
                 src_reg_en_EX <= 2'h0;
                 reg_write_en_EX <= 0;
+                csr_write_en_EX <= 0;
                 cache_write_en_EX <= 3'h0;
                 alu_src1_EX <= 0;
                 alu_src2_EX <= 2'b0;
@@ -115,6 +121,7 @@ module Ctrl_EX(
                 load_type_EX <= load_type_ID;
                 src_reg_en_EX <= src_reg_en_ID;
                 reg_write_en_EX <= reg_write_en_ID;
+                csr_write_en_EX <= csr_write_en_ID;
                 cache_write_en_EX <= cache_write_en_ID;
                 alu_src1_EX <= alu_src1_ID;
                 alu_src2_EX <= alu_src2_ID;
