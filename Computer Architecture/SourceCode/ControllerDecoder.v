@@ -83,7 +83,7 @@ module ControllerDecoder(
     assign alu_src2 = (opcode == `opcode_OP) ? 2'b00 :
                                                (opcode == `opcode_SYSTEM) ? 2'b11 : 2'b10;
 
-    assign csr_read_en = (func3 == `func3_CSRRWI && rd == 5'b0) ? 0 : 1;
+    assign csr_read_en = ((func3 == `func3_CSRRW || func3 ==  `func3_CSRRWI) && rd == 5'b0) ? 0 : 1;
     assign csr_write_en = (rs1 == 5'b0 && func3 != `func3_CSRRW && func3 != `func3_CSRRWI) ? 0 : 1;
     assign op1_src = (func3 == `func3_CSRRW || func3 == `func3_CSRRS || func3 == `func3_CSRRC) ? 1 : 0;
 
@@ -243,7 +243,7 @@ module ControllerDecoder(
                     `func3_CSRRC  : ALU_func <= `CSRRC;
                     `func3_CSRRWI : ALU_func <= `ADD;
                     `func3_CSRRSI : ALU_func <= `OR;
-                    `func3_CSRRCI : ALU_func <= `AND;
+                    `func3_CSRRCI : ALU_func <= `CSRRC;
                     default: ALU_func <= `ERROR; 
                 endcase
                 br_type <= `NOBRANCH;
