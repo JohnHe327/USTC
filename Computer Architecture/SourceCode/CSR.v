@@ -37,7 +37,7 @@ module CSR(
     output wire [31:0] csr_data
     );
 
-    wire dealt_addr[4:0], dealt_wb_addr[4:0];
+    wire [4:0] dealt_addr, dealt_wb_addr;
     assign dealt_addr = addr[4:0];
     assign dealt_wb_addr = wb_addr[4:0];
 
