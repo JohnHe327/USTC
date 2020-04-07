@@ -130,6 +130,8 @@ module HarzardUnit(
                 end else begin
                     op1_sel <= 2'h3;
                 end
+            end else if (~src_reg_en[1] && alu_src1 == 0) begin // CSR zimm
+                op1_sel <= 2'h3;
             end else begin // PC
                 op1_sel <= 2'h2;
             end
