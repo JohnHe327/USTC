@@ -17,18 +17,21 @@
 // 输出
     // jal               jal跳转指令
     // jalr              jalr跳转指令
-    // op2_src           ALU的第二个操作数来源。为1时，op2选择imm，为0时，op2选择reg2
+    // op2_src           ALU的第二个操作数来源。为0时op2选择reg2，为1时op2选择imm，为2时选择CSR，为3时选择0
     // ALU_func          ALU执行的运算类型
     // br_type           branch的判断条件，可以是不进行branch
     // load_npc          写回寄存器的值的来源（PC或者ALU计算结果）, load_npc == 1时选择PC
-    // wb_select         写回寄存器的值的来源（Cache内容或者ALU计算结果），wb_select == 1时选择cache内容
+    // wb_select         写回寄存器的值的来源，wb_select == 0时选择ALU计算结果，wb_select == 1时选择cache内容， wb_select == 2时选择CSR
     // load_type         load类型
     // src_reg_en        指令中src reg的地址是否有效，src_reg_en[1] == 1表示reg1被使用到了，src_reg_en[0]==1表示reg2被使用到了
     // reg_write_en      通用寄存器写使能，reg_write_en == 1表示需要写回reg
     // cache_write_en    按字节写入data cache
     // imm_type          指令中立即数类型
     // alu_src1          alu操作数1来源，alu_src1 == 0表示来自reg1，alu_src1 == 1表示来自PC
-    // alu_src2          alu操作数2来源，alu_src2 == 2’b00表示来自reg2，alu_src2 == 2'b01表示来自reg2地址，alu_src2 == 2'b10表示来自立即数
+    // alu_src2          alu操作数2来源，alu_src2 == 2’b00表示来自reg2，alu_src2 == 2'b01表示来自reg2地址，alu_src2 == 2'b10表示来自立即数，alu_src2 == 2'b11表示来自CSR
+    // csr_read_en       CSR读使能
+    // csr_write_en      CSR写使能
+    // op1_src           ALU的第一个操作数来源，为0时选择inst[19:15]，为1时选择reg1
 // 实验要求
     // 补全模块
 
@@ -38,38 +41,52 @@ module ControllerDecoder(
     input wire [31:0] inst,
     output wire jal,
     output wire jalr,
-    output wire op2_src,
+    output wire [1:0] op2_src,
     output reg [3:0] ALU_func,
     output reg [2:0] br_type,
     output wire load_npc,
-    output wire wb_select,
+    output wire [1:0] wb_select,
     output reg [2:0] load_type,
     output reg [1:0] src_reg_en,
     output reg reg_write_en,
     output reg [3:0] cache_write_en,
     output wire alu_src1,
     output wire [1:0] alu_src2,
-    output reg [2:0] imm_type
+    output reg [2:0] imm_type,
+    output wire csr_read_en,
+    output wire csr_write_en,
+    output wire op1_src
     );
 
     // DONE: Complete this module
     wire [6:0] opcode;
     wire [4:0] rd;
     wire [3:0] func3;
+    wire [4:0] rs1;
     wire [6:0] func7;
 
     assign opcode = inst[6:0];
     assign rd = inst[11:7];
     assign func3 = inst[14:12];
+    assign rs1 = inst[19:15];
     assign func7 = inst[31:25];
 
     assign jal  = (opcode == `opcode_JAL) ? 1 : 0;
     assign jalr = (opcode == `opcode_JALR) ? 1 : 0;
-    assign op2_src = (opcode == `opcode_OP) ? 0 : 1;
+    assign op2_src = (opcode == `opcode_OP) ? 2'h0 :
+                                              (opcode == `opcode_SYSTEM) ? ((func3 == `func3_CSRRW || func3 == `func3_CSRRWI) ? 2'h3 : 2'h2) :
+                                                                           2'h1;
     assign load_npc = (opcode == `opcode_JAL || opcode == `opcode_JALR) ? 1 : 0;
-    assign wb_select = (opcode == `opcode_LOAD) ? 1 : 0;
+    assign wb_select = (opcode == `opcode_LOAD) ? 2'h1 :
+                                                  (opcode == `opcode_SYSTEM) ? 2'h2 : 2'h0;
     assign alu_src1 = (opcode == `opcode_AUIPC) ? 1 : 0;
-    assign alu_src2 = (opcode == `opcode_OP) ? 2'b00 : 2'b10;
+    assign alu_src2 = (opcode == `opcode_OP) ? 2'b00 :
+                                               (opcode == `opcode_SYSTEM) ? 2'b11 : 2'b10;
+
+    assign csr_read_en = ((func3 == `func3_CSRRW || func3 ==  `func3_CSRRWI) && rd == 5'b0) ? 0 : 1;
+    assign csr_write_en = (rs1 == 5'b0 && func3 != `func3_CSRRW && func3 != `func3_CSRRWI) ? 0 : 1;
+    assign op1_src = (opcode == `opcode_SYSTEM
+                      && (func3 == `func3_CSRRWI || func3 == `func3_CSRRSI || func3 == `func3_CSRRCI)) ? 0 : 1;
 
     always@(*)
     begin
@@ -218,6 +235,32 @@ module ControllerDecoder(
                     default: cache_write_en <= 4'b0;
                 endcase
                 imm_type <= `STYPE;
+            end
+            `opcode_SYSTEM :
+            begin
+                case (func3)
+                    `func3_CSRRW  : ALU_func <= `ADD;
+                    `func3_CSRRS  : ALU_func <= `OR;
+                    `func3_CSRRC  : ALU_func <= `CSRRC;
+                    `func3_CSRRWI : ALU_func <= `ADD;
+                    `func3_CSRRSI : ALU_func <= `OR;
+                    `func3_CSRRCI : ALU_func <= `CSRRC;
+                    default: ALU_func <= `ERROR; 
+                endcase
+                br_type <= `NOBRANCH;
+                load_type <= `NOREGWRITE;
+                case (func3)
+                    `func3_CSRRW  : src_reg_en <= 2'b10;
+                    `func3_CSRRS  : src_reg_en <= 2'b10;
+                    `func3_CSRRC  : src_reg_en <= 2'b10;
+                    `func3_CSRRWI : src_reg_en <= 2'b00;
+                    `func3_CSRRSI : src_reg_en <= 2'b00;
+                    `func3_CSRRCI : src_reg_en <= 2'b00;
+                    default: src_reg_en <= 2'b00;
+                endcase
+                reg_write_en <= 1;
+                cache_write_en <= 4'b0;
+                imm_type <= `RTYPE;
             end
             default: 
             begin

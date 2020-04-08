@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company: USTC ESLAB
 // Engineer: Huang Yifan (hyf15@mail.ustc.edu.cn)
-// 
+//           John He (hechunwang2000327@hotmail.com)
 // Design Name: RV32I Core
 // Module Name: RV32I Core
 // Tool Versions: Vivado 2017.4.1
@@ -43,11 +43,11 @@ module RV32ICore(
     wire [31:0] reg2, reg2_EX, reg2_MEM;
     wire [31:0] op2;
     wire [31:0] reg_or_imm;
-    wire op2_src;
+    wire [1:0] op2_src;
     wire [3:0] ALU_func_ID, ALU_func_EX;
     wire [2:0] br_type_ID, br_type_EX;
     wire load_npc_ID, load_npc_EX;
-    wire wb_select_ID, wb_select_EX, wb_select_MEM;
+    wire [1:0] wb_select_ID, wb_select_EX, wb_select_MEM;
     wire [2:0] load_type_ID, load_type_EX, load_type_MEM;
     wire [1:0] src_reg_en_ID, src_reg_en_EX;
     wire [3:0] cache_write_en_ID, cache_write_en_EX, cache_write_en_MEM;
@@ -60,13 +60,25 @@ module RV32ICore(
     wire [31:0] result, result_MEM;
     wire [1:0] op1_sel, op2_sel, reg2_sel;
 
+    wire csr_write_en_ID, csr_write_en_EX, csr_write_en_MEM, csr_write_en_WB;
+    wire csr_read_en;
+    wire [31:0] csr_data, csr_data_EX, csr_data_MEM;
+    wire [11:0] csr_dest_EX, csr_dest_MEM, csr_dest_WB;
+    wire [31:0] csr_wb;
+    wire op1_src;
+    wire [31:0] op1;
 
+    // MUX for op1 source
+    assign op1 = op1_src ? reg1 : {27'b0, inst_ID[19:15]};
 
 
     // Adder to compute PC + 4
     assign PC_4 = PC_IF + 4;
     // MUX for op2 source
-    assign op2 = op2_src ? imm : reg2;
+    assign op2 = (op2_src == 2'h0) ? reg2 :
+                                     (op2_src == 2'h1) ? imm :
+                                                         (op2_src == 2'h2) ? csr_data :
+                                                                             32'b0;
     // Adder to compute PC_ID + Imm - 4
     assign jal_target = PC_ID + op2 - 4;
     // MUX for ALU op1
@@ -162,6 +174,16 @@ module RV32ICore(
         .reg2(reg2)
     );
 
+    CSR CSR1(
+        .clk(CPU_CLK),
+        .rst(CPU_RST),
+        .write_en(csr_write_en_WB),
+        .read_en(csr_read_en),
+        .addr(inst_ID[31:20]),
+        .wb_addr(csr_dest_WB),
+        .wb_data(csr_wb),
+        .csr_data(csr_data)
+    );
 
     ControllerDecoder ControllerDecoder1(
         .inst(inst_ID),
@@ -178,7 +200,10 @@ module RV32ICore(
         .cache_write_en(cache_write_en_ID),
         .alu_src1(alu_src1_ID),
         .alu_src2(alu_src2_ID),
-        .imm_type(imm_type)
+        .imm_type(imm_type),
+        .csr_read_en(csr_read_en),
+        .csr_write_en(csr_write_en_ID),
+        .op1_src(op1_src)
     );
 
     ImmExtend ImmExtend1(
@@ -208,7 +233,7 @@ module RV32ICore(
         .clk(CPU_CLK),
         .bubbleE(bubbleE),
         .flushE(flushE),
-        .reg1(reg1),
+        .reg1(op1),
         .reg1_EX(reg1_EX)
     );
 
@@ -228,6 +253,14 @@ module RV32ICore(
         .reg2_EX(reg2_EX)
     );
 
+    CSR_EX CSR_EX1(
+        .clk(CPU_CLK),
+        .bubbleE(bubbleE),
+        .flushE(flushE),
+        .csr_data(csr_data),
+        .csr_data_EX(csr_data_EX)
+    );
+
     Addr_EX Addr_EX1(
         .clk(CPU_CLK),
         .bubbleE(bubbleE),
@@ -235,9 +268,11 @@ module RV32ICore(
         .reg1_src_ID(inst_ID[19:15]),
         .reg2_src_ID(inst_ID[24:20]),
         .reg_dest_ID(inst_ID[11:7]),
+        .csr_dest_ID(inst_ID[31:20]),
         .reg1_src_EX(reg1_src_EX),
         .reg2_src_EX(reg2_src_EX),
-        .reg_dest_EX(reg_dest_EX)
+        .reg_dest_EX(reg_dest_EX),
+        .csr_dest_EX(csr_dest_EX)
     );
 
 
@@ -254,6 +289,7 @@ module RV32ICore(
         .load_type_ID(load_type_ID),
         .src_reg_en_ID(src_reg_en_ID),
         .reg_write_en_ID(reg_write_en_ID),
+        .csr_write_en_ID(csr_write_en_ID),
         .cache_write_en_ID(cache_write_en_ID),
         .alu_src1_ID(alu_src1_ID),
         .alu_src2_ID(alu_src2_ID),
@@ -265,6 +301,7 @@ module RV32ICore(
         .load_type_EX(load_type_EX),
         .src_reg_en_EX(src_reg_en_EX),
         .reg_write_en_EX(reg_write_en_EX),
+        .csr_write_en_EX(csr_write_en_EX),
         .cache_write_en_EX(cache_write_en_EX),
         .alu_src1_EX(alu_src1_EX),
         .alu_src2_EX(alu_src2_EX)
@@ -306,12 +343,22 @@ module RV32ICore(
         .reg2_MEM(reg2_MEM)
     );
 
+    CSR_MEM CSR_MEM1(
+        .clk(CPU_CLK),
+        .bubbleM(bubbleM),
+        .flushM(flushM),
+        .csr_data_EX(csr_data_EX),
+        .csr_data_MEM(csr_data_MEM)
+    );
+
     Addr_MEM Addr_MEM1(
         .clk(CPU_CLK),
         .bubbleM(bubbleM),
         .flushM(flushM),
         .reg_dest_EX(reg_dest_EX),
-        .reg_dest_MEM(reg_dest_MEM)
+        .csr_dest_EX(csr_dest_EX),
+        .reg_dest_MEM(reg_dest_MEM),
+        .csr_dest_MEM(csr_dest_MEM)
     );
 
 
@@ -323,10 +370,12 @@ module RV32ICore(
         .wb_select_EX(wb_select_EX),
         .load_type_EX(load_type_EX),
         .reg_write_en_EX(reg_write_en_EX),
+        .csr_write_en_EX(csr_write_en_EX),
         .cache_write_en_EX(cache_write_en_EX),
         .wb_select_MEM(wb_select_MEM),
         .load_type_MEM(load_type_MEM),
         .reg_write_en_MEM(reg_write_en_MEM),
+        .csr_write_en_MEM(csr_write_en_MEM),
         .cache_write_en_MEM(cache_write_en_MEM)
     );
 
@@ -346,6 +395,7 @@ module RV32ICore(
         .write_en(cache_write_en_MEM),
         .debug_write_en(CPU_Debug_DataCache_WE2),
         .addr(result_MEM),
+        .csr_data(csr_data_MEM),
         .debug_addr(CPU_Debug_DataCache_A2),
         .in_data(reg2_MEM),
         .debug_in_data(CPU_Debug_DataCache_WD2),
@@ -354,12 +404,22 @@ module RV32ICore(
     );
 
 
+    CSR_WB CSR_WB1(
+        .clk(CPU_CLK),
+        .bubbleW(bubbleW),
+        .flushW(flushW),
+        .csr_wb_MEM(result_MEM),
+        .csr_wb_WB(csr_wb)
+    );
+
     Addr_WB Addr_WB1(
         .clk(CPU_CLK),
         .bubbleW(bubbleW),
         .flushW(flushW),
         .reg_dest_MEM(reg_dest_MEM),
-        .reg_dest_WB(reg_dest_WB)
+        .csr_dest_MEM(csr_dest_MEM),
+        .reg_dest_WB(reg_dest_WB),
+        .csr_dest_WB(csr_dest_WB)
     );
 
     Ctrl_WB Ctrl_WB1(
@@ -367,7 +427,9 @@ module RV32ICore(
         .bubbleW(bubbleW),
         .flushW(flushW),
         .reg_write_en_MEM(reg_write_en_MEM),
-        .reg_write_en_WB(reg_write_en_WB)
+        .csr_write_en_MEM(csr_write_en_MEM),
+        .reg_write_en_WB(reg_write_en_WB),
+        .csr_write_en_WB(csr_write_en_WB)
     );
 
 

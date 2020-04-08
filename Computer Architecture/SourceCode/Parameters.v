@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company: USTC ESLAB
 // Engineer: Huang Yifan (hyf15@mail.ustc.edu.cn)
-// 
+//           John He (hechunwang2000327@hotmail.com)
 // Design Name: RV32I Core
 // Module Name: Parameters
 // Tool Versions: Vivado 2017.4.1
@@ -13,7 +13,7 @@
 // 功能说明
     // 为了代码可读性，定义了常量值
 // 实验要求  
-    // 无需修改
+    // 添加必要常量
 
 `ifndef CONST_VALUES
 `define CONST_VALUES
@@ -29,6 +29,7 @@
     `define SLT  4'd8
     `define SLTU  4'd9
     `define LUI  4'd10
+    `define CSRRC 4'd11
     `define NOOP 4'd14
     `define ERROR 4'd15
 // br_type[2:0]
@@ -64,6 +65,7 @@
     `define opcode_BRANCH   7'b1100011
     `define opcode_LOAD     7'b0000011
     `define opcode_STORE    7'b0100011
+    `define opcode_SYSTEM   7'b0001101
 // instruction func3
     `define func3_ADD   3'b000 //`func3_ADDI 
     `define func3_SLT   3'b010 //`func3_SLTI 
@@ -86,6 +88,13 @@
     `define func3_WORD 3'b010
     `define func3_BU   3'b100
     `define func3_HU   3'b101
+
+    `define func3_CSRRW  3'b001
+    `define func3_CSRRS  3'b010
+    `define func3_CSRRC  3'b011
+    `define func3_CSRRWI 3'b101
+    `define func3_CSRRSI 3'b110
+    `define func3_CSRRCI 3'b111
 //instruction func7
     `define func7_ADD   7'b0000000
     `define func7_SUB   7'b0100000
