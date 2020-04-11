@@ -9,6 +9,7 @@
 int bof(char *str)
 {
     char buffer[24];
+    printf("%p\n", buffer);
 
     /* The following statement has a buffer overflow problem */ 
     strcpy(buffer, str);
