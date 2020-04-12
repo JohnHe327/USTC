@@ -149,3 +149,15 @@ You should see an error message here:
 
     *** stack smashing detected ***: ./stack terminated
     Aborted (core dumped)
+
+# Task 4: Non-executable Stack
+
+Now try to complie `stack.c` with `noexecstack` option, and repeat the attcak. See what will happen:
+
+    sudo gcc -o stack -z noexecstack -fno-stack-protector stack.c
+    sudo chmod 4755 stack
+    ./stack
+
+You should see an error message here:
+
+    Segmentation fault (core dumped)
