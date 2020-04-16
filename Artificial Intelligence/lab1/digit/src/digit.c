@@ -1,0 +1,172 @@
+// 数码问题
+// 在一个 5*5 的网格中，23 个小方块写有数字“1-21”，剩下的两个空白方块代表空位
+// 特别地，有三个写有“7”的方块被绑定在一起，组成了一个“7”型块
+// 与空位上、下、左、右相邻的方块可以移动到空位中，记为一次行动
+// 现给定初始状态与目标状态，要求获得从初始状态到目标状态的合法移动序列
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#define ZERO1 22
+#define ZERO2 23
+
+typedef struct Coordinate
+{
+    int i, j;
+} COORDINATE;
+typedef struct Actions
+{
+    int num;
+    char act;
+} ACTIONS;
+typedef struct Node
+{
+    int state[5][5];
+    int f, g, h;
+    ACTIONS *act;
+    struct Node *parent;
+} NODE;
+
+int input[5][5];
+int goal[5][5];
+
+void readInput(FILE *fp, int arr[5][5])
+{
+    for (int i = 0; i < 5; i++)
+        for (int j = 0; j < 5; j++)
+            if (j == 4)
+                fscanf(fp, "%d", &arr[i][j]);
+            else
+                fscanf(fp, "%d,", &arr[i][j]);
+    return;
+}
+
+COORDINATE getCoordinate(int const num, int const arr[5][5])
+// 1 <= num <= 21 or
+// num == 22: first zero
+// num == 23: second zero
+{
+    COORDINATE cor = {-1, -1};
+    if (num <= 0 || num >= 24) // illegal
+        return cor;
+    else if (num <= 21) // default case
+    {
+        for (cor.i = 0; cor.i < 5; cor.i++)
+            for (cor.j = 0; cor.j < 5; cor.j++)
+                if (arr[cor.i][cor.j] == num)
+                    return cor;
+    }
+    else // find zero
+    {
+        int flag = ZERO1;
+        for (cor.i = 0; cor.i < 5; cor.i++)
+            for (cor.j = 0; cor.j < 5; cor.j++)
+                if (arr[cor.i][cor.j] == num)
+                {
+                    if (flag == num)
+                        return cor;
+                    else
+                        flag++;
+                }
+    }
+    return cor;
+}
+
+int hamiltonDist(COORDINATE const a, COORDINATE const b)
+{
+    return (abs(a.i - b.i) + abs(a.j - b.j));
+}
+
+int getHeuristic(int const src[5][5], int const dest[5][5])
+{
+    int sum = 0;
+    bool flag = false;
+    for (int i = 0; i < 5; i++)
+        for (int j = 0; j < 5; j++)
+        {
+            COORDINATE cor = {i, j};
+            if (src[i][j] == 0)
+                continue; // do nothing
+            else if (src[i][j] == 7)
+            {
+                if (flag == false)
+                {
+                    sum += hamiltonDist(cor, getCoordinate(src[i][j], dest));
+                    flag = true;
+                }
+            }
+            else
+            {
+                sum += hamiltonDist(cor, getCoordinate(src[i][j], dest));
+            }
+        }
+    return sum;
+}
+
+int main()
+{
+    printf("input file should be placed in '../input/1.txt' and so on, up to 9 files\n");
+    printf("goal should be placed in '../input/goal.txt'\n");
+    printf("output file will be placed in '../output/' with the same input file name\n");
+    printf("press enter to continue\n");
+    getchar();
+
+    int i = 1;
+    while (i)
+    {
+        // initialize
+        memset(input, 0, sizeof(input));
+        memset(goal, 0, sizeof(goal));
+
+        // open file
+        char inputFname[32] = "../input/1.txt";
+        char inputGoal[32] = "../input/goal.txt";
+        char outputFname[32] = "../output/1.txt";
+        inputFname[9] = (char)i + '0';
+        outputFname[10] = (char)i + '0';
+
+        FILE *fpIn, *fpGoal, *fpOut;
+        fpIn = fopen(inputFname, "r");
+        if (fpIn == NULL)
+        {
+            printf("cannot open %s!\n", inputFname);
+            break;
+        }
+        fpGoal = fopen(inputGoal, "r");
+        if (fpGoal == NULL)
+        {
+            printf("cannot open %s!\n", inputGoal);
+            break;
+        }
+        fpOut = fopen(outputFname, "w");
+        if (fpOut == NULL)
+        {
+            printf("cannot create %s!\n", outputFname);
+            break;
+        }
+        readInput(fpIn, input);
+        readInput(fpGoal, goal);
+
+        // create root node
+        NODE *root = (NODE *)malloc(sizeof(NODE));
+        root->act = NULL;
+        root->parent = NULL;
+        memcpy(root->state, input, sizeof(input));
+        root->g = 0;
+        root->h = getHeuristic(input, goal);
+        root->f = root->g + root->h;
+
+        // move seven & six to goal
+        // moveSeven();
+        // block
+        // A*
+
+        // close file
+        fclose(fpIn);
+        fclose(fpOut);
+        fclose(fpGoal);
+        i++;
+    }
+    return 0;
+}
