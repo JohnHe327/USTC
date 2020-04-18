@@ -33,7 +33,7 @@ typedef struct Fringe
     struct Fringe *pnext;
 } FRINGE;
 FRINGE *head, *tail;
-FRINGE *checkedFringe;
+FRINGE *closedFringe;
 
 int input[5][5];
 int goal[5][5];
@@ -112,7 +112,6 @@ int getHeuristic(int const src[5][5], int const dest[5][5])
 
 void appendFringe(NODE *n)
 {
-
     FRINGE *pnew = (FRINGE *)malloc(sizeof(FRINGE));
     pnew->pnext = NULL;
     pnew->pNode = n;
@@ -132,7 +131,7 @@ NODE *fringePopMin()
 
     FRINGE *pre = head; // pointer before min
     FRINGE *min = head->pnext;
-    FRINGE *p1 = min; // pointer before compare
+    FRINGE *p1 = min;       // pointer before compare
     FRINGE *p2 = p1->pnext; // compare with min
 
     // find min
@@ -152,21 +151,21 @@ NODE *fringePopMin()
         tail = pre;
     pre->pnext = min->pnext;
     NODE *n = min->pNode;
-    min->pnext = checkedFringe->pnext;
-    checkedFringe->pnext = min;
+    min->pnext = closedFringe->pnext;
+    closedFringe->pnext = min;
     return n;
 }
 
-bool notExplored(int arr[5][5])
+int exploredIn(int arr[5][5])
 {
     FRINGE *p = NULL;
-    for (p = checkedFringe->pnext; p != NULL; p = p->pnext)
+    for (p = closedFringe->pnext; p != NULL; p = p->pnext)
         if (memcmp(arr, p->pNode->state, sizeof(input)) == 0)
-            return false;
+            return -1;
     for (p = head->pnext; p != NULL; p = p->pnext)
         if (memcmp(arr, p->pNode->state, sizeof(input)) == 0)
-            return false;
-    return true;
+            return 1;
+    return 0;
 }
 
 void expandNode(NODE *src, COORDINATE z1)
@@ -177,8 +176,9 @@ void expandNode(NODE *src, COORDINATE z1)
         memcpy(pnew, src, sizeof(NODE));
         pnew->state[z1.i][z1.j] = pnew->state[z1.i - 1][z1.j];
         pnew->state[z1.i - 1][z1.j] = 0;
-        if (notExplored(pnew->state)) // complete pnew & add to fringe
+        switch (exploredIn(pnew->state))
         {
+        case 0: // complete pnew & add to fringe
             pnew->parent = src;
             pnew->g++;
             pnew->h = getHeuristic(pnew->state, goal);
@@ -187,6 +187,9 @@ void expandNode(NODE *src, COORDINATE z1)
             pnew->act->act = 'd';
             pnew->act->num = pnew->state[z1.i][z1.j];
             appendFringe(pnew);
+            break;
+        default:
+            free(pnew);
         }
     }
     if (z1.i != 4 && src->state[z1.i + 1][z1.j] != 0 && src->state[z1.i + 1][z1.j] != 7) // z1 down
@@ -195,8 +198,9 @@ void expandNode(NODE *src, COORDINATE z1)
         memcpy(pnew, src, sizeof(NODE));
         pnew->state[z1.i][z1.j] = pnew->state[z1.i + 1][z1.j];
         pnew->state[z1.i + 1][z1.j] = 0;
-        if (notExplored(pnew->state)) // complete pnew & add to fringe
+        switch (exploredIn(pnew->state))
         {
+        case 0: // complete pnew & add to fringe
             pnew->parent = src;
             pnew->g++;
             pnew->h = getHeuristic(pnew->state, goal);
@@ -205,6 +209,9 @@ void expandNode(NODE *src, COORDINATE z1)
             pnew->act->act = 'u';
             pnew->act->num = pnew->state[z1.i][z1.j];
             appendFringe(pnew);
+            break;
+        default:
+            free(pnew);
         }
     }
     if (z1.j != 0 && src->state[z1.i][z1.j - 1] != 0 && src->state[z1.i][z1.j - 1] != 7) // z1 left
@@ -213,8 +220,9 @@ void expandNode(NODE *src, COORDINATE z1)
         memcpy(pnew, src, sizeof(NODE));
         pnew->state[z1.i][z1.j] = pnew->state[z1.i][z1.j - 1];
         pnew->state[z1.i][z1.j - 1] = 0;
-        if (notExplored(pnew->state)) // complete pnew & add to fringe
+        switch (exploredIn(pnew->state))
         {
+        case 0: // complete pnew & add to fringe
             pnew->parent = src;
             pnew->g++;
             pnew->h = getHeuristic(pnew->state, goal);
@@ -223,6 +231,9 @@ void expandNode(NODE *src, COORDINATE z1)
             pnew->act->act = 'r';
             pnew->act->num = pnew->state[z1.i][z1.j];
             appendFringe(pnew);
+            break;
+        default:
+            free(pnew);
         }
     }
     if (z1.j != 4 && src->state[z1.i][z1.j + 1] != 0 && src->state[z1.i][z1.j + 1] != 7) // z1 right
@@ -231,8 +242,9 @@ void expandNode(NODE *src, COORDINATE z1)
         memcpy(pnew, src, sizeof(NODE));
         pnew->state[z1.i][z1.j] = pnew->state[z1.i][z1.j + 1];
         pnew->state[z1.i][z1.j + 1] = 0;
-        if (notExplored(pnew->state)) // complete pnew & add to fringe
+        switch (exploredIn(pnew->state))
         {
+        case 0: // complete pnew & add to fringe
             pnew->parent = src;
             pnew->g++;
             pnew->h = getHeuristic(pnew->state, goal);
@@ -241,6 +253,9 @@ void expandNode(NODE *src, COORDINATE z1)
             pnew->act->act = 'l';
             pnew->act->num = pnew->state[z1.i][z1.j];
             appendFringe(pnew);
+            break;
+        default:
+            free(pnew);
         }
     }
 }
@@ -255,8 +270,9 @@ void expandNode7(NODE *src, COORDINATE z1, COORDINATE z2)
         pnew->state[z2.i][z2.j] = 7;
         pnew->state[z1.i - 1][z1.j] = 0;
         pnew->state[z2.i - 2][z2.j] = 0;
-        if (notExplored(pnew->state)) // complete pnew & add to fringe
+        switch (exploredIn(pnew->state))
         {
+        case 0: // complete pnew & add to fringe
             pnew->parent = src;
             pnew->g++;
             pnew->h = getHeuristic(pnew->state, goal);
@@ -265,6 +281,9 @@ void expandNode7(NODE *src, COORDINATE z1, COORDINATE z2)
             pnew->act->act = 'd';
             pnew->act->num = 7;
             appendFringe(pnew);
+            break;
+        default:
+            free(pnew);
         }
     }
     if (z1.i <= 2 && z2.i <= 2 && src->state[z1.i + 1][z1.j] == 7 && src->state[z2.i + 1][z2.j] == 7)
@@ -275,8 +294,9 @@ void expandNode7(NODE *src, COORDINATE z1, COORDINATE z2)
         pnew->state[z2.i][z2.j] = 7;
         pnew->state[z1.i + 1][z1.j] = 0;
         pnew->state[z2.i + 2][z2.j] = 0;
-        if (notExplored(pnew->state)) // complete pnew & add to fringe
+        switch (exploredIn(pnew->state))
         {
+        case 0: // complete pnew & add to fringe
             pnew->parent = src;
             pnew->g++;
             pnew->h = getHeuristic(pnew->state, goal);
@@ -285,6 +305,9 @@ void expandNode7(NODE *src, COORDINATE z1, COORDINATE z2)
             pnew->act->act = 'u';
             pnew->act->num = 7;
             appendFringe(pnew);
+            break;
+        default:
+            free(pnew);
         }
     }
     if (z1.j >= 2 && z2.j >= 2 && src->state[z1.i][z1.j - 1] == 7 && src->state[z2.i][z2.j - 1] == 7)
@@ -295,8 +318,9 @@ void expandNode7(NODE *src, COORDINATE z1, COORDINATE z2)
         pnew->state[z2.i][z2.j] = 7;
         pnew->state[z1.i][z1.j - 2] = 0;
         pnew->state[z2.i][z2.j - 1] = 0;
-        if (notExplored(pnew->state)) // complete pnew & add to fringe
+        switch (exploredIn(pnew->state))
         {
+        case 0: // complete pnew & add to fringe
             pnew->parent = src;
             pnew->g++;
             pnew->h = getHeuristic(pnew->state, goal);
@@ -305,6 +329,9 @@ void expandNode7(NODE *src, COORDINATE z1, COORDINATE z2)
             pnew->act->act = 'r';
             pnew->act->num = 7;
             appendFringe(pnew);
+            break;
+        default:
+            free(pnew);
         }
     }
     if (z1.j <= 2 && z2.j <= 3 && src->state[z1.i][z1.j + 1] == 7 && src->state[z2.i][z2.j + 1] == 7)
@@ -315,8 +342,9 @@ void expandNode7(NODE *src, COORDINATE z1, COORDINATE z2)
         pnew->state[z2.i][z2.j] = 7;
         pnew->state[z1.i][z1.j + 2] = 0;
         pnew->state[z2.i][z2.j + 1] = 0;
-        if (notExplored(pnew->state)) // complete pnew & add to fringe
+        switch (exploredIn(pnew->state))
         {
+        case 0: // complete pnew & add to fringe
             pnew->parent = src;
             pnew->g++;
             pnew->h = getHeuristic(pnew->state, goal);
@@ -325,6 +353,9 @@ void expandNode7(NODE *src, COORDINATE z1, COORDINATE z2)
             pnew->act->act = 'l';
             pnew->act->num = 7;
             appendFringe(pnew);
+            break;
+        default:
+            free(pnew);
         }
     }
 }
@@ -347,10 +378,10 @@ NODE *AstarSolve()
     return min;
 }
 
-void printAns(FILE *fp,NODE *n)
+void printAnswer(FILE *fp, NODE *n)
 {
     if (n != NULL)
-        printAns(fp, n->parent);
+        printAnswer(fp, n->parent);
     if (n != NULL && n->act != NULL)
         fprintf(fp, "(%d,%c);\n", n->act->num, n->act->act);
 }
@@ -414,14 +445,34 @@ int main()
         head->pNode = NULL;
         tail = head;
         appendFringe(root);
-        checkedFringe = (FRINGE *)malloc(sizeof(FRINGE));
-        checkedFringe->pnext = NULL;
-        checkedFringe->pNode = NULL;
+        closedFringe = (FRINGE *)malloc(sizeof(FRINGE));
+        closedFringe->pnext = NULL;
+        closedFringe->pNode = NULL;
 
         // A*
-        NODE *terminate = AstarSolve();
-        printf("finish %d\n", i);
-        printAns(fpOut, terminate);
+        NODE *terminate = NULL;
+        terminate = AstarSolve();
+        printf("finish task %d\n", i);
+        printAnswer(fpOut, terminate);
+
+        // clear malloc memory
+        FRINGE *p;
+        for (p = head->pnext; p != NULL; p = head->pnext)
+        {
+            head->pnext = p->pnext;
+            free(p->pNode->act);
+            free(p->pNode);
+            free(p);
+        }
+        free(head);
+        for (p = closedFringe->pnext; p != NULL; p = closedFringe->pnext)
+        {
+            closedFringe->pnext = p->pnext;
+            free(p->pNode->act);
+            free(p->pNode);
+            free(p);
+        }
+        free(closedFringe);
 
         // close file
         fclose(fpIn);
