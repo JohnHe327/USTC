@@ -69,7 +69,7 @@ module Ctrl_EX(
     output reg load_npc_EX,
     output reg [1:0] wb_select_EX,
     output reg [2:0] load_type_EX,
-    output reg [2:0] src_reg_en_EX,
+    output reg [1:0] src_reg_en_EX,
     output reg reg_write_en_EX,
     output reg csr_write_en_EX,
     output reg [3:0] cache_write_en_EX,
@@ -84,11 +84,11 @@ module Ctrl_EX(
         br_type_EX = 3'h0;
         load_npc_EX = 0;
         wb_select_EX = 2'h0;
-        load_type_EX = 2'h0;
+        load_type_EX = 3'h0;
         src_reg_en_EX = 2'h0;
         reg_write_en_EX = 0;
         csr_write_en_EX = 0;
-        cache_write_en_EX = 3'h0;
+        cache_write_en_EX = 4'h0;
         alu_src1_EX = 0;
         alu_src2_EX = 2'b0;
     end
@@ -103,11 +103,11 @@ module Ctrl_EX(
                 br_type_EX <= 3'h0;
                 load_npc_EX <= 0;
                 wb_select_EX <= 2'h0;
-                load_type_EX <= 2'h0;
+                load_type_EX <= 3'h0;
                 src_reg_en_EX <= 2'h0;
                 reg_write_en_EX <= 0;
                 csr_write_en_EX <= 0;
-                cache_write_en_EX <= 3'h0;
+                cache_write_en_EX <= 4'h0;
                 alu_src1_EX <= 0;
                 alu_src2_EX <= 2'b0;
             end
