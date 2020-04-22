@@ -32,7 +32,7 @@ typedef struct Fringe
     NODE *pNode;
     struct Fringe *pnext;
 } FRINGE;
-FRINGE *head, *tail;
+FRINGE *head;
 FRINGE *closedFringe;
 
 int input[5][5];
@@ -113,15 +113,14 @@ int getHeuristic(int const src[5][5], int const dest[5][5])
 void appendFringe(NODE *n)
 {
     FRINGE *pnew = (FRINGE *)malloc(sizeof(FRINGE));
-    pnew->pnext = NULL;
+    pnew->pnext = head->pnext;
     pnew->pNode = n;
-    tail->pnext = pnew;
-    tail = pnew;
+    head->pnext = pnew;
 }
 
 bool fringeEmpty()
 {
-    return (head == tail);
+    return (head->pnext == NULL);
 }
 
 NODE *fringePopMin()
@@ -147,8 +146,6 @@ NODE *fringePopMin()
     }
 
     // pop min
-    if (min == tail)
-        tail = pre;
     pre->pnext = min->pnext;
     NODE *n = min->pNode;
     min->pnext = closedFringe->pnext;
@@ -443,7 +440,6 @@ int main()
         head = (FRINGE *)malloc(sizeof(FRINGE));
         head->pnext = NULL;
         head->pNode = NULL;
-        tail = head;
         appendFringe(root);
         closedFringe = (FRINGE *)malloc(sizeof(FRINGE));
         closedFringe->pnext = NULL;
