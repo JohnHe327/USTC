@@ -14,6 +14,7 @@
     //  识别流水线中的数据冲突，控制数据转发，和flush、bubble信号
 // 输入
     // rst               CPU的rst信号
+    // miss              Cache读写miss信号
     // reg1_srcD         ID阶段的源reg1地址
     // reg2_srcD         ID阶段的源reg2地址
     // reg1_srcE         EX阶段的源reg1地址
@@ -50,6 +51,7 @@
 
 module HarzardUnit(
     input wire rst,
+    input wire miss,
     input wire [4:0] reg1_srcD, reg2_srcD, reg1_srcE, reg2_srcE, reg_dstE, reg_dstM, reg_dstW,
     input wire br, jalr, jal,
     input wire [1:0] src_reg_en,
@@ -104,9 +106,10 @@ module HarzardUnit(
             
             // bubbleF
             // bubbleD
-            if (wb_select == 2'h1 && reg_dstE != 5'b0
+            if (miss
+            || (wb_select == 2'h1 && reg_dstE != 5'b0
                     && (reg1_srcD != 5'b0 && reg1_srcD == reg_dstE
-                        || reg2_srcD != 5'b0 && reg2_srcD == reg_dstE)) begin
+                        || reg2_srcD != 5'b0 && reg2_srcD == reg_dstE))) begin
                 bubbleF <= 1;
                 bubbleD <= 1;
             end else begin
@@ -115,11 +118,11 @@ module HarzardUnit(
             end
             
             // bubbleE
-            bubbleE <= 0;
+            bubbleE <= miss;
             // bubbleM
-            bubbleM <= 0;
+            bubbleM <= miss;
             // bubbleW
-            bubbleW <= 0;
+            bubbleW <= miss;
 
             // op1_sel
             if (src_reg_en[1] && alu_src1 == 0) begin // reg1
