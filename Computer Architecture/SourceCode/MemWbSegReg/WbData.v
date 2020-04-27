@@ -17,6 +17,7 @@
     // 为了数据同步，Data Extension和Data Cache集成在其中
 // 输入
     // clk               时钟信号
+    // rst               CPU的rst信号
     // wb_select         选择写回寄存器的数据：如果为0，写回ALU计算结果，如果为1，写回Memory读取的内容
     // load_type         load指令类型
     // write_en          Data Cache写使能
@@ -30,11 +31,13 @@
 // 输出
     // debug_out_data    Data Cache的debug读出数据
     // data_WB           传给下一流水段的写回寄存器内容
+    // miss              Cache的miss信号
 // 实验要求  
-    // 添加CSR
+    // 添加CSR，将DataCache换为Cache
 
 module WB_Data_WB(
-    input wire clk, bubbleW, flushW,
+    input wire clk, rst, bubbleW, flushW,
+    output wire miss,
     input wire [1:0] wb_select,
     input wire [2:0] load_type,
     input  [3:0] write_en, debug_write_en,
@@ -50,8 +53,7 @@ module WB_Data_WB(
     wire [31:0] data_WB_raw;
 
 
-
-    DataCache DataCache1(
+    /*DataCache DataCache1(
         .clk(clk),
         .write_en(write_en << addr[1:0]),
         .debug_write_en(debug_write_en),
@@ -61,14 +63,42 @@ module WB_Data_WB(
         .debug_in_data(debug_in_data),
         .out_data(data_raw),
         .debug_out_data(debug_out_data)
+    );*/
+
+    cache #(
+        .LINE_ADDR_LEN  ( 3             ),
+        .SET_ADDR_LEN   ( 2             ),
+        .TAG_ADDR_LEN   ( 12            ),
+        .WAY_CNT        ( 3             )
+    ) cache1 (
+        .clk            ( clk           ),
+        .rst            ( rst           ),
+        .miss           ( miss          ),
+        .addr           ( addr          ),
+        .rd_req         ( |load_type    ),
+        .rd_data        ( data_raw      ),
+        .wr_req         ( |write_en     ),
+        .wr_data        ( in_data       )
     );
 
+    reg [31:0] hit_cnt, miss_cnt; // 命中/缺失计数
 
+    always@(posedge clk or posedge rst) begin
+        if (rst) begin
+            hit_cnt <= 0;
+        end else begin
+            if (|load_type && ~miss)
+                hit_cnt <= hit_cnt + 1;
+        end
+    end
 
-
-
-
-
+    always@(posedge miss or posedge rst) begin
+        if (rst) begin
+            miss_cnt <= 0;
+        end else begin
+            miss_cnt <= miss_cnt + 1;
+        end
+    end
 
 
     // Add flush and bubble support
@@ -108,10 +138,4 @@ module WB_Data_WB(
                                                                          ((wb_select_old == 2'h1) ? data_WB_raw :
                                                                                                      csr_data_old)));
 
-
-
-
-
-
-    
 endmodule
