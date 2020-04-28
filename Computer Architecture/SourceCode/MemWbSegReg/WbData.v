@@ -87,7 +87,7 @@ module WB_Data_WB(
         if (rst) begin
             hit_cnt <= 0;
         end else begin
-            if (|load_type && ~miss)
+            if ((|load_type || |write_en) && ~miss)
                 hit_cnt <= hit_cnt + 1;
         end
     end
