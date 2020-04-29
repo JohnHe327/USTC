@@ -57,7 +57,28 @@ always @ (*) begin              // 判断 输入的address 是否在 cache 中�
             cache_hit[i] = 1'b0;
 end
 
-int swapi;
+integer swapi;
+always@(*) begin
+    if(|cache_hit) begin
+        for (integer i = 0; i <= WAY_CNT; i++)
+            if (cache_hit[i])
+                swapi = i;
+    end else begin
+        integer i, j, m, n;
+        for (i = 0; i <= WAY_CNT; i++)                      // find !valid
+            if (valid[set_addr][i] == 0)
+                break;
+        for (j = 0; j <= WAY_CNT; j++)                      // find !dirty
+            if (valid[set_addr][j] && !dirty[set_addr][j])
+                break;
+        for (m = 0, n = 1; n <= WAY_CNT; n++)               // find max usecnt
+            if (usecnt[set_addr][n] > usecnt[set_addr][m])
+                m = n;
+        swapi = (i <= WAY_CNT) ? i :
+                                ((j <= WAY_CNT) ? j : m);
+    end
+end
+
 always @ (posedge clk or posedge rst) begin     // ?? cache ???
     if(rst) begin
         cache_stat <= IDLE;
@@ -72,16 +93,12 @@ always @ (posedge clk or posedge rst) begin     // ?? cache ???
         mem_wr_addr <= 0;
         {mem_rd_tag_addr, mem_rd_set_addr} <= 0;
         rd_data <= 0;
-        swapi = 0;
     end else begin
         case(cache_stat)
         IDLE:       begin
-                        for (integer i = 0; i <= WAY_CNT; i++) usecnt[set_addr][i]++; // 时钟+1
+                        for (integer i = 0; i <= WAY_CNT; i++) usecnt[set_addr][i] <= usecnt[set_addr][i] + 1; // 时钟+1
                         if(|cache_hit) begin
-                            swapi = 0;
-                            while (swapi <= WAY_CNT && cache_hit[swapi] == 0)
-                                swapi++;
-                            usecnt[set_addr][swapi] = 0; // >LRU
+                            usecnt[set_addr][swapi] <= 0; // >LRU
                             if(rd_req) begin    // 如果cache命中，并且是读请求，
                                 rd_data <= cache_mem[set_addr][swapi][line_addr];   //则直接从cache中取出要读的数据
                             end else if(wr_req) begin // 如果cache命中，并且是写请求，
@@ -89,15 +106,6 @@ always @ (posedge clk or posedge rst) begin     // ?? cache ???
                                 dirty[set_addr][swapi] <= 1'b1;                     // 写数据的同时置脏位
                             end 
                         end else begin
-                            swapi = 0;
-                            while (swapi <= WAY_CNT && valid[set_addr][swapi] && dirty[set_addr][swapi])
-                                swapi++; // 寻找 invalid 或 valid但notdirty 的line
-                            if (swapi > WAY_CNT) begin // 寻找替换项
-                                swapi = WAY_CNT;
-                                for (int j = 0; j < WAY_CNT; j++)
-                                    if (usecnt[set_addr][j] > usecnt[set_addr][swapi])
-                                        swapi = j;
-                            end
                             if(wr_req | rd_req) begin   // 如果 cache 未命中，并且有读写请求，则需要进行换入
                                 if(valid[set_addr][swapi] & dirty[set_addr][swapi]) begin    // 如果 要换入的cache line 本来有效，且脏，则需要先将它换出
                                     cache_stat  <= SWAP_OUT;
