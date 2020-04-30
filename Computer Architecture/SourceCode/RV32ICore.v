@@ -68,6 +68,8 @@ module RV32ICore(
     wire op1_src;
     wire [31:0] op1;
 
+    wire miss;
+
     // MUX for op1 source
     assign op1 = op1_src ? reg1 : {27'b0, inst_ID[19:15]};
 
@@ -388,8 +390,10 @@ module RV32ICore(
 
     WB_Data_WB WB_Data_WB1(
         .clk(CPU_CLK),
+        .rst(CPU_RST),
         .bubbleW(bubbleW),
         .flushW(flushW),
+        .miss(miss),
         .wb_select(wb_select_MEM),
         .load_type(load_type_MEM),
         .write_en(cache_write_en_MEM),
@@ -444,6 +448,7 @@ module RV32ICore(
     // ---------------------------------------------
     HarzardUnit HarzardUnit1(
         .rst(CPU_RST),
+        .miss(miss),
         .reg1_srcD(inst_ID[19:15]),
         .reg2_srcD(inst_ID[24:20]),
         .reg1_srcE(reg1_src_EX),
