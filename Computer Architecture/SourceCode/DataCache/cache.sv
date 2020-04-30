@@ -1,6 +1,40 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: USTC ESLAB
+// Engineer: John He (hechunwang2000327@hotmail.com)
+// 
+// Design Name: RV32I Core
+// Module Name: cache
+// Tool Versions: Vivado 2017.4.1
+// Description: RV32I Data Cache
+// 
+//////////////////////////////////////////////////////////////////////////////////
 
+
+// 功能说明
+    // 同步读写 Cache
+    // 暂未实现独热码非整字读写功能
+// 输入
+    // clk               输入时钟
+    // rst               CPU的rst信号
+    // addr              读写地址
+    // rd_req            读请求
+    // wr_req            写请求
+    // wr_data           写入数据
+    // 
+    // REPLACE_POLICY    替换策略，0表示FIFO，1表示LRU
+    // LINE_ADDR_LEN     line内地址长度，决定了每个line具有2^n个word
+    // SET_ADDR_LEN      组地址长度，决定了一共有2^n个组
+    // TAG_ADDR_LEN      tag长度
+    // WAY_CNT           组相连度，决定了每组中有2^n路line
+// 输出
+    // miss              cache未命中信号
+    // rd_data           输出数据
+// 实验要求
+    // 修改为组相联cache，实现FIFO、LRU两种替换算法
 
 module cache #(
+    parameter  REPLACE_POLICY= 1, // 0表示FIFO，1表示LRU
     parameter  LINE_ADDR_LEN = 3, // line内地址长度，决定了每个line具有2^3个word
     parameter  SET_ADDR_LEN  = 3, // 组地址长度，决定了一共有2^3=8组
     parameter  TAG_ADDR_LEN  = 6, // tag长度
@@ -98,7 +132,7 @@ always @ (posedge clk or posedge rst) begin     // ?? cache ???
         IDLE:       begin
                         for (integer i = 0; i <= WAY_CNT; i++) usecnt[set_addr][i] <= usecnt[set_addr][i] + 1; // 时钟+1
                         if(|cache_hit) begin
-                            usecnt[set_addr][swapi] <= 0; // >LRU
+                            if (REPLACE_POLICY == 1) usecnt[set_addr][swapi] <= 0; // >LRU
                             if(rd_req) begin    // 如果cache命中，并且是读请求，
                                 rd_data <= cache_mem[set_addr][swapi][line_addr];   //则直接从cache中取出要读的数据
                             end else if(wr_req) begin // 如果cache命中，并且是写请求，

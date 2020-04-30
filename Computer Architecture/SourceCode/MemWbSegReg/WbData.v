@@ -66,6 +66,7 @@ module WB_Data_WB(
     );*/
 
     cache #(
+        .REPLACE_POLICY ( 1             ),
         .LINE_ADDR_LEN  ( 3             ),
         .SET_ADDR_LEN   ( 2             ),
         .TAG_ADDR_LEN   ( 12            ),
