@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'holiday.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'USTE': 'root',
+        'USER': 'root',
         'PASSWORD': 'root-password',
         'NAME': 'holiday',
         'HOST': '172.17.0.2',
