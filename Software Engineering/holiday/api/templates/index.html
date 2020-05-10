@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Date</title>
+    </head>
+    <body>
+        <div>
+            {% if request.session.is_login %}
+                <span>Hi, {{ request.session.user_name }}</span>
+                <form method="POST">
+                    {% csrf_token %}
+                    <label for="date">Choose Date:</label>
+                    <div>
+                        <input type="date" name="date" id="date_info">
+                        <input type="submit", value="Check!">
+                    </div>
+                </form>
+                {% if result %}
+                    <div>{{ result }}</div>
+                {% else %}
+                    <div>Not a holiday!</div>
+                {% endif %}
+                <div><a href="{%  url 'logout' %}">logout</a></div>
+            {% else %}
+                <div><a href="{%  url 'login' %}">login</a></div>
+            {% endif %}
+        </div>
+    </body>
+</html>
+
