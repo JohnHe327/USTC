@@ -17,6 +17,11 @@
     // 添加BTB模块
 
 module RV32ICore #(
+    parameter  REPLACE_POLICY= 1, // Cache 替换策略，0表示FIFO，1表示LRU
+    parameter  LINE_ADDR_LEN = 3, // Cache line 地址长度
+    parameter  SET_ADDR_LEN  = 3, // Cache 组地址长度
+    parameter  TAG_ADDR_LEN  = 6, // Cache tag 长度
+    parameter  WAY_CNT       = 3, // Cache 组相连度
     parameter  BTB_EN        = 1, // BTB 使能
     parameter  BHT_EN        = 1, // BHT 使能
     parameter  BTB_LEN       = 3, // BTB 项地址长度
@@ -433,7 +438,13 @@ module RV32ICore #(
     // ---------------------------------------------
 
 
-    WB_Data_WB WB_Data_WB1(
+    WB_Data_WB #(
+        .REPLACE_POLICY ( REPLACE_POLICY),
+        .LINE_ADDR_LEN  ( LINE_ADDR_LEN ),
+        .SET_ADDR_LEN   ( SET_ADDR_LEN  ),
+        .TAG_ADDR_LEN   ( TAG_ADDR_LEN  ),
+        .WAY_CNT        ( WAY_CNT       )
+    ) WB_Data_WB1(
         .clk(CPU_CLK),
         .rst(CPU_RST),
         .bubbleW(bubbleW),

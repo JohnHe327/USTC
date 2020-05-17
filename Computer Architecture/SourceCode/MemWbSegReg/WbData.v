@@ -35,7 +35,13 @@
 // 实验要求  
     // 添加CSR，将DataCache换为Cache
 
-module WB_Data_WB(
+module WB_Data_WB #(
+    parameter  REPLACE_POLICY= 1, // Cache 替换策略，0表示FIFO，1表示LRU
+    parameter  LINE_ADDR_LEN = 3, // Cache line 地址长度
+    parameter  SET_ADDR_LEN  = 3, // Cache 组地址长度
+    parameter  TAG_ADDR_LEN  = 6, // Cache tag 长度
+    parameter  WAY_CNT       = 3  // Cache 组相连度
+)(
     input wire clk, rst, bubbleW, flushW,
     output wire miss,
     input wire [1:0] wb_select,
@@ -66,11 +72,11 @@ module WB_Data_WB(
     );*/
 
     cache #(
-        .REPLACE_POLICY ( 1             ),
-        .LINE_ADDR_LEN  ( 3             ),
-        .SET_ADDR_LEN   ( 2             ),
-        .TAG_ADDR_LEN   ( 12            ),
-        .WAY_CNT        ( 3             )
+        .REPLACE_POLICY ( REPLACE_POLICY),
+        .LINE_ADDR_LEN  ( LINE_ADDR_LEN ),
+        .SET_ADDR_LEN   ( SET_ADDR_LEN  ),
+        .TAG_ADDR_LEN   ( TAG_ADDR_LEN  ),
+        .WAY_CNT        ( WAY_CNT       )
     ) cache1 (
         .clk            ( clk           ),
         .rst            ( rst           ),
