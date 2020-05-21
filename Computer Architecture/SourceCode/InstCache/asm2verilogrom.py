@@ -76,8 +76,8 @@ endmodule
 RISCV_TOOLCHAIN_PATH = '.\\riscv32-gnu-toolchain-windows\\'
 
 if len(sys.argv) != 3:
-    print('    Usage:\n        python asm2verilog.py [INPUT ASM file] [OUTPUT Verilog file]')
-    print('    Example:\n        python asm2verilog.py QuickSort.S InstructionCache.v')
+    print('    Usage:\n        python asm2verilogrom.py [INPUT ASM file] [OUTPUT Verilog file]')
+    print('    Example:\n        python asm2verilogrom.py QuickSort.S InstructionCache.v')
 else:
     INPUT  = sys.argv[1]
     OUTPUT = sys.argv[2]

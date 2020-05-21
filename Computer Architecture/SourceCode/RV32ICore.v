@@ -14,8 +14,19 @@
     // RV32I Core的顶层模块
 //实验要求  
     // 添加CSR指令的数据通路和相应部件
+    // 添加BTB模块
 
-module RV32ICore(
+module RV32ICore #(
+    parameter  REPLACE_POLICY= 1, // Cache 替换策略，0表示FIFO，1表示LRU
+    parameter  LINE_ADDR_LEN = 3, // Cache line 地址长度
+    parameter  SET_ADDR_LEN  = 3, // Cache 组地址长度
+    parameter  TAG_ADDR_LEN  = 6, // Cache tag 长度
+    parameter  WAY_CNT       = 3, // Cache 组相连度
+    parameter  BTB_EN        = 1, // BTB 使能
+    parameter  BHT_EN        = 1, // BHT 使能
+    parameter  BTB_LEN       = 3, // BTB 项地址长度
+    parameter  BHT_LEN       = 12 // BHT 项地址长度
+)(
     input wire CPU_CLK,
     input wire CPU_RST,
     input wire [31:0] CPU_Debug_DataCache_A2,
@@ -70,6 +81,9 @@ module RV32ICore(
 
     wire miss;
 
+    wire [31:0] NPC_PRED, dealt_br_target;
+    wire PRED_TAKEN_IF, PRED_TAKEN_ID, PRED_TAKEN_EX;
+
     // MUX for op1 source
     assign op1 = op1_src ? reg1 : {27'b0, inst_ID[19:15]};
 
@@ -102,6 +116,8 @@ module RV32ICore(
     // MUX for result (ALU or PC_EX)
     assign result = load_npc_EX ? PC_EX : ALU_out;
 
+    // MUX for br_target
+    assign dealt_br_target = PRED_TAKEN_EX ? PC_EX : br_target;
 
 
     //Module connections
@@ -111,13 +127,13 @@ module RV32ICore(
 
 
     NPC_Generator NPC_Generator1(
-        .PC(PC_4),
+        .PC(NPC_PRED),
         .jal_target(jal_target),
         .jalr_target(ALU_out),
-        .br_target(br_target),
+        .br_target(dealt_br_target),
         .jal(jal),
         .jalr(jalr_EX),
-        .br(br),
+        .br(br ^ PRED_TAKEN_EX),
         .NPC(NPC)
     );
 
@@ -135,6 +151,25 @@ module RV32ICore(
     // ---------------------------------------------
     // IF stage
     // ---------------------------------------------
+
+    BTB #(
+        .BTB_EN(BTB_EN),
+        .BHT_EN(BHT_EN),
+        .BTB_LEN(BTB_LEN),
+        .BHT_LEN(BHT_LEN)
+    ) BTB1 (
+        .clk(CPU_CLK),
+        .rst(CPU_RST),
+        .PC_IF(PC_IF),
+        .NPC_PRED(NPC_PRED),
+        .PRED_TAKEN(PRED_TAKEN_IF),
+        .br_inst(|br_type_EX),
+        .br(br),
+        .PC_EX(PC_EX - 4),
+        .br_target(br_target),
+        .PRED_TAKEN_EX(PRED_TAKEN_EX)
+    );
+
 
     PC_ID PC_ID1(
         .clk(CPU_CLK),
@@ -158,6 +193,13 @@ module RV32ICore(
     );
 
 
+    PRED_ID PRED_ID1(
+        .clk(CPU_CLK),
+        .bubbleD(bubbleD),
+        .flushD(flushD),
+        .PRED_TAKEN_IF(PRED_TAKEN_IF),
+        .PRED_TAKEN_ID(PRED_TAKEN_ID)
+    );
 
     // ---------------------------------------------
     // ID stage
@@ -229,6 +271,14 @@ module RV32ICore(
         .flushE(flushE),
         .address(jal_target),
         .address_EX(br_target)
+    );
+
+    PRED_EX PRED_EX1(
+        .clk(CPU_CLK),
+        .bubbleE(bubbleE),
+        .flushE(flushE),
+        .PRED_TAKEN_ID(PRED_TAKEN_ID),
+        .PRED_TAKEN_EX(PRED_TAKEN_EX)
     );
 
     Op1_EX Op1_EX1(
@@ -388,7 +438,13 @@ module RV32ICore(
     // ---------------------------------------------
 
 
-    WB_Data_WB WB_Data_WB1(
+    WB_Data_WB #(
+        .REPLACE_POLICY ( REPLACE_POLICY),
+        .LINE_ADDR_LEN  ( LINE_ADDR_LEN ),
+        .SET_ADDR_LEN   ( SET_ADDR_LEN  ),
+        .TAG_ADDR_LEN   ( TAG_ADDR_LEN  ),
+        .WAY_CNT        ( WAY_CNT       )
+    ) WB_Data_WB1(
         .clk(CPU_CLK),
         .rst(CPU_RST),
         .bubbleW(bubbleW),
@@ -456,7 +512,7 @@ module RV32ICore(
         .reg_dstE(reg_dest_EX),
         .reg_dstM(reg_dest_MEM),
         .reg_dstW(reg_dest_WB),
-        .br(br),
+        .br(br ^ PRED_TAKEN_EX),
         .jalr(jalr_EX),
         .jal(jal),
         .src_reg_en(src_reg_en_EX),
