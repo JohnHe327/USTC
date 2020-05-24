@@ -1,0 +1,103 @@
+
+{% extends "base.html" %}
+
+{% from 'bootstrap/form.html' import render_form, render_field %}
+
+{% block headInsert %}
+<style type="text/css">
+.inp-prompt {
+    display: block;
+    min-height: 20px;
+}
+.display-block {
+    display: block;
+}
+.display-none {
+    display: none;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="center-block">
+
+    <div><form method="POST">
+        <!--选择类型-->
+        <div>
+            <select name="query" id="quert-select">
+                <option value="insert" selected="selected">插入</option>
+                <option value="delete">删除</option>
+                <option value="select">查询</option>
+                <option value="update">修改</option>
+            </select>
+        </div>
+        <!--输入数据-->
+        <div id="change-id" class="display-block">
+            <label for="change_id_inp" class="inp-prompt">change ID: </label>
+            <input type="text" id="change_id_inp" name="change_id" class="inp-prompt">
+        </div>
+        <div id="change-date" class="display-block">
+            <label for="change_date_inp" class="inp-prompt">change date: </label>
+            <input type="date" id="change_date_inp" name="change_date" class="inp-prompt">
+        </div>
+        <div id="orig-class-id" class="display-block">
+            <label for="orig_class_inp" class="inp-prompt">original class ID: </label>
+            <input type="text" id="orig_class_inp" name="orig_class" class="inp-prompt">
+        </div>
+        <div id="curr-class-id" class="display-block">
+            <label for="curr_calss_inp" class="inp-prompt">current class ID: </label>
+            <input type="text" id="curr_calss_inp" name="curr_calss" class="inp-prompt">
+        </div>
+        <div id="change-type" class="display-block">
+            <label for="section_seme_inp" class="inp-prompt">change type: </label>
+            <select id="section_seme_inp" name="change_type" class="inp-prompt">
+                <option value="专业" selected="selected">专业</option>
+                <option value="年级">年级</option>
+            </select>
+        </div>
+        <div id="student-id" class="display-block">
+            <label for="student_id_inp" class="inp-prompt">student ID: </label>
+            <input type="text" id="student_id_inp" name="student_id" class="inp-prompt">
+        </div>
+        <div id="change-detail" class="display-block">
+            <label for="change_detail_inp" class="inp-prompt">change league member: </label>
+            <input type="text" id="change_detail_inp" name="change_detail" class="inp-prompt" placeholder="是/否/不是团员">
+        </div>
+        <div id="select-filter" class="display-none">
+            <input type="button" value="Add Filter" id="add-filter-btn">
+            <select name="sel0" id="sel0" onchange="ChangeSel(this)">
+                <option value="changeid" selected="selected">change ID</option>
+                <option value="date">change date</option>
+                <option value="orig">original class ID</option>
+                <option value="curr">current class ID</option>
+                <option value="type">change type</option>
+            </select>
+            =
+            <input type="text" name="subclause0" id="subclause0">
+        </div>
+        <!--提交-->
+        <div>
+            <input type="submit" value="提交">
+            <input type="reset" value="重置">
+        </div>
+    </form></div>
+    <br>
+
+    <div class="card border-primary mb-3" style="max-width: 48rem;">
+        <div class="card">
+        <div >
+            <div class="card-header"> 学籍异动信息 </div>
+            <div class="card-body text-primary">
+                {% for chang in change %}
+                <p class="card-text"> {{ chang }} </p>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <a type="button" class="btn btn-primary" href="{{ url_for('index') }}">返回主页</a>
+	<br>
+	<script src="{{ url_for('static', filename='changestatus.js') }}"></script>
+</div>
+{% endblock %}

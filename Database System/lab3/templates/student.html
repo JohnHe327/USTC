@@ -1,0 +1,98 @@
+
+{% extends "base.html" %}
+
+{% from 'bootstrap/form.html' import render_form, render_field %}
+
+{% block headInsert %}
+<style type="text/css">
+.inp-prompt {
+    display: block;
+    min-height: 20px;
+}
+.display-block {
+    display: block;
+}
+.display-none {
+    display: none;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="center-block">
+
+    <div><form method="POST">
+        <!--选择类型-->
+        <div>
+            <select name="query" id="quert-select">
+                <option value="insert" selected="selected">插入</option>
+                <option value="delete">删除</option>
+                <option value="select">查询</option>
+                <option value="update">修改</option>
+            </select>
+        </div>
+        <!--输入数据-->
+        <div id="student-id" class="display-block">
+            <label for="student_id_inp" class="inp-prompt">student ID: </label>
+            <input type="text" id="student_id_inp" name="student_id" class="inp-prompt">
+        </div>
+        <div id="student-person-id" class="display-block">
+            <label for="student_personal_inp" class="inp-prompt">student personal ID: </label>
+            <input type="number" id="student_personal_inp" name="student_person_id" class="inp-prompt">
+        </div>
+        <div id="student-email" class="display-block">
+            <label for="student_email_inp" class="inp-prompt">student email address: </label>
+            <input type="email" id="student_email_inp" name="student_email_address" class="inp-prompt">
+        </div>
+        <div id="student-class" class="display-block">
+            <label for="student_class_inp" class="inp-prompt">student class ID: </label>
+            <input type="text" id="student_class_inp" name="student_class" class="inp-prompt">
+        </div>
+        <div id="student-major" class="display-block">
+            <label for="student_major_inp" class="inp-prompt">student major ID: </label>
+            <input type="text" id="student_major_inp" name="student_major" class="inp-prompt">
+        </div>
+        <div id="student-enrollment" class="display-block">
+            <label for="student_enrollment_inp" class="inp-prompt">student enrollment date: </label>
+            <input type="date" id="student_enrollment_inp" name="student_enrollment" class="inp-prompt">
+        </div>
+        <div id="select-filter" class="display-none">
+            <input type="button" value="Add Filter" id="add-filter-btn">
+            <select name="sel0" id="sel0" onchange="ChangeSel(this)">
+                <option value="ID" selected="selected">ID</option>
+                <option value="personal ID">personal ID</option>
+                <option value="email">email</option>
+                <option value="class">class</option>
+                <option value="major">major</option>
+                <option value="enrollment">enrollment</option>
+            </select>
+            =
+            <input type="text" name="subclause0" id="subclause0">
+        </div>
+        <!--提交-->
+        <div>
+            <input type="submit" value="提交">
+            <input type="reset" value="重置">
+        </div>
+    </form></div>
+    <br>
+
+    <div class="card border-primary mb-3" style="max-width: 48rem;">
+        <div class="card">
+        <div >
+            <div class="card-header"> 学生信息 </div>
+            <div class="card-body text-primary">
+                {% for studen in student %}
+                <p class="card-text"> {{ studen }} </p>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+        </div>
+
+    <a type="button" class="btn btn-primary " href="{{ url_for('personalinfo') }}">学生个人信息管理</a>
+    <a type="button" class="btn btn-primary" href="{{ url_for('index') }}">返回主页</a>
+	<br>
+	<script src="{{ url_for('static', filename='student.js') }}"></script>
+</div>
+{% endblock %}

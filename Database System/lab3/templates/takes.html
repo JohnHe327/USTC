@@ -1,0 +1,100 @@
+
+{% extends "base.html" %}
+
+{% from 'bootstrap/form.html' import render_form, render_field %}
+
+{% block headInsert %}
+<style type="text/css">
+.inp-prompt {
+    display: block;
+    min-height: 20px;
+}
+.display-block {
+    display: block;
+}
+.display-none {
+    display: none;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="center-block">
+
+    <div><form method="POST">
+        <!--选择类型-->
+        <div>
+            <select name="query" id="quert-select">
+                <option value="insert" selected="selected">插入</option>
+                <option value="delete">删除</option>
+                <option value="select">查询</option>
+                <option value="update">修改</option>
+            </select>
+        </div>
+        <!--输入数据-->
+        <div id="student-id" class="display-block">
+            <label for="student_id_inp" class="inp-prompt">student ID: </label>
+            <input type="text" id="student_id_inp" name="student_id" class="inp-prompt">
+        </div>
+        <div id="course-id" class="display-block">
+            <label for="course_id_inp" class="inp-prompt">course ID: </label>
+            <input type="text" id="course_id_inp" name="course_id" class="inp-prompt">
+        </div>
+        <div id="teacher-id" class="display-block">
+            <label for="teacher_id_inp" class="inp-prompt">teacher ID: </label>
+            <input type="text" id="teacher_id_inp" name="teacher_id" class="inp-prompt">
+        </div>
+        <div id="section-year" class="display-block">
+            <label for="section_year_inp" class="inp-prompt">year: </label>
+            <input type="number" id="section_year_inp" name="section_year" class="inp-prompt">
+        </div>
+        <div id="section-seme" class="display-block">
+            <label for="section_seme_inp" class="inp-prompt">semester: </label>
+            <select id="section_seme_inp" name="section_seme" class="inp-prompt">
+                <option value="春">春</option>
+                <option value="秋">秋</option>
+            </select>
+        </div>
+        <div id="takes-grade" class="display-block">
+            <label for="takes_grade_inp" class="inp-prompt">grade: </label>
+            <input type="number" id="takes_grade_inp" name="takes_grade" class="inp-prompt">
+        </div>
+        <div id="select-filter" class="display-none">
+            <input type="button" value="Add Filter" id="add-filter-btn">
+            <select name="sel0" id="sel0" onchange="ChangeSel(this)">
+                <option value="studentid" selected="selected">student ID</option>
+                <option value="courseid">course ID</option>
+                <option value="teacherid">teacher ID</option>
+                <option value="year">year</option>
+                <option value="seme">semester</option>
+                <option value="grade">grade</option>
+            </select>
+            =
+            <input type="text" name="subclause0" id="subclause0">
+        </div>
+        <!--提交-->
+        <div>
+            <input type="submit" value="提交">
+            <input type="reset" value="重置">
+        </div>
+    </form></div>
+    <br>
+
+    <div class="card border-primary mb-3" style="max-width: 48rem;">
+        <div class="card">
+        <div >
+            <div class="card-header"> 选课信息 </div>
+            <div class="card-body text-primary">
+                {% for take in takes %}
+                <p class="card-text"> {{ take }} </p>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <a type="button" class="btn btn-primary" href="{{ url_for('index') }}">返回主页</a>
+	<br>
+	<script src="{{ url_for('static', filename='takes.js') }}"></script>
+</div>
+{% endblock %}

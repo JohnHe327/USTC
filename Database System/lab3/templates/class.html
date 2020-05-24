@@ -1,0 +1,97 @@
+
+{% extends "base.html" %}
+
+{% from 'bootstrap/form.html' import render_form, render_field %}
+
+{% block headInsert %}
+<style type="text/css">
+.inp-prompt {
+    display: block;
+    min-height: 20px;
+}
+.display-block {
+    display: block;
+}
+.display-none {
+    display: none;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="center-block">
+
+    <div><form method="POST">
+        <!--选择类型-->
+        <div>
+            <select name="query" id="quert-select">
+                <option value="insert" selected="selected">插入</option>
+                <option value="delete">删除</option>
+                <option value="select">查询</option>
+                <option value="update">修改</option>
+            </select>
+        </div>
+        <!--输入数据-->
+        <div id="class-id" class="display-block">
+            <label for="class_id_inp" class="inp-prompt">class ID: </label>
+            <input type="text" id="class_id_inp" name="class_id" class="inp-prompt">
+        </div>
+        <div id="class-name" class="display-block">
+            <label for="class_name_inp" class="inp-prompt">class name: </label>
+            <input type="text" id="class_name_inp" name="class_name" class="inp-prompt">
+        </div>
+        <div id="class-create-date" class="display-block">
+            <label for="class_create_date_inp" class="inp-prompt">class create date: </label>
+            <input type="date" id="class_create_date_inp" name="class_create_date" class="inp-prompt">
+        </div>
+        <div id="class-teacher" class="display-block">
+            <label for="class_teacher_inp" class="inp-prompt">class head teacher: </label>
+            <input type="text" id="class_teacher_inp" name="class_teacher" class="inp-prompt">
+        </div>
+        <div id="class-grade" class="display-block">
+            <label for="class_grade_inp" class="inp-prompt">class grade: </label>
+            <input type="number" id="class_grade_inp" name="class_grade" class="inp-prompt">
+        </div>
+        <div id="class-major" class="display-block">
+            <label for="class_major_inp" class="inp-prompt">class major: </label>
+            <input type="text" id="class_major_inp" name="class_major" class="inp-prompt">
+        </div>
+        <div id="select-filter" class="display-none">
+            <input type="button" value="Add Filter" id="add-filter-btn">
+            <select name="sel0" id="sel0" onchange="ChangeSel(this)">
+                <option value="ID" selected="selected">class ID</option>
+                <option value="name">class name</option>
+                <option value="createdate">create date</option>
+                <option value="headteacher">head teacher</option>
+                <option value="grade">grade</option>
+                <option value="major">major</option>
+            </select>
+            =
+            <input type="text" name="subclause0" id="subclause0">
+        </div>
+        <!--提交-->
+        <div>
+            <input type="submit" value="提交">
+            <input type="reset" value="重置">
+        </div>
+    </form></div>
+    <br>
+
+    <div class="card border-primary mb-3" style="max-width: 48rem;">
+        <div class="card">
+        <div >
+            <div class="card-header"> 班级信息 </div>
+            <div class="card-body text-primary">
+                {% for clas in classes %}
+                <p class="card-text"> {{ clas }} </p>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+        </div>
+
+    <a type="button" class="btn btn-primary" href="{{ url_for('index') }}">返回主页</a>
+	<br>
+	<script src="{{ url_for('static', filename='class.js') }}"></script>
+</div>
+{% endblock %}

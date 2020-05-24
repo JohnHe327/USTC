@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form, render_field %}
+
+{% block headInsert %}
+<style>
+body{background:url({{ url_for('static', filename='img/wishpool_wishAchieve.jpg') }}) top left;background-size:cover;}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="center-block">
+    <p style="color:white">“我要把天上的星星摘下送给你，照亮你的眼睛——愿望实现”</p>
+		{% if userStatus==0 %}
+			<br>
+			<div class="alert alert-danger" role="alert">
+				<h4 class="alert-heading">oh!!!你的用户还处于未激活状态!</h4>
+				<p>为了提高活动的真实有趣性，我们需要确认所有的用户都是实名用户。如果你想完整地体验活动，请务必请激活你的账户。</p>
+				<hr>
+				<p class="mb-0">更多关于激活账户的信息点我查看!<a href="{{ url_for('unconfirmed') }}">点击这里激活账户</a></p>
+			</div>
+			<br>
+		{% endif %}
+	{% if sex %}
+		<br>
+		<a type="button" class="btn btn-primary" href="{{ url_for('boy') }}">领取愿望</a>
+        <a type="button" class="btn btn-primary" href="{{ url_for('wishpool') }}">愿望池</a>
+        <a type="button" class="btn btn-primary" href="{{ url_for('faq') }}">查看规则</a>
+        <a type="button" class="btn btn-primary" href="{{ url_for('index') }}">返回主页</a>
+		<br>
+	{% else %}
+		<br>
+	<a type="button" class="btn btn-primary" href="{{ url_for('girl') }}">许下愿望</a>
+        <a type="button" class="btn btn-primary" href="{{ url_for('wishpool') }}">愿望池</a>
+        <a type="button" class="btn btn-primary" href="{{ url_for('faq') }}">查看规则</a>
+        <a type="button" class="btn btn-primary" href="{{ url_for('index') }}">返回主页</a>
+		<br>
+	{% endif %}
+	<br>
+</div>
+{% endblock %}

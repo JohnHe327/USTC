@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+	<br>
+	<a href="{{ url_for('campus') }}" style="width:50%" class="btn btn-primary btn-sm btn-block"> 校区管理 </a>
+	<br>
+
+	<br>
+	<a href="{{ url_for('major') }}" style="width:50%" class="btn btn-primary btn-sm btn-block"> 专业管理 </a>
+	<br>
+
+	<br>
+	<a href="{{ url_for('classes') }}" style="width:50%" class="btn btn-primary btn-sm btn-block"> 班级管理 </a>
+	<br>
+
+	<br>
+	<a href="{{ url_for('student') }}" style="width:50%" class="btn btn-primary btn-sm btn-block"> 学生信息管理 </a>
+	<br>
+
+	<br>
+	<a href="{{ url_for('personalinfo') }}" style="width:50%" class="btn btn-primary btn-sm btn-block"> 人员信息管理 </a>
+	<br>
+
+	<br>
+	<a href="{{ url_for('teacher') }}" style="width:50%" class="btn btn-primary btn-sm btn-block"> 教师信息管理 </a>
+	<br>
+
+	<br>
+	<a href="{{ url_for('course') }}" style="width:50%" class="btn btn-primary btn-sm btn-block"> 课程管理 </a>
+	<br>
+
+	<br>
+	<a href="{{ url_for('section') }}" style="width:50%" class="btn btn-primary btn-sm btn-block"> 教师开课管理 </a>
+	<br>
+
+	<br>
+	<a href="{{ url_for('takes') }}" style="width:50%" class="btn btn-primary btn-sm btn-block"> 学生选课管理 </a>
+	<br>
+
+	<br>
+	<a href="{{ url_for('changestatus') }}" style="width:50%" class="btn btn-primary btn-sm btn-block"> 学籍异动管理 </a>
+	<br>
+
+    <span class="badge badge-pill badge-info">有问题请联系数据库实验小组：*****</span>
+
+{% endblock %}

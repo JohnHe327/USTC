@@ -1,0 +1,82 @@
+
+{% extends "base.html" %}
+
+{% from 'bootstrap/form.html' import render_form, render_field %}
+
+{% block headInsert %}
+<style type="text/css">
+.inp-prompt {
+    display: block;
+    min-height: 20px;
+}
+.display-block {
+    display: block;
+}
+.display-none {
+    display: none;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="center-block">
+
+    <div><form method="POST">
+        <!--选择类型-->
+        <div>
+            <select name="query" id="quert-select">
+                <option value="insert" selected="selected">插入</option>
+                <option value="delete">删除</option>
+                <option value="select">查询</option>
+                <option value="update">修改</option>
+            </select>
+        </div>
+        <!--输入数据-->
+        <div id="campus-id" class="display-block">
+            <label for="campus_id_inp" class="inp-prompt">campus ID: </label>
+            <input type="text" id="campus_id_inp" name="Campus_id" class="inp-prompt">
+        </div>
+        <div id="campus-name" class="display-block">
+            <label for="campus_name_inp" class="inp-prompt">campus name: </label>
+            <input type="text" id="campus_name_inp" name="Campus_name" class="inp-prompt">
+        </div>
+        <div id="campus-addr" class="display-block">
+            <label for="campus_addr_inp" class="inp-prompt">campus address: </label>
+            <input type="text" id="campus_addr_inp" name="Campus_address" class="inp-prompt">
+        </div>
+        <div id="select-filter" class="display-none">
+            <input type="button" value="Add Filter" id="add-filter-btn">
+            <select name="sel0" id="sel0">
+                <option value="ID" selected="selected">campus ID</option>
+                <option value="name">campus name</option>
+                <option value="addr">campus address</option>
+            </select>
+            =
+            <input type="text" name="subclause0" id="subclause0">
+        </div>
+        <!--提交-->
+        <div>
+            <input type="submit" value="提交">
+            <input type="reset" value="重置">
+        </div>
+    </form></div>
+    <br>
+
+    <div class="card border-primary mb-3" style="max-width: 48rem;">
+        <div class="card">
+        <div >
+            <div class="card-header"> 校区信息 </div>
+            <div class="card-body text-primary">
+                {% for campu in campus %}
+                <p class="card-text"> {{ campu }} </p>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+        </div>
+
+    <a type="button" class="btn btn-primary" href="{{ url_for('index') }}">返回主页</a>
+	<br>
+	<script src="{{ url_for('static', filename='campus.js') }}"></script>
+</div>
+{% endblock %}
