@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form, render_field %}
+
+{% block headInsert %}
+<style>
+body{background:url({{ url_for('static', filename='img/show_index.jpg') }}) top left;background-size:cover;background-repeat: no-repeat}
+</style>
+{% endblock %}
+
+{% block content %}
+<!--玩转“境像show”-->
+<p>
+<p>
+<button class="btn btn-primary btn-lg btn-block" type="button" id="buttonRegauler">玩转“境像show”</button>
+</p>
+<div class="collapse" id="collapseRegauler">
+    <div class="card card-body">
+        <strong>规则：</strong>
+<p>欢迎来到“境像show”！本次页面分为四个场景，分别是“Here is Wonderland!”、“The Mad Tea Party!”、“March Hare’s Kitchen!” 、“The Battle between Queens Red and White！”，大家可以尽情探索，并一起在这个世界中留下你的身影。
+在这里，你可以看到尽情展现自我的小蜗们，你也可以化身其中一员，将多姿多彩的你展现在别人面前！</p>
+<p>你可以在主页查看各种作品，也可以直接对你感兴趣的关键词直接搜索。遇到喜欢的作品别忘记点赞收藏哦！</p>
+<p>如果想要投稿的话，进入个人页面，点击“我要投稿”即可参与投稿！优秀的作品将被更多人看见，对于每周优秀作品我们还会给与特别的奖励哦！</p>
+<strong>每周优秀作品奖励规则：</strong>
+<p>项目组每周将选出20位优秀作者颁发奖品，规则如下。</p>
+<ol>
+    <li>每周发放一等奖5名，二等奖10名，三等奖15名，共计30名。</li>
+    <li>每周四个版块获奖人数至少1人一等奖。</li>
+    <li>除这4个名额外，剩余26个名额按照本周作品人气排名前26名比例进行版块分配。</li>
+    <li>按照3划分后，剩余1个一等奖名额分配给产生前10名最多的分区，二、三等奖按照3分配后各分区比例进行划分。</li>
+</ol>
+</div>
+</div>
+</p>
+<!--Here is Wonderland!-->
+<p>
+<a href="{{url_for('wonderland')}}">
+<button class="btn btn-primary btn-lg btn-block" type="button" id="buttonWonderland">Here is Wonderland!</button>
+</a>
+<div class="collapse" id="collapseWonderland">
+    <div class="card card-body">
+<p>欢迎来到2020仙境！这里是新的世界，在这个不一样的世界会发生什么呢？一起来看看吧！</p>
+    <p>该分区作品主题表示新年气息&春天故事（春天妆容&春日摄影作品也是可以的噢~~~）新的一年，小蜗们还记得新年/春天的故事吗？</p>
+</div>
+</div>
+</p>
+<!--The Mad Tea Party!-->
+<p>
+    <a href="{{url_for('party')}}">
+    <button class="btn btn-primary btn-lg btn-block" type="button" id="buttonParty">The Mad Tea Party!</button>
+    </a>
+    <div class="collapse" id="collapseParty">
+        <div class="card card-body">
+        <p>疯狂茶会开始啦！这里有耍着杂技的小丑，有跳着奇异舞蹈的女孩。你说他们为什么这么古怪？这还得从一只中华菊头蝠说起……小蜗们在茶会上会有什么表现呢？</p>
+        <p>该分区作品主题主要是生活杂谈，宅在家的日常绝不只是学习和睡觉！！</p>
+        </div>
+    </div>
+</p>
+<!--March Hare’s Kitchen!-->
+<p>
+    <a href="{{url_for('kitchen')}}">
+    <button class="btn btn-primary btn-lg btn-block" type="button" id="buttonKitchen">March Hare’s Kitchen!</button>
+    </a>
+    <div class="collapse" id="collapseKitchen">
+        <div class="card card-body">
+        <p>味道古怪的红茶，飘逸香气的蛋糕，紫烟外冒的黑暗料理，三月兔的厨房应有尽有！不妨进来看看，总有一道对你口味！</p>
+        <p>该分区作品主题是烹饪。只会吃可怎么行？我们要亲自动手！我们手下的黑暗料理都黑得别具一格！</p>
+    </div>
+    </div>
+</p>
+<!--The Battle between Queens Red and White!-->
+<p>
+    <a href="{{url_for('battle')}}">
+    <button class="btn btn-primary btn-lg btn-block" type="button" id="buttonBattle">The Battle between Queens Red and White!</button>
+    </a>
+    <div class="collapse" id="collapseBattle">
+        <div class="card card-body">
+        <p>红白皇后正站在棋盘中央？红皇后和白皇后应派出各自的勇士，为她们进行决斗！红皇后派出的是2019n-CoV病毒！白皇后派出的是一线医疗人员、科研人员等为此奋战的勇士们！小蜗们也一起来加油助威吧！</p>
+        <p>该分区作品主题是疫情相关的内容。我们绝不会被打倒！~</p>
+    </div>
+    </div>
+</p>
+<!--My Rabbit-Hole!-->
+<p>
+    <a href="{{url_for('hole')}}">
+    <button class="btn btn-primary btn-lg btn-block" type="button" id="buttonHole">My Rabbit-Hole!</button>
+    </a>
+    <div class="collapse" id="collapseHole">
+        <div class="card card-body">
+        <p>欢迎来到2020仙境！这里是新的世界，在这个不一样的世界会发生什么呢？一起来看看吧！</p>
+        <p>个人主页</p>
+        </div>
+    </div>
+</p>
+<!--upload-->
+<div>
+    <p>
+        <a href="{{url_for('upload')}}">
+        <button class="btn btn-primary btn-lg btn-block" type="button" id="upload">我要投稿</button>
+        </a>
+    </p>
+</div>
+<script src="{{ url_for('static', filename='show.js') }}"></script>
+{% endblock %}

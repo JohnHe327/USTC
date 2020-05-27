@@ -1,0 +1,101 @@
+
+{% extends "base.html" %}
+
+{% from 'bootstrap/form.html' import render_form, render_field %}
+
+{% block headInsert %}
+<style type="text/css">
+.inp-prompt {
+    display: block;
+    min-height: 20px;
+}
+.display-block {
+    display: block;
+}
+.display-none {
+    display: none;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="center-block">
+
+    <div><form method="POST">
+        <!--选择类型-->
+        <div>
+            <select name="query" id="quert-select">
+                <option value="insert" selected="selected">插入</option>
+                <option value="delete">删除</option>
+                <option value="select">查询</option>
+                <option value="update">修改</option>
+            </select>
+        </div>
+        <!--输入数据-->
+        <div id="teacher-id" class="display-block">
+            <label for="teacher_id_inp" class="inp-prompt">teacher ID: </label>
+            <input type="text" id="teacher_id_inp" name="teacher_id" class="inp-prompt">
+        </div>
+        <div id="teacher-person-id" class="display-block">
+            <label for="teacher_personal_inp" class="inp-prompt">teacher personal ID: </label>
+            <input type="number" id="teacher_personal_inp" name="teacher_person_id" class="inp-prompt">
+        </div>
+        <div id="teacher-entry" class="display-block">
+            <label for="teacher_entry_inp" class="inp-prompt">teacher entry date: </label>
+            <input type="date" id="teacher_entry_inp" name="teacher_entry" class="inp-prompt">
+        </div>
+        <div id="teacher-email" class="display-block">
+            <label for="teacher_email_inp" class="inp-prompt">teacher email address: </label>
+            <input type="email" id="teacher_email_inp" name="teacher_email_address" class="inp-prompt">
+        </div>
+        <div id="teacher-major" class="display-block">
+            <label for="teacher_major_inp" class="inp-prompt">teacher major ID: </label>
+            <input type="text" id="teacher_major_inp" name="teacher_major" class="inp-prompt">
+        </div>
+        <div id="teacher-rank" class="display-block">
+            <label for="teacher_rank_inp" class="inp-prompt">teacher rank: </label>
+            <select id="teacher_rank_inp" name="teacher_rank" class="inp-prompt">
+                <option value="professor">professor</option>
+                <option value="assistant">assistant</option>
+            </select>
+        </div>
+        <div id="select-filter" class="display-none">
+            <input type="button" value="Add Filter" id="add-filter-btn">
+            <select name="sel0" id="sel0" onchange="ChangeSel(this)">
+                <option value="ID" selected="selected">ID</option>
+                <option value="personal ID">personal ID</option>
+                <option value="entry">entry date</option>
+                <option value="email">email</option>
+                <option value="major">major ID</option>
+                <option value="rank">rank</option>
+            </select>
+            =
+            <input type="text" name="subclause0" id="subclause0">
+        </div>
+        <!--提交-->
+        <div>
+            <input type="submit" value="提交">
+            <input type="reset" value="重置">
+        </div>
+    </form></div>
+    <br>
+
+    <div class="card border-primary mb-3" style="max-width: 48rem;">
+        <div class="card">
+        <div >
+            <div class="card-header"> 教师信息 </div>
+            <div class="card-body text-primary">
+                {% for teache in teacher %}
+                <p class="card-text"> {{ teache }} </p>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+        </div>
+
+    <a type="button" class="btn btn-primary " href="{{ url_for('personalinfo') }}">教师个人信息管理</a>
+    <a type="button" class="btn btn-primary" href="{{ url_for('index') }}">返回主页</a>
+	<br>
+	<script src="{{ url_for('static', filename='teacher.js') }}"></script>
+</div>
+{% endblock %}
