@@ -57,6 +57,14 @@ if __name__ == '__main__':
     use_grade = input('use grade [Yes/No]: \n')[0].lower() == 'y'
     if algorithm == 'k':
         k = input('k = ')
+    elif algorithm == 's':
+        kernel_function = input('kernel [Linear/Poly]: \n')[0].lower()
+        if kernel_function == 'l':
+            kernel_function = 'linear'
+        else:
+            print('unknown kernel function')
+            kernel_function = 'linear'
+        C = float(input('C = '))
     test_iter = int(input('iteration = '))
 
     score_avg = 0.0
@@ -85,6 +93,8 @@ if __name__ == '__main__':
         tp = tn = fp = fn = 0
         if algorithm == 'k':
             tp, tn, fp, fn = KNN.knn(training_set, test_set, k)
+        elif algorithm == 's':
+            tp, tn, fp, fn = SVM.svm(training_set, test_set, C, kernel_function)
         # measure result
         if tp + tn + fp + fn == len(test_set):
             P = tp / (tp + fp)
