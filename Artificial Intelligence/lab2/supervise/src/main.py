@@ -1,6 +1,7 @@
 import random
 import math
 import KNN
+import SVM
 
 jobs = {'"teacher"': 0, '"health"': 1, '"services"': 2, '"at_home"': 3, '"other"': 4}
 reasons = {'"course"': 0, '"reputation"': 1, '"home"': 2, '"other"': 3}  # 2 1 0 3 ?
@@ -61,6 +62,8 @@ if __name__ == '__main__':
         kernel_function = input('kernel [Linear/Poly]: \n')[0].lower()
         if kernel_function == 'l':
             kernel_function = 'linear'
+        elif kernel_function == 'p':
+            kernel_function = 'poly'
         else:
             print('unknown kernel function')
             kernel_function = 'linear'
