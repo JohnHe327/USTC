@@ -32,6 +32,8 @@ def load_data(training_set):
 def kernel(x1, x2, method):
     if method == 'linear':
         return np.dot(x1, x2)
+    elif method == 'poly':
+        return np.multiply((1 + np.dot(x1, x2)), (1 + np.dot(x1, x2)))
 
 
 def take_step(i1, i2, ds, kernel_method):
