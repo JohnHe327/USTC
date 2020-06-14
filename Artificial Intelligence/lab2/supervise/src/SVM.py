@@ -30,10 +30,18 @@ def load_data(training_set):
 
 
 def kernel(x1, x2, method):
-    if method == 'linear':
+    if method[0] == 'linear':
         return np.dot(x1, x2)
-    elif method == 'poly':
+    elif method[0] == 'poly':
         return np.multiply((1 + np.dot(x1, x2)), (1 + np.dot(x1, x2)))
+    elif method[0] == 'rbf':
+        m, n = np.shape(x1)
+        result = np.mat(np.zeros((m, 1)))
+        for i in range(m):
+            row = x1[i, :] - x2.T
+            result[i] = row * row.T
+        result = np.exp(result / (-1 * method[1] ** 2))
+        return result
 
 
 def take_step(i1, i2, ds, kernel_method):
