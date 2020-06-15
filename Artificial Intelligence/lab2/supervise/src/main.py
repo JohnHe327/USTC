@@ -52,6 +52,7 @@ if __name__ == '__main__':
     filename = input('data file [mat/por]: \n')
     filename = '../data/student/student-' + filename + '.csv'
     print('Opening "' + filename + '"')
+    # test file
     inp_file = open(filename, 'r')
     inp_file.close()
     algorithm = input('algorithm [Knn/Svm]: \n')[0].lower()
@@ -59,14 +60,18 @@ if __name__ == '__main__':
     if algorithm == 'k':
         k = input('k = ')
     elif algorithm == 's':
-        kernel_function = input('kernel [Linear/Poly]: \n')[0].lower()
+        kernel_function = input('kernel [Linear/Poly/Rbf]: \n')[0].lower()
         if kernel_function == 'l':
-            kernel_function = 'linear'
+            kernel_function = ['linear']
         elif kernel_function == 'p':
-            kernel_function = 'poly'
+            kernel_function = ['poly']
+        elif kernel_function == 'r':
+            kernel_function = ['rbf']
+            sigma = float(input('sigma = '))
+            kernel_function.append(sigma)
         else:
             print('unknown kernel function')
-            kernel_function = 'linear'
+            kernel_function = ['linear']
         C = float(input('C = '))
     test_iter = int(input('iteration = '))
 
@@ -74,6 +79,7 @@ if __name__ == '__main__':
     for iteration in range(test_iter):
         inp_file = open(filename, 'r')
         inp_file.readline().split(';')  # read header
+        # prepare all data
         data = []
         inp = ''
         while True:
@@ -82,6 +88,7 @@ if __name__ == '__main__':
                 break
             inp = formatting(inp.split(';'), use_grade)
             data.append(inp)
+        # prepare training set & test set
         lines = len(data)
         training_set = []
         test_set = []
