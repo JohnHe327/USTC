@@ -2,6 +2,7 @@ import random
 import math
 import KNN
 import SVM
+import DecisionTree as dt
 
 jobs = {'"teacher"': 0, '"health"': 1, '"services"': 2, '"at_home"': 3, '"other"': 4}
 reasons = {'"course"': 0, '"reputation"': 1, '"home"': 2, '"other"': 3}  # 2 1 0 3 ?
@@ -55,7 +56,7 @@ if __name__ == '__main__':
     # test file
     inp_file = open(filename, 'r')
     inp_file.close()
-    algorithm = input('algorithm [Knn/Svm]: \n')[0].lower()
+    algorithm = input('algorithm [Knn/Svm/Decision_tree]: \n')[0].lower()
     use_grade = input('use grade [Yes/No]: \n')[0].lower() == 'y'
     if algorithm == 'k':
         k = input('k = ')
@@ -73,6 +74,8 @@ if __name__ == '__main__':
             print('unknown kernel function')
             kernel_function = ['linear']
         C = float(input('C = '))
+    elif algorithm == 'd':
+        pass
     test_iter = int(input('iteration = '))
 
     score_avg = 0.0
@@ -105,6 +108,8 @@ if __name__ == '__main__':
             tp, tn, fp, fn = KNN.knn(training_set, test_set, k)
         elif algorithm == 's':
             tp, tn, fp, fn = SVM.svm(training_set, test_set, C, kernel_function)
+        elif algorithm == 'd':
+            tp, tn, fp, fn = dt.decision_tree(training_set, test_set)
         # measure result
         if tp + tn + fp + fn == len(test_set):
             P = tp / (tp + fp)
@@ -113,7 +118,7 @@ if __name__ == '__main__':
             print('F1 score = {:.2%}'.format(f1_score))
             score_avg += f1_score
         else:
-            print('error!')
+            print('error in testing result!')
             inp_file.close()
             break
         # close file
