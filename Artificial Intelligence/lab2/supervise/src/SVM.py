@@ -1,5 +1,5 @@
 import numpy as np
-import random
+from random import randint
 
 
 class DataStructure:
@@ -150,7 +150,7 @@ def examine_example(i2, ds, kernel_method):
     if r2 < -ds.tolerate and alpha2 < ds.C or r2 > ds.tolerate and alpha2 > 0:
         '''
         # random alpha1
-        i1 = random.randint(0, ds.m-1)
+        i1 = randint(0, ds.m-1)
         if(take_step(i1, i2, ds)):
             return 1
         '''
@@ -173,7 +173,7 @@ def examine_example(i2, ds, kernel_method):
                 return 1
 
             # i1未效更新，从随机开始处遍历整个非边界alpha作为i1
-            random_start = random.randint(0, len(non_bound_alphas_list) - 1)
+            random_start = randint(0, len(non_bound_alphas_list) - 1)
             for i1 in range(random_start, len(non_bound_alphas_list)):
                 if i1 == i2:
                     continue
@@ -186,7 +186,7 @@ def examine_example(i2, ds, kernel_method):
                     return 1
 
         # 随机位置开始遍历
-        random_start = random.randint(0, ds.m - 1)
+        random_start = randint(0, ds.m - 1)
         for i1 in range(random_start, ds.m):
             if i1 == i2:
                 continue

@@ -1,4 +1,4 @@
-import random
+from random import randint
 import math
 import KNN
 import SVM
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     filename = input('data file [mat/por]: \n')
     filename = '../data/student/student-' + filename + '.csv'
     print('Opening "' + filename + '"')
-    # test file
+    # try to open file
     inp_file = open(filename, 'r')
     inp_file.close()
     algorithm = input('algorithm [Knn/Svm/Decision_tree]: \n')[0].lower()
@@ -98,7 +98,7 @@ if __name__ == '__main__':
         max_train_set = math.floor(0.7 * lines)
         max_test_set = lines - max_train_set
         for i in range(lines):
-            if len(test_set) >= max_test_set or len(training_set) < max_train_set and random.randint(0, 9) < 7:
+            if len(test_set) >= max_test_set or len(training_set) < max_train_set and randint(0, 9) < 7:
                 training_set.append(data[i])
             else:
                 test_set.append(data[i])
