@@ -22,6 +22,29 @@ def load_data(file_name):
     return raw_data, cluster
 
 
+def show_figure(data_set, k, centroids, cluster_assignment):
+    from matplotlib import pyplot as plt
+    rows = data_set.shape[0]
+    mark = ['or', 'ob', 'og', 'ok', '^r', '+r', 'sr', 'dr', '<r', 'pr']
+    for i in range(rows):
+        mark_index = int(cluster_assignment[i, 0])
+        x = data_set[i, 0]
+        if data_set.shape[1] > 1:
+            y = data_set[i, 1]
+        else:
+            y = 0
+        plt.plot(x, y, mark[mark_index])
+    mark = ['Dr', 'Db', 'Dg', 'Dk', '^b', '+b', 'sb', 'db', '<b', 'pb']
+    for i in range(k):
+        x = centroids[i, 0]
+        if centroids.shape[1] > 1:
+            y = centroids[i, 1]
+        else:
+            y = 0
+        plt.plot(x, y, mark[i], markersize = 12)
+    plt.show()
+
+
 def main():
     inp_filename = '../input/wine.data'
     use_pca = int(input('use pca?: '))
@@ -43,6 +66,8 @@ def main():
     for k in range(max_cluster, 1, -1):
         # print('-----\nk =', k)
         centroids, cluster_assignment = kMeans.k_means(data, k)
+        # show figure
+        # show_figure(data, k, centroids, cluster_assignment)
 
         ss = sd = ds = dd = 0
         for i in range(len(origin_cluster)):
@@ -107,6 +132,9 @@ def main():
             best_silhouette = np.mean(silhouette_coe)
             best_centroids = centroids
             best_assignment = cluster_assignment[:, 0]
+
+    # show result figure
+    show_figure(data, best_cluster, best_centroids, best_assignment)
 
     # write file
     print('RI =', best_rand_index)
