@@ -16,9 +16,7 @@ int main(int argc, char *argv[])
 
     // calculate
     if (my_rank == 0)
-    {
         start_time = MPI_Wtime();
-    }
     sum = 0.0;
     step = 1.0 / num_steps;
 
@@ -35,7 +33,7 @@ int main(int argc, char *argv[])
     {
         stop_time = MPI_Wtime();
         printf("pi = %lf\n", pi);
-        printf("time used: %lf\n", stop_time - start_time);
+        printf("time used: %lf s\n", stop_time - start_time);
         fflush(stdout);
     }
     MPI_Finalize();
