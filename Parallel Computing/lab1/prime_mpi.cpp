@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <mpi.h>
+static long num_steps = 500000;
 
 int isPrime(int number)
 {
@@ -16,7 +17,7 @@ int isPrime(int number)
 
 int main(int argc, char* argv[])
 {
-    int num_steps, my_rank, num_procs, i, total, local_sum;
+    int my_rank, num_procs, i, total, local_sum;
     double start_time, end_time;
 
     MPI_Init(&argc, &argv);
@@ -24,20 +25,14 @@ int main(int argc, char* argv[])
     MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 
     if (my_rank == 0)
-    {
-        printf("max number：");
-        fflush(stdout);
-        scanf("%d", &num_steps);
         start_time = MPI_Wtime();
-    }
-    MPI_Bcast(&num_steps, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
     local_sum = 0;
     int sun = num_steps / num_procs;
     for (i = my_rank; i <= num_steps; i += num_procs)
         local_sum += isPrime(i);
-    MPI_Reduce(&local_sum, &total, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
 
+    MPI_Reduce(&local_sum, &total, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
     if (my_rank == 0)
     {
         printf("total: %d\n", total);
