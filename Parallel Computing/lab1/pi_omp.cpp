@@ -12,7 +12,7 @@ int _tmain(int argc, _TCHAR* argv[])
     int i;
     double x, pi, sum = 0.0;
     step = 1.0 / (double)num_steps;
-    time_t t_start, t_end;
+    clock_t t_start, t_end;
     t_start = clock();
     omp_set_num_threads(NUM_THREADS);
     #pragma omp parallel for reduction(+:sum) private(x)
