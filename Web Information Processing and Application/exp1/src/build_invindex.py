@@ -12,8 +12,23 @@ STOPWORDS_PATH = "stopwords.txt"
 
 # special pre_process for enron dataset
 def pre_process_enron(file):
-    pass
-    return file
+    '''
+    input : opened file in lines
+    output: mail header removed
+    '''
+    pre_processed_file = ''
+    useless_header = ['message-id:', 'sent:', 'date:', 'from:', 'to:', 'cc:', 'mime-version:', 'content-type:', 'content-transfer-encoding:', 'bcc:', 'x-from:', 'x-to:', 'x-cc:', 'x-bcc:', 'x-folder:', 'x-origin:', 'x-filename:']
+    for line in file:
+        line = line.lower().replace(':=', ': ').split()
+        if not line or line[0] in useless_header:
+            # 空行或邮件头
+            continue
+        elif line[0] == 'subject:':
+            line.pop(0)
+        else:
+            pass
+        pre_processed_file = pre_processed_file + ' '.join(line)
+    return pre_processed_file
 
 def strip_punct(file):
     punctre = re.compile('[%s]' % re.escape(string.punctuation))
@@ -52,10 +67,14 @@ def buildTextIndexAndInvIndex():
             c.execute('''INSERT INTO texts VALUES (?, ?)''', t)
             
             with open(file_path) as f:
-                opened_file = f.read().replace('\n', ' ')
+                opened_file = f.readlines()
+            # 去邮件头
             pre_processed_file = pre_process_enron(opened_file)
+            # 去标点
             stripped_file = strip_punct(pre_processed_file)
+            # 词根化
             stemmed_file = stem_words(stripped_file)
+            # 去停用词
             no_stop_word_file = exclude_stop_words(stemmed_file)
             prepared_file = no_stop_word_file
             
@@ -98,4 +117,3 @@ def testIndexes():
 if __name__ == "__main__":
     buildTextIndexAndInvIndex()
     testIndexes()
-    
