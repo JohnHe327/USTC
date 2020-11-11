@@ -2,12 +2,13 @@ import numpy as np
 import utils
 
 from build_index_and_matrix import WORD_INDEX_PATH, TFIDF_MAT_PATH
+from build_index_and_matrix import stem_words
 
 def search(query):
     word_index = np.load(WORD_INDEX_PATH)
     tfidf_mat = np.load(TFIDF_MAT_PATH)
     query_vector = np.zeros(len(word_index))
-    for word in query.lower().split():
+    for word in stem_words(query):
         index = np.where(word_index == word)
         query_vector[index] = 1
 

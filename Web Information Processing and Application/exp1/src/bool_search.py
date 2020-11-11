@@ -3,12 +3,15 @@ import collections
 import math
 
 from build_index_and_matrix import DB_INDEX_PATH
+from build_index_and_matrix import stem_words
 
 def search(query):
     # prepare query list
     query = query.replace('(', '( ')
     query = query.replace(')', ' )')
-    query = query.split(' ')
+    query = stem_words(query)
+    reserved_pattern = {'and':'AND', 'or':'OR', 'not':'NOT'}
+    query = [reserved_pattern[x] if x in reserved_pattern else x for x in query]
 
     text_num = get_text_num()
     indexed_docIDs = [i+1 for i in range(text_num)]
