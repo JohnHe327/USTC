@@ -4,7 +4,6 @@ import sqlite3
 import string
 import numpy as np
 
-from nltk.tokenize import word_tokenize
 import time
 
 # DATA_PATH = "../dataset/maildir"
@@ -64,6 +63,7 @@ def stem_words(file, stem_mode=1):
     """
     stemmed_file = []
     if stem_mode == 0:
+        from nltk.tokenize import word_tokenize
         from nltk.stem import PorterStemmer
         file = word_tokenize(text=file,language="english")
         for input_word in file:
