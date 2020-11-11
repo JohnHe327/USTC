@@ -12,14 +12,21 @@ STOPWORDS_PATH = "stopwords.txt"
 
 # special pre_process for enron dataset
 def pre_process_enron(file):
-    '''
-    input : opened file in lines
-    output: mail header removed
-    '''
+    """
+    Args:
+        file: opened file in lines
+
+    Returns:
+        A word list with mail header removed
+    """
     pre_processed_file = ''
     useless_header = ['message-id:', 'sent:', 'date:', 'from:', 'to:', 'cc:', 'mime-version:', 'content-type:', 'content-transfer-encoding:', 'bcc:', 'x-from:', 'x-to:', 'x-cc:', 'x-bcc:', 'x-folder:', 'x-origin:', 'x-filename:']
     for line in file:
-        line = line.lower().replace(':=', ': ').split()
+        line = line.lower() \
+                .replace(':=', ': ') \
+                .split()
+        while line and line[0] == '>':
+            line.pop(0)
         if not line or line[0] in useless_header:
             # 空行或邮件头
             continue
@@ -31,13 +38,18 @@ def pre_process_enron(file):
     return pre_processed_file
 
 def strip_punct(file):
+    """remove punctuation & number
+    """
     punctre = re.compile('[%s]' % re.escape(string.punctuation))
-    nopunct = punctre.sub('',file)
+    nopunct = punctre.sub(' ',file)
+    nopunct = re.sub('[0-9]+', ' ', nopunct)
     return nopunct
 
 def stem_words(file):
-    pass
-    return file.lower()
+    """词根化
+    """
+    file = file.split()
+    return file
 
 def exclude_stop_words(file):
     pass
