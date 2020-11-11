@@ -2,6 +2,9 @@
 
 ## TODO
 
-- 在 `src/build_invindex` 里面的函数 `pre_process_enron`，做针对于 enron dataset 的处理
+- 在 `src/build_invindex` 里完成词根化和去停用词
+- 在 `src/build_invindex` 里优化代码，从文本预处理到建立倒排索引只 split 一次
 
-主要完成：输出的文本，只保留邮件标题和邮件正文，将前面的一些邮件格式头删掉，因为这些对查询帮助不大，我看了查询词汇一般都是针对邮件正文的查询
+## BUG-FIX
+
+- `src/build_invindex`: 去邮件头出现了遗漏的情况，在收件人很多的时候，邮件里会分行，但是只有第一行的头部有"To "，后面就识别不出来了，参考 `arora-h/all_documents/10_` 这个邮件。同时注意一下别的地方有没有类似情况

@@ -2,10 +2,16 @@ import os.path
 import re
 import sqlite3
 import string
+import numpy as np
 
 # DATA_PATH = "../dataset/maildir"
 DATA_PATH = "../sub_dataset/maildir"
+# invindex database
 DB_INDEX_PATH = "../output/index.db"
+# word index for semantic search
+WORD_INDEX_PATH = "../output/word_index.npy"
+# tfidf matrix for semantic search
+TFIDF_MAT_PATH = "../output/tfidf_mat.npy"
 STOPWORDS_PATH = "stopwords.txt"
 
 # HELPER FUNCTIONS
@@ -48,8 +54,8 @@ def strip_punct(file):
 def stem_words(file):
     """词根化
     """
-    file = file.split()
-    return file
+    pass
+    return file.lower()
 
 def exclude_stop_words(file):
     pass
@@ -61,7 +67,7 @@ def exclude_stop_words(file):
 # store an index file with sqlite3
 # [textID, text_path, ...(other features, like author)]
 # [word, word frequency(df), textID1, textID2, ...]
-def buildTextIndexAndInvIndex():
+def build_index_and_matrix():
     conn = sqlite3.connect(DB_INDEX_PATH)
     c = conn.cursor()
     c.execute('''DROP TABLE IF EXISTS texts''')
@@ -93,12 +99,30 @@ def buildTextIndexAndInvIndex():
             words_in_file = prepared_file.split()
             for word in words_in_file:
                 if word in worddict:
-                    worddict[word][0] += 1
+                    # the word's first appear in this file
                     if worddict[word][1][-1] != textID:
+                        worddict[word][0] += 1
                         worddict[word][1].append(textID)
+                        worddict[word][2].append(1)
+                    # the word appear several times in this file
+                    else:
+                        worddict[word][2][-1] += 1
+                # the word appear for the first time
                 else:
-                    worddict[word] = [1, [textID]]
-    
+                    # [df, [Doc list], [tf list]]
+                    worddict[word] = [1, [textID], [1]]
+
+    c.execute('''DROP TABLE IF EXISTS variables''')
+    c.execute('''CREATE TABLE variables
+                (name TEXT PRIMARY KEY,
+                value TEXT)''')
+    text_num = textID
+    t = ('text_num', text_num)
+    c.execute('''INSERT INTO variables VALUES (?, ?)''', t)
+    t = ('word_num', len(worddict))
+    c.execute('''INSERT INTO variables VALUES (?, ?)''', t)
+
+    # invindex for bool search
     c.execute('''DROP TABLE IF EXISTS invindex''')
     c.execute('''CREATE TABLE invindex
                     (word TEXT PRIMARY KEY,
@@ -109,9 +133,24 @@ def buildTextIndexAndInvIndex():
         text_list = ' '.join(map(str, value[1]))
         t = (word, value[0], text_list)
         c.execute('''INSERT INTO invindex VALUES (?, ?, ?)''', t)
-
+    
     conn.commit()
     conn.close()
+
+    # tf-idf matrix for semantic search
+    print("total text num:", text_num)
+    word_arr = np.zeros(len(worddict), dtype='<U16')
+    tfidf_mat = np.zeros((len(worddict), text_num))
+    i = 0
+    for word, value in worddict.items():
+        word_arr[i] = word
+        j = 0
+        for textID in value[1]:
+            tfidf_mat[i][textID - 1] = (1 + np.log10(value[2][j])) * np.log10(text_num / value[0])
+            j += 1
+        i += 1
+    np.save(WORD_INDEX_PATH, word_arr)
+    np.save(TFIDF_MAT_PATH, tfidf_mat)
 
 # TEST FUNCTIONS
 
@@ -120,12 +159,19 @@ def testIndexes():
     conn = sqlite3.connect(DB_INDEX_PATH)
     c = conn.cursor()
     c.execute('''SELECT * FROM invindex
-                LIMIT 1''')
+                LIMIT 3''')
     for row in c:
         print(row[0], row[1], row[2])
 
     conn.close()
 
+def testTfidfMat():
+    word_arr = np.load(WORD_INDEX_PATH)
+    tfidf_mat = np.load(TFIDF_MAT_PATH)
+    print(word_arr[0:5])
+    print(tfidf_mat[0:5][0:5])
+
 if __name__ == "__main__":
-    buildTextIndexAndInvIndex()
+    build_index_and_matrix()
     testIndexes()
+    testTfidfMat()
