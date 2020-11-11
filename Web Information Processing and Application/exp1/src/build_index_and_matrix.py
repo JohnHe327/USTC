@@ -4,6 +4,9 @@ import sqlite3
 import string
 import numpy as np
 
+from nltk.tokenize import word_tokenize
+import time
+
 # DATA_PATH = "../dataset/maildir"
 DATA_PATH = "../sub_dataset/maildir"
 # invindex database
@@ -23,7 +26,7 @@ def pre_process_enron(file):
         file: opened file in lines
 
     Returns:
-        A word list with mail header removed
+        A string with mail header removed
     """
     pre_processed_file = ''
     useless_header = ['message-id:', 'sent:', 'date:', 'from:', 'to:', 'cc:', 'mime-version:', 'content-type:', 'content-transfer-encoding:', 'bcc:', 'x-from:', 'x-to:', 'x-cc:', 'x-bcc:', 'x-folder:', 'x-origin:', 'x-filename:']
@@ -51,11 +54,36 @@ def strip_punct(file):
     nopunct = re.sub('[0-9]+', ' ', nopunct)
     return nopunct
 
-def stem_words(file):
+def stem_words(file, stem_mode=1):
     """词根化
+    Args:
+        file: string
+        stem_mode: integer 0-2
+    Returns:
+        stemmed word in a list
     """
-    pass
-    return file.lower()
+    stemmed_file = []
+    if stem_mode == 0:
+        from nltk.stem import PorterStemmer
+        file = word_tokenize(text=file,language="english")
+        for input_word in file:
+            stemmed_file.append(PorterStemmer().stem(word=input_word))
+    elif stem_mode == 1:
+        from nltk.stem import SnowballStemmer
+        snowball_stemmer = SnowballStemmer('english')
+        file = file.split()
+        for input_word in file:
+            stemmed_file.append(snowball_stemmer.stem(input_word))
+    elif stem_mode == 2:
+        from nltk.stem import WordNetLemmatizer
+        wordnet_lemmatizer = WordNetLemmatizer()
+        file = file.split()
+        for input_word in file:
+            stemmed_file.append(wordnet_lemmatizer.lemmatize(input_word))
+    else:
+        print('Not Stemmed!')
+        stemmed_file = file.split()
+    return stemmed_file
 
 def exclude_stop_words(file):
     pass
@@ -96,7 +124,7 @@ def build_index_and_matrix():
             no_stop_word_file = exclude_stop_words(stemmed_file)
             prepared_file = no_stop_word_file
             
-            words_in_file = prepared_file.split()
+            words_in_file = prepared_file
             for word in words_in_file:
                 if word in worddict:
                     # the word's first appear in this file
@@ -172,6 +200,11 @@ def testTfidfMat():
     print(tfidf_mat[0:5][0:5])
 
 if __name__ == "__main__":
+    t1 = time.time()
+
     build_index_and_matrix()
     testIndexes()
     testTfidfMat()
+
+    t2 = time.time()
+    print('build time used:', t2 - t1, 's')
