@@ -86,8 +86,21 @@ def stem_words(file, stem_mode=1):
     return stemmed_file
 
 def exclude_stop_words(file):
-    pass
-    return file
+    """
+    Args:
+        file: stemed words in a list
+    Returns:
+        list, remove stopwords
+    """
+    from nltk.corpus import stopwords
+    stop_words = set(stopwords.words('english'))
+    words_filtered = []
+    
+    for word in file:
+        if word not in stop_words:
+            words_filtered.append(word)
+
+    return words_filtered
 
 # MAIN FUNCTIONS
 
