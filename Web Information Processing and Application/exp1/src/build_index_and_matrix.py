@@ -27,14 +27,16 @@ def pre_process_enron(file):
     Returns:
         A string with mail header removed
     """
-    pre_processed_file = ''
+    pre_processed_file = []
     useless_header = ['message-id:', 'sent:', 'date:', 'from:', 'to:', 'cc:', 'mime-version:', 'content-type:', 'content-transfer-encoding:', 'bcc:', 'x-from:', 'x-to:', 'x-cc:', 'x-bcc:', 'x-folder:', 'x-origin:', 'x-filename:']
     for line in file:
         line = line.lower() \
                 .replace(':=', ': ') \
+                .replace('>', ' ') \
                 .split()
         while line and line[0] == '>':
             line.pop(0)
+
         if not line or line[0] in useless_header:
             # 空行或邮件头
             continue
@@ -42,8 +44,8 @@ def pre_process_enron(file):
             line.pop(0)
         else:
             pass
-        pre_processed_file = pre_processed_file + ' '.join(line)
-    return pre_processed_file
+        pre_processed_file.extend(line)
+    return ' '.join(pre_processed_file)
 
 def strip_punct(file):
     """remove punctuation & number
