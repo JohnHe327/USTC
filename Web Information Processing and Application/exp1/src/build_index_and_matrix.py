@@ -104,6 +104,17 @@ def exclude_stop_words(file):
 
     return words_filtered
 
+'''
+# 获取文件编码类型
+import chardet
+def get_file_encoding(file):
+    # 二进制方式读取，获取字节数据，检测类型
+    with open(file, 'rb') as f:
+        data = f.read()
+        encoding = chardet.detect(data)['encoding']
+    return encoding
+'''
+
 # MAIN FUNCTIONS
 
 # build text index and invert index
@@ -127,8 +138,12 @@ def build_index_and_matrix():
             t = (textID, file_path)
             c.execute('''INSERT INTO texts VALUES (?, ?)''', t)
             
+            # file_encoding = get_file_encoding(file_path)
             with open(file_path) as f:
-                opened_file = f.readlines()
+                try:
+                    opened_file = f.readlines()
+                except:
+                    pass
             # 去邮件头
             pre_processed_file = pre_process_enron(opened_file)
             # 去标点
