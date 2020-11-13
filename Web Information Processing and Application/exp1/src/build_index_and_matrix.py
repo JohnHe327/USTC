@@ -94,11 +94,12 @@ def exclude_stop_words(file):
         list, remove stopwords
     """
     from nltk.corpus import stopwords
-    stop_words = set(stopwords.words('english')).add('com')
+    stop_words = set(stopwords.words('english'))
+    local_stop_words = {'com'}
     words_filtered = []
     
     for word in file:
-        if word not in stop_words:
+        if word not in stop_words and word not in local_stop_words:
             words_filtered.append(word)
 
     return words_filtered
