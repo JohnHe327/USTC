@@ -199,7 +199,7 @@ def build_index_and_matrix():
     # tf-idf matrix for semantic search
     print("total text num:", text_num)
     word_arr = np.zeros(len(worddict), dtype='<U16')
-    tfidf_mat = np.zeros((len(worddict), text_num))
+    tfidf_mat = np.zeros((len(worddict), text_num), dtype='float16')
     i = 0
     for word, value in worddict.items():
         word_arr[i] = word
