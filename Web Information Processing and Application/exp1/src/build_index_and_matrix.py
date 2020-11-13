@@ -14,7 +14,6 @@ DB_INDEX_PATH = "../output/index.db"
 WORD_INDEX_PATH = "../output/word_index.npy"
 # tfidf matrix for semantic search
 TFIDF_MAT_PATH = "../output/tfidf_mat.npy"
-STOPWORDS_PATH = "stopwords.txt"
 
 # HELPER FUNCTIONS
 
@@ -33,10 +32,9 @@ def pre_process_enron(file):
     for line in file:
         line = line.lower() \
                 .replace(':=', ': ') \
-                .replace('>', ' ') \
-                .split()
-        while line and line[0] == '>':
-            line.pop(0)
+                .replace('>', ' ')
+        line = re.sub('[^ ]+@[^ ]+\.com', ' ', line)
+        line = line.split()
 
         if not line or line[0] in useless_header:
             # 空行或邮件头
@@ -96,7 +94,7 @@ def exclude_stop_words(file):
         list, remove stopwords
     """
     from nltk.corpus import stopwords
-    stop_words = set(stopwords.words('english'))
+    stop_words = set(stopwords.words('english')).add('com')
     words_filtered = []
     
     for word in file:
