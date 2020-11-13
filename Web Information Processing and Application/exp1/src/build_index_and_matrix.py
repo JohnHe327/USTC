@@ -28,7 +28,8 @@ def pre_process_enron(file):
         A string with mail header removed
     """
     pre_processed_file = []
-    useless_header = ['message-id:', 'sent:', 'date:', 'from:', 'to:', 'cc:', 'mime-version:', 'content-type:', 'content-transfer-encoding:', 'bcc:', 'x-from:', 'x-to:', 'x-cc:', 'x-bcc:', 'x-folder:', 'x-origin:', 'x-filename:']
+    useless_header = ['message-id:', 'sent:', 'date:', 'from:', 'to:', 'cc:', 'mime-version:', 'content-type:', 'content-transfer-encoding:', 'bcc:', 'x-from:', 'x-to:', 'x-cc:', 'x-bcc:', 'x-folder:', 'x-origin:', 'x-filename:',
+    'sender:', 'x-mailer:', 'references:', 'x-mimetrack:']
     for line in file:
         line = line.lower() \
                 .replace(':=', ': ') \
