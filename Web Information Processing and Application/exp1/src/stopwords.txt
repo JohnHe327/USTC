@@ -1,15 +1,3 @@
-# Freely available stopword list.  This stopword
-
-# list provides a nice balance between coverage
-
-# and size.
-
-#
-
-#
-
-#
-
 a
 
 about
@@ -146,6 +134,8 @@ clear
 
 clearly
 
+com
+
 come
 
 could
@@ -184,6 +174,8 @@ each
 
 early
 
+ect
+
 either
 
 end
@@ -195,6 +187,8 @@ ending
 ends
 
 enough
+
+enron
 
 even
 
@@ -327,6 +321,8 @@ him
 himself
 
 his
+
+hou
 
 how
 
@@ -867,3 +863,31 @@ your
 yours
 
 z
+
+ltd
+
+std
+
+www
+
+http
+
+html
+
+td
+
+tr
+
+href
+
+am
+
+pm
+
+br
+
+font
+
+img
+
+ee

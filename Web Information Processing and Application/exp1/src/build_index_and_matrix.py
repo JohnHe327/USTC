@@ -14,6 +14,7 @@ DB_INDEX_PATH = "../output/index.db"
 WORD_INDEX_PATH = "../output/word_index.npy"
 # tfidf matrix for semantic search
 TFIDF_MAT_PATH = "../output/tfidf_mat.npy"
+STOPWORDS_PATH = "stopwords.txt"
 
 # HELPER FUNCTIONS
 
@@ -95,7 +96,8 @@ def exclude_stop_words(file):
     """
     from nltk.corpus import stopwords
     stop_words = set(stopwords.words('english'))
-    local_stop_words = {'com'}
+    with open(STOPWORDS_PATH) as f:
+        local_stop_words = stem_words(' '.join(f.readlines()))
     words_filtered = []
     
     for word in file:
@@ -217,7 +219,7 @@ def testIndexes():
     conn = sqlite3.connect(DB_INDEX_PATH)
     c = conn.cursor()
     c.execute('''SELECT * FROM invindex
-                LIMIT 3''')
+                LIMIT 1''')
     for row in c:
         print(row[0], row[1], row[2])
 
@@ -226,7 +228,7 @@ def testIndexes():
 def testTfidfMat():
     word_arr = np.load(WORD_INDEX_PATH)
     tfidf_mat = np.load(TFIDF_MAT_PATH)
-    print(word_arr[0:5])
+    print(word_arr[0:30])
     print(tfidf_mat[0:5][0:5])
 
 if __name__ == "__main__":
