@@ -6,8 +6,8 @@ import numpy as np
 
 import time
 
-# DATA_PATH = "../dataset/maildir"
-DATA_PATH = "../sub_dataset/maildir"
+DATA_PATH = "../dataset/maildir"
+# DATA_PATH = "../sub_dataset/maildir"
 # invindex database
 DB_INDEX_PATH = "../output/index.db"
 # word index for semantic search
@@ -17,6 +17,7 @@ TFIDF_MAT_PATH = "../output/tfidf_mat.npy"
 STOPWORDS_PATH = "stopwords.txt"
 
 MAX_TERM_NUM = 1000
+TOTAL_TEXT_NUM = 517401
 
 # HELPER FUNCTIONS
 
@@ -175,6 +176,9 @@ def build_index_and_matrix():
                     # [df, [Doc list], [tf list], total_frequency]
                     worddict[word] = [1, [textID], [1], 1]
 
+            if textID % 1000 == 0:
+                print("{}/{} file processed".format(textID, TOTAL_TEXT_NUM))
+
     # keep noly MAX_TERM_NUM words
     sorted_word_dict = sorted(worddict.items(), key=lambda d:d[1][3], reverse = True)
     valid_word_dict = {}
@@ -218,6 +222,9 @@ def build_index_and_matrix():
             tfidf_mat[i][textID - 1] = (1 + np.log10(value[2][j])) * np.log10(text_num / value[0])
             j += 1
         i += 1
+        if i % 100 == 0:
+            print("{}/{} word tfidf processed".format(i, MAX_TERM_NUM))
+
     np.save(WORD_INDEX_PATH, word_arr)
     np.save(TFIDF_MAT_PATH, tfidf_mat)
 
@@ -228,9 +235,9 @@ def testIndexes():
     conn = sqlite3.connect(DB_INDEX_PATH)
     c = conn.cursor()
     c.execute('''SELECT * FROM invindex
-                LIMIT 1''')
+                LIMIT 10''')
     for row in c:
-        print(row[0], row[1], row[2])
+        print(row[0], row[1])
 
     conn.close()
 
