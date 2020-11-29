@@ -5,20 +5,28 @@
 - python 3.7
 
 ## 运行方式：
+使用管理员模式打开hosts文件（默认在`C:/Windows/System32/drivers/etc/hosts`），在文档末尾添加一行：
+```
+199.232.68.133 raw.githubusercontent.com
+```
+使用管理员模式，在`./src/`文件夹下打开`powershell`：
 ```bash
+# 安装依赖
 pip install nltk
 pip install numpy
-pip install sqlite3
+pip install pysqlite3
 python
 >>> import nltk
 >>> nltk.download('stopwords')
 >>> exit()
+# 创建输出文件夹（已生成output文件时可忽略）
+mkdir ../output
 # 构建倒排表、tf-idf 矩阵（已生成output文件时可忽略）
-python ./src/build_index_and_matrix.py
+python ./build_index_and_matrix.py
 # 使用 bool 检索
-python ./src/bool_search.py
+python ./bool_search.py
 # 使用语义检索
-python ./src/semantic_search.py
+python ./semantic_search.py
 ```
 
 ## 关键函数：
