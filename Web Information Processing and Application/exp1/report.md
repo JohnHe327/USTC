@@ -41,21 +41,86 @@
   - 本实验中，我们调用了 nltk 库对邮件中的单词进行词根化。这样做有利于避免因为词性转化而导致搜索不到目标词的问题。如，用户需要搜索"message"，但某个文档中出现的是"messages"，即“message”的复数形式。如果不做词根化处理，搜索引擎则不会把他们识别为同一个词，导致遗漏的情况。
   - 另外，我们实现了三种不同的词根化方案，可以满足对构建时间和准确度不同的权衡与取舍要求，极大地提高了系统的灵活性。
 
-#### 
-
-
 ### 实验结果
 - 构建索引时间：3h
-- 索引处理器时间：
-- 查询吞吐量：
-  - bool 检索：
-  - 语义检索：
 - 查询延迟：
-  - bool 检索：
-  - 语义检索：
-- 索引临时空间：
-- 索引空间： 1GB
+  - bool 检索：<1s
+  - 语义检索：约10s
+- tf-idf矩阵占用空间： 约1GB
 
 ### 运行示例
 
+#### build inv-index and tf-idf matrix
+运行 `build_index_and_matrix.py`，大约三个小时后，得到结果：
+![](img/build1.png)
+以下是文档频率排行前十的结果，可以看到，基本去除了冗余的**停用词**。
+![](img/build2.png)
+
+#### bool search
+- 选用查询词：power, company, customers, employees, president
+- 查询用例
+  > 注：查询结果中文档的排序是按照文件名字典序排序的
+  - **power AND company AND customers AND employees AND president**
+    执行结果：
+    ![](img/bool1_cmd.png)
+    可以看到，对五个词用AND连起来查询，一共用了0.72s，查询到1816个结果。
+    下面是第一个结果的部分内容(../dataset/maildir/arnold-j/all_documents/605_)
+    ![](img/bool1_eg.png)
+    这是一封长邮件，里面涵盖了全部五个搜索词，正因为搜索词要求五个词都在，所以几乎只有这种长邮件才满足要求。
+  - **power AND company OR customers AND employees OR president**
+    执行结果：
+    ![](img/bool2_cmd.png)
+    讲其中两个AND换成OR，搜索结果数量增加为37912个
+    ![](img/bool2_eg.png)
+    查看第一个文档，其中含有 president 这个词，结果正确
+  - **power AND company AND NOT (customers OR employees OR president)**
+    执行结果：
+    ![](img/bool3_cmd.png)
+    含有 power 和 company 的同时不含有后面三个词，查询结果有8172个
+    ![](img/bool3_eg.png)
+    第一个文档中，含有 Power, Company, 同时不含有其他三个词
+  - **NOT power AND NOT company AND NOT customers AND NOT employees AND NOT president**
+    执行结果：
+    ![](img/bool4_cmd.png)
+    搜索不含有这五个词的结果，一共有373787个
+  - **power OR company OR customers OR employees OR president**
+    执行结果：
+    ![](img/bool5_cmd.png)
+    至少包含一个搜索词的结果，有143614个
+
+#### semantic search
+- 选用查询词：opportunity, management, address, offer, price
+- 查询用例
+  - **opportunity**
+    执行结果：
+    ![](img/semantic1_cmd.png)
+    输出十个匹配度最高的结果
+    ![](img/semantic1_eg1.png)
+    查看第一个结果，短邮件，含有opportunity
+  - **opportunity, management**
+    执行结果：
+    ![](img/semantic2_cmd.png)
+    分别展现第一和第十的结果
+    ![](img/semantic2_eg1.png)
+    ![](img/semantic2_eg2.png)
+    分别是含有一个 management 和一个 opportunities 的邮件
+    含有 management 的邮件排行高于含有 opportunities 的邮件的原因是 management 的文档频率低于 opportunity，搜索引擎认为频率越低的词含有更丰富的信息。
+    另外，在排行第十的结果中， opportunity 以复数形式存在，这里体现了**去词根化**的结果，可以将一个词的不同形式都识别出来。
+  - **opportunity, management, address**
+    执行结果：
+    ![](img/semantic3_cmd.png)
+    展现第一和第十的结果
+    ![](img/semantic3_eg1.png)
+    ![](img/semantic3_eg2.png)
+  - **opportunity, management, address, offer**
+    执行结果：
+    ![](img/semantic4_cmd.png)
+  - **opportunity, management, address, offer, price**
+    执行结果：
+    ![](img/semantic5_cmd.png)
+  
+
 ### 总结
+通过本实验，我们实现了一个bool检索和语义检索系统，加深了对倒排索引，tf-idf语义检索的理解。
+在优化系统过程中，进一步加深了对搜索系统的理解。
+感谢助教和老师，提供了优质的学习资源！

@@ -9,8 +9,9 @@
 
 ## 运行方式：
 ```bash
-# 安装 nltk 库
 pip install nltk
+pip install numpy
+pip install sqlite3
 python
 >>> import nltk
 >>> nltk.download('stopwords')

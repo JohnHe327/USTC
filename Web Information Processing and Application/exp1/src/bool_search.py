@@ -1,6 +1,8 @@
 import sqlite3
 import collections
 import math
+import utils
+import time
 
 from build_index_and_matrix import DB_INDEX_PATH
 from build_index_and_matrix import stem_words
@@ -261,4 +263,15 @@ def test_search_token(token):
 
 if __name__ == "__main__":
     query_str = input("Please input your bool query (words connected with AND, OR, NOT): ")
-    print(search(query_str))
+
+
+    t1 = time.time()
+    results = search(query_str)
+    t2 = time.time()
+    print('bool search time:', t2 - t1, 's')
+    
+    print("total number of results: ", len(results))
+    print("first 100 results: ", results[:min(len(results), 100)])
+    print("first ten file path: ")
+    for i in range(10):
+        print(utils.searchFilePath(results[i]))
