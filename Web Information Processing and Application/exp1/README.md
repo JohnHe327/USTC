@@ -1,8 +1,5 @@
 # enron-search-engine
 
-## TODO
-- ppt chap.7 page 7 写进实验报告
-
 ## 运行环境：
 - Windows 10
 - python 3.7
