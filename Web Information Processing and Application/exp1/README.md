@@ -47,3 +47,5 @@ python ./semantic_search.py
 
 ## bug 处理：
 若 nltk 库不能正常运行或下载器下载缓慢，可通过睿客网下载 [nltk_data](https://rec.ustc.edu.cn/share/1ed388f0-2e52-11eb-83a2-8926fdd7b031) ，解压至 `C:/nltk_data/` 即可使用。
+
+dataset下载地址：[enron_mail](https://rec.ustc.edu.cn/share/7b98b6b0-33c3-11eb-bcb1-5744eb4b6e09)，密码：`2lfw`。
