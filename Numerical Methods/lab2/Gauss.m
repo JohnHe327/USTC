@@ -1,4 +1,4 @@
-clear,clc
+clear, clc, clf
 LW = 'LineWidth'; lw = 2;
 MS = 'MarkerSize'; ms = 20;
 format long
