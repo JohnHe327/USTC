@@ -356,7 +356,7 @@ F = @(x)(sin(3 .* x .^ 2));
 dF = @(x)(6 .* x .* cos(3 .* x .^ 2));
 
 MAX_ITER = 30;
-iter_n = (1:MAX_ITER)';
+iter_n = 2 * (1:MAX_ITER)' - 1;
 max_error1 = zeros(MAX_ITER, 1);
 max_error2 = zeros(MAX_ITER, 1); % Chebyshev error
 
