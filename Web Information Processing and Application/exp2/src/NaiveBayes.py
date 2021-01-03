@@ -5,7 +5,7 @@ from sklearn.metrics import accuracy_score
 TRAIN_DATA_PATH = "../data/train.txt"
 TEST_DATA_PATH  = "../data/test.txt"
 ALL_ANS         = "../data/TRAIN_FILE.txt"
-OUTPUT_PATH     = "../output/result_nb.txt"
+OUTPUT_PATH     = "./TPlinker_data/bayes_output.txt"
 TRAIN_SIZE = 6400
 TEST_SIZE = 1600
 
