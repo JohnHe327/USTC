@@ -1,0 +1,800 @@
+6001 "A solar calendar is a calendar whose dates indicate the position of the earth on its revolution around the sun."
+Other(dates,position)
+6002 "The regiment is composed of ten battalions of 400 heavy infantry and 50 light infantry each plus an extra unit of 1000 pikemen and 500 extra light infantry."
+Member-Collection(pikemen,unit)
+6003 "This magazine has thrown together a list of the Top 100 albums between 2000 and 2009."
+Product-Producer(list,magazine)
+6004 "Traditionally the national dish of the island is 'Spuds and Herrin', boiled potatoes and herring ."
+Component-Whole(herring,dish)
+6005 "Weights were added to the other side of the balance until tissue release from the choroidal side was achieved."
+Entity-Origin(tissue,choroidal side)
+6006 "Newly generated pneuroblasts are migrating into the dam ."
+Entity-Destination(pneuroblasts,dam)
+6007 "Shri Pandit Krishnapal Sharma made approximately 1 tola of gold from 1 tola of mercury in front of us; the mercury was put inside a shell of reetha."
+Entity-Destination(mercury,shell)
+6008 "I even placed the dish in a cold oven as directions state."
+Entity-Destination(dish,oven)
+6009 "This sweet satisfaction was only troubled by the sorrow caused by the horrible attack on the person of a representative of the nation."
+Cause-Effect(attack,sorrow)
+6010 "Earl turned and leaned on the railing of the balcony ."
+Component-Whole(railing,balcony)
+6011 "In a similar context, this circuit has followed the rule that reinstatement is a basic element of the appropriate remedy in wrongful employee discharge cases."
+Component-Whole(reinstatement,remedy)
+6012 "I love the sweet and salty combo of the watermelon salads that have been all over the food world lately."
+Other(combo,salads)
+6013 "It is exciting to see the windsurfers conquer the water body with their impressive control and skills."
+Other(windsurfers,control)
+6014 "During the period of Professor Mikko Niemi (1965-1996) the focus of research was in male reproduction biology ."
+Message-Topic(research,male reproduction biology)
+6015 "The head gasket leaked coolant into the oil ."
+Entity-Destination(coolant,oil)
+6016 "A German company dug a pool on an outdoor running track and then covered it up."
+Product-Producer(company,pool)
+6017 "It's the quality inside a fertilizer bag ."
+Other(quality,bag)
+6018 "Many depression sufferers and their physicians revealed that insomnia was caused by depression ."
+Cause-Effect(depression,insomnia)
+6019 " Education in early African societies included such things as artistic performances , ceremonies, games, festivals, dancing, singing, and drawing."
+Component-Whole(artistic performances,Education)
+6020 "Some foreign workers moved into a converted dormitory at Serangoon Gardens estate on Friday."
+Entity-Destination(workers,dormitory)
+6021 "This company has put the insulation into the walls ."
+Entity-Destination(insulation,walls)
+6022 "From 1958 to the present, he has cautiously undertaken a close collaboration with a pleiad of reputed authors in his cinematic endeavors."
+Member-Collection(authors,pleiad)
+6023 " Artists have created a living piece of leather from mouse stem cells."
+Product-Producer(piece,Artists)
+6024 "The taxpayers have dumped billions into this bankrupt company without noticing it."
+Entity-Destination(billions,company)
+6025 "She wears a brace for her left ankle , has restricted use of her left hand, still has vision problems and continues with therapy."
+Other(brace,ankle)
+6026 "We had calamari appetizer which was no different then any other place, the lamb shank tasted like it was cooked in canned tomato sauce ."
+Entity-Origin(sauce,tomato)
+6027 "The disease was transmitted on to another patient by skin."
+Entity-Destination(disease,patient)
+6028 "The bridges of a koto, on the other hand, are moved by the player , in the course of a single piece of music."
+Instrument-Agency(bridges,player)
+6029 "The liver is responsible for production of biochemicals necessary for digestion."
+Product-Producer(biochemicals,liver)
+6030 "The increased spending caused a strain on the state treasury as the Sultan was spending increasing amounts of time in the harem rather than leading the people."
+Cause-Effect(spending,strain)
+6031 "That episode also reflected on the 1992 Los Angeles riots ."
+Message-Topic(episode,riots)
+6032 "My earliest research interest stemmed from an internship at Tall Timbers."
+Cause-Effect(internship,interest)
+6033 "Here are some ways to avoid mindless eating and boost your weight loss from running ."
+Cause-Effect(running,loss)
+6034 "Adding a staysail gives a boat a small jib that can balance the boat in heavier wind and sea conditions."
+Component-Whole(jib,boat)
+6035 "This statement pointed toward the resolution preferred by the Bosnian Serbs."
+Message-Topic(statement,resolution)
+6036 "Latest figures show unemployment in Wales is rising again despite falls in the previous two months."
+Other(figures,unemployment)
+6037 "When the Anatolian language went away from the community , it continued its dialectal divisions."
+Entity-Origin(language,community)
+6038 "The tides caused by the sun follow the exact same methods as those by the moon."
+Cause-Effect(sun,tides)
+6039 "The organizers of the retreat near Lake Placid threw together a group of people on a hunch."
+Other(organizers,group)
+6040 "This study aimed at assessing the processing time of a natural scene in a fast categorization task of its context or 'gist'."
+Other(study,processing time)
+6041 "Athens, in his time, was strictly a portion of feudal Europe, and the chivalry of Athenian dukes was familiar to those for whom he wrote, and wherever chivalry was in esteem; and when he described a fatal battle in the plain of Thebes, the slaughter of knights, the despair of their ladies, he recalled a great catastrophe recent in men's memories."
+Other(chivalry,dukes)
+6042 " Elderberry wine has a unique flavor that changes considerably over time."
+Entity-Origin(wine,Elderberry)
+6043 "All that has changed after the arrival, last month, of a handful of socialist environmental campaigners from the group ."
+Member-Collection(campaigners,group)
+6044 "In 1946, Maytag began marketing a separate line of ranges and refrigerators made by other companies under the Maytag name."
+Product-Producer(refrigerators,companies)
+6045 "Maybe a few times my boobs have popped out of an outfit but that happens."
+Entity-Origin(boobs,outfit)
+6046 "Lionsgate has announced that they have pulled the film from its release date , but as of yet have not announced when we can expect to dee the movie in theaters."
+Other(film,date)
+6047 "You have added keys into the memory on the remote systems."
+Entity-Destination(keys,memory)
+6048 "The debacle was the topic of conversation for days."
+Message-Topic(conversation,debacle)
+6049 "I forgot to shut the bathroom door before showering and the steam set off the smoke alarm on the wall between the bathroom and my bedroom."
+Cause-Effect(steam,alarm)
+6050 "Mekong is a 35 percent (70 proof) rice whisky famous in Thailand as the drink of choice for the blue collar workforce."
+Entity-Origin(whisky,rice)
+6051 "A Katrina-like hurricane eventually collapses the slapdash apartment buildings the villains have constructed, killing the guilty and innocent alike."
+Product-Producer(buildings,villains)
+6052 "This article introduces feminist and women's rights arguments ."
+Message-Topic(article,arguments)
+6053 "Characteristics of a vacuum spark triggered by the transient hollowcathode discharge electron beam ."
+Cause-Effect(beam,spark)
+6054 " Lemon cake is my husband's favorite."
+Entity-Origin(cake,Lemon)
+6055 "Some of you remember the story of William Kamkwamba, the boy who at 14 built a 12-watt windmill from improvised materials for his famine-stricken home in Africa."
+Product-Producer(windmill,boy)
+6056 "She painted the socket of the bulb with black paint, using a cotton swab."
+Component-Whole(socket,bulb)
+6057 "The fuel processor system of the invention generates hydrogen from a hydrocarbon compound or from mixtures of hydrocarbon compounds."
+Product-Producer(hydrogen,system)
+6058 "The sliding bar assembly is attached to the removable panel and the bush is mounted to the panel's stationary support."
+Other(assembly,panel)
+6059 "The design unveiled yesterday by the architects is on a more human scale than the American and Spanish projects."
+Product-Producer(design,architects)
+6060 "This particular X-ray machine has a timer on it that they used for exposure time."
+Component-Whole(timer,machine)
+6061 "The disparity became the topic for her doctoral dissertation ."
+Message-Topic(dissertation,disparity)
+6062 "My friend travels into several countries in Northern Europe by himself."
+Entity-Destination(friend,countries)
+6063 "This document reflects the best browser settings for use with a Macintosh system."
+Message-Topic(document,settings)
+6064 "The paste was put inside a wrap which reminded me of a Chinese mu-shu wrapper."
+Entity-Destination(paste,wrap)
+6065 "Sky transfer has taken cycling into the football age ."
+Entity-Destination(cycling,football age)
+6066 "The electrician carries out audibility checks throughout the building during the drill."
+Other(electrician,checks)
+6067 "We placed the burlap into the bucket as lining."
+Entity-Destination(burlap,bucket)
+6068 "That puts you a little above the recomendations from the article I linked, but not rediculously so."
+Entity-Origin(recomendations,article)
+6069 "The leukocytes migrated into the body tissues to take up a permanent residence at that location rather than remaining in the blood."
+Entity-Destination(leukocytes,tissues)
+6070 "A dehydrator is best for the drying of high moisture herbs."
+Other(dehydrator,drying)
+6071 "The dagger was inside a wooden sheath which is actually a walking stick."
+Content-Container(dagger,wooden sheath)
+6072 " Ships heading north and eastward across the North Atlantic stayed in the current ."
+Instrument-Agency(current,Ships)
+6073 "Jack and Jill are lying on the floor inside the house dead."
+Component-Whole(floor,house)
+6074 "This revolutionary system contains DVD's reference guides , phone and online support and much more (It's like having your own personal weight loss coach 24/7)."
+Component-Whole(reference guides,system)
+6075 "Professional painters use a 5-gallon bucket with a roller screen."
+Instrument-Agency(bucket,painters)
+6076 "A gas is enclosed in a container fitted with a piston of cross-sectional area 0.10 mz."
+Content-Container(gas,container)
+6077 "Each year, many infants and toddlers die due to suffocation from breathing small objects into their breathing passages and lungs."
+Cause-Effect(breathing,suffocation)
+6078 "The flu shot was given to young children , pregnant women, and elders first."
+Entity-Destination(flu shot,children)
+6079 "Transient reduced electronic dynamics at low temperatures has been attempted by researchers using QDT approaches ."
+Instrument-Agency(approaches,researchers)
+6080 "Ultimately, this began to shake the confidence of people in the union of the provinces ."
+Member-Collection(provinces,union)
+6081 " Solutions to these exercises have been provided in the appendix ."
+Message-Topic(appendix,Solutions)
+6082 "Aware of the suffering caused by the destruction of life, I am committed to cultivating compassion and learning ways to protect the lives of people, animals, plants, and minerals."
+Cause-Effect(destruction,suffering)
+6083 "The story was related in the Adevarul newspaper's online edition ."
+Component-Whole(story,edition)
+6084 "The cocaine was concealed inside a teddy bear ."
+Content-Container(cocaine,teddy bear)
+6085 "Even way back in the San Francisco earthquake, most of the damage was caused by fire after the earthquake ."
+Cause-Effect(earthquake,fire)
+6086 "These three-dimensional lithographs are similar to the paper constructions of Red Grooms and an impressive installation piece previously created by the artist ."
+Product-Producer(piece,artist)
+6087 "The fuel is leaked into a crankcase ."
+Entity-Destination(fuel,crankcase)
+6088 "The management of the club consists of Thai office bearers and local expatriate volunteers."
+Member-Collection(bearers,management)
+6089 "The promotion of tourist attractions in Baracoa, the first village founded by the Spanish conquistadors in Cuba, is the main goal of the Tourist Information Center (INFOTUR) in that eastern city."
+Product-Producer(village,conquistadors)
+6090 "A new student organisation is being established at UWS from the beginning of 2009."
+Member-Collection(student,organisation)
+6091 "The bomb was discovered placed inside a rubbish bin ."
+Content-Container(bomb,rubbish bin)
+6092 "The aircraft departed from the illegal airport of Lefkoniko the following day."
+Entity-Origin(aircraft,airport)
+6093 "The company has entered into a reseller agreement ."
+Other(company,agreement)
+6094 "More people are falling into poverty , especially those already struggling to make ends meet."
+Other(people,poverty)
+6095 "The decade produced a bumper crop of great movies."
+Other(decade,crop)
+6096 "The trail starts at an elevation of 5600' and steadily climbs to the top of a 6850' promontory overlooking Pine and Juniper Canyons."
+Other(trail,elevation)
+6097 "The TV was in a cabinet that you can only see from the bed but not from the side because of the cabinet's door."
+Content-Container(TV,cabinet)
+6098 "The aisles in the supermarket are well-designed."
+Component-Whole(aisles,supermarket)
+6099 "A microbrewery, or craft brewery, is a modern brewery which produces a limited amount of beer ."
+Product-Producer(beer,brewery)
+6100 "Groups of them were gathered, drinking barley ale ."
+Entity-Origin(ale,barley)
+6101 "The present essay is derived from a more comprehensive study ."
+Entity-Origin(essay,study)
+6102 "Venezuela sent an ambassador to the Palestine border ."
+Entity-Destination(ambassador,border)
+6103 "The smile runs away from the kid's face ."
+Other(smile,face)
+6104 "They are navigational maps based on realistic descriptions of harbours and coasts."
+Other(maps,descriptions)
+6105 "The bottom is welded into each monoseal casket using a continuous weld aldong the entire seam."
+Other(bottom,casket)
+6106 "He's stuffed pork into defense and homeland security."
+Other(pork,defense)
+6107 "The intestines and appendix are part of the gastrointestinal system ."
+Component-Whole(intestines,gastrointestinal system)
+6108 "Liver cancer caused by HBV virus is among the first three causes of death from cancer in men, and a major cause of cancer in women."
+Cause-Effect(virus,cancer)
+6109 "A common side effect of strict elimination after extended periods of use is headaches from caffeine withdrawal , which is also a clear sign of the addiction."
+Cause-Effect(caffeine withdrawal,headaches)
+6110 "The war resulted in other collateral imperial conquests as well."
+Cause-Effect(war,conquests)
+6111 " Backpackers are travelling to several countries in a short period of time."
+Entity-Destination(Backpackers,countries)
+6112 "Congenital renal disease was detected in a flock of sheep in the English Midlands over 2 successive years (1982 and 1983)."
+Member-Collection(sheep,flock)
+6113 "The anthrax was in a suitcase , on its way to Canada."
+Content-Container(anthrax,suitcase)
+6114 " Funds are moving into this new project ."
+Entity-Destination(Funds,project)
+6115 "Management Unit personnel marked private lines with blue paint ."
+Instrument-Agency(paint,personnel)
+6116 "Published papers include results of original investigation, clinical reports, case history reports and review articles."
+Message-Topic(papers,results)
+6117 "Water disinfection tablets were put into the canteen ."
+Entity-Destination(tablets,canteen)
+6118 "The tea was in a cup and not as the menu suggested in a pot."
+Content-Container(tea,cup)
+6119 "With one exception, the moths emerged from the cocoon during hours of darkness."
+Entity-Origin(moths,cocoon)
+6120 "What passes for a town is a huddle of bubble-shaped huts , the movable homes of camel-thwacking nomads who somehow survive out here."
+Member-Collection(huts,huddle)
+6121 "An MRI machine measures the response with a computer ."
+Component-Whole(computer,machine)
+6122 "I hear it, too, in the lovely expansiveness of his work as a chamber musician ."
+Other(chamber,musician)
+6123 "The teenager fell seriously ill after receiving the injection , along with thousands of other pupils across Northern Ireland last Friday."
+Other(injection,pupils)
+6124 "The most specific prophecies are on the topic of the rise and fall of leaders and organizations."
+Message-Topic(prophecies,rise)
+6125 "When they became adults the twins established a city ."
+Product-Producer(city,twins)
+6126 "The light that is currently reaching the Earth was generated in the sun approximately 100000 years ago."
+Cause-Effect(sun,light)
+6127 "Around 5% of the EU population was born in a third country and as many as one in 12 are living in a country different to the one in which they grew up."
+Entity-Origin(population,country)
+6128 "A panda moved into the suburban Darwin park ."
+Entity-Destination(panda,park)
+6129 "A former prostitute finds a professional job with the help of a training program ."
+Instrument-Agency(program,prostitute)
+6130 "The bounded applicability of the Perceptron arose from the linearity of its modifiable decision rule."
+Cause-Effect(linearity,applicability)
+6131 "In addition to my passionate work with this firm and other moustache related activities I work as a policeman in Trondheim police department ."
+Member-Collection(policeman,department)
+6132 "The shock wave was generated by an explosive made from RDX."
+Cause-Effect(explosive,wave)
+6133 "At that time there was also a Renaissance building founded by the wall ."
+Other(building,wall)
+6134 "Frankies 457 Spuntino is a cozy tin-ceilinged trattoria founded by a pair of Italian American pals from Queens - both named Frankie."
+Product-Producer(trattoria,pair)
+6135 "In that case, the doctor stops the bleeding with hormones ."
+Instrument-Agency(hormones,doctor)
+6136 "The violin is a string instrument with four strings usually tuned in perfect fifths."
+Component-Whole(strings,violin)
+6137 "He added ethanol into the wash buffer ."
+Entity-Destination(ethanol,buffer)
+6138 "To enable the animal to perform this wide range of activities, the beak of the chicken has an extensive nerve supply with numerous mechanoreceptors, thermoreceptors, and nociceptors."
+Component-Whole(beak,chicken)
+6139 "It is okay to have a bale of turtles for pets, but they must be free of salmonella bacteria."
+Member-Collection(turtles,bale)
+6140 " Ginger wine is a fortified wine made from a fermented blend of ground ginger and raisins that was first produced in England."
+Entity-Origin(wine,Ginger)
+6141 "The pepper was in a bottle , and the roll of butter was made around it."
+Content-Container(pepper,bottle)
+6142 "The fuselage accommodated a camera bay, flare bay and an additional fuel tank ."
+Component-Whole(tank,fuselage)
+6143 "Lycophytes are vascular plants in the class Lycopodiopsida, a division of vascular plants known as Pteridophytes (the ferns and their allies )."
+Other(ferns,allies)
+6144 "The department achieved the goal with a 75% reduction in accidents."
+Other(department,reduction)
+6145 "Ching survives by latching on to a prostitute, played by Maggie Cheung, while Fung works his way in a circle of robbers ."
+Member-Collection(robbers,circle)
+6146 "The root vocabulary was generated from the world's six most widely spoken languages (Chinese, Hindi/Urdu, English, Spanish, Arabic and Russian)."
+Entity-Origin(vocabulary,languages)
+6147 "We sit up for almost an hour before a sounder of boar enter the arena."
+Member-Collection(boar,sounder)
+6148 "The 9-mm pistol was hidden in the battery slot of the laptop and could have been used in a possible hijacking attempt."
+Content-Container(pistol,battery slot)
+6149 "In a literature review of 875 cases of Merkel cell carcinoma, the tumor was the cause of death in 34% of these patients."
+Cause-Effect(tumor,death)
+6150 "Anyway, there's a cabal of ninja assassins who traverse the globe killing people for "100 pounds of gold", or the modern day equivalent."
+Member-Collection(assassins,cabal)
+6151 "For this moment with you gives me hope of happier tomorrows and eases the pain from sad yesterdays ."
+Entity-Origin(pain,yesterdays)
+6152 "One of the soft baby toys were four bug buddies in a jug with a mesh-top lid."
+Content-Container(bug buddies,jug)
+6153 "The instability grows from an perturbation whose initial amplitude is small."
+Cause-Effect(perturbation,instability)
+6154 "Both praise and blame cause concern , for they bring people hope and fear."
+Cause-Effect(praise,concern)
+6155 "This apartment has a recently redone kitchen and bathroom and gets lots of light."
+Component-Whole(kitchen,apartment)
+6156 "This article is about pre-existing conditions with respect to health insurance ."
+Other(conditions,health insurance)
+6157 "The azeotrope was distilled from an equimolar mixture ."
+Entity-Origin(azeotrope,mixture)
+6158 "The key to drinking ginger ale for an upset stomach is to make sure it actually HAS ginger in it."
+Entity-Origin(ale,ginger)
+6159 "The dreary tenement scene is architecturally reminiscent of the neighbourhood of Fagin's den of child-thieves in Oliver Twist."
+Other(den,child-thieves)
+6160 "The exact equations are set out in later sections of this article."
+Component-Whole(equations,sections)
+6161 "This skirt was sitting in a bin in my garage."
+Content-Container(skirt,bin)
+6162 "It shows a female doctor with a veil standing beside a female patient in bed, also wearing the veil."
+Instrument-Agency(veil,doctor)
+6163 "She moved the files into a shared folder ."
+Entity-Destination(files,shared folder)
+6164 "Virgin Galactic is determined to send folks into space ."
+Entity-Destination(folks,space)
+6165 "A method of mitigating the effect of a market spike caused by the triggering and the election of a conditional order includes monitoring conditional orders."
+Cause-Effect(election,spike)
+6166 "It is a beautiful sight to watch a bouquet of pheasants fly from their nesting area, straight up into the sky."
+Member-Collection(pheasants,bouquet)
+6167 " Researchers formed a mold using a silicon coating process ."
+Instrument-Agency(process,Researchers)
+6168 "This video segment, adapted from ZOOM, demonstrates how to use a drinking straw and a bottle full of water to make low- and high-pitched sounds."
+Content-Container(water,bottle)
+6169 "This paralyzed him so much that when trying to lay back on the bed, he fell on his back and hit his head on the bed post ."
+Component-Whole(post,bed)
+6170 "My friend has entered into a new relationship ."
+Other(friend,relationship)
+6171 "The wall was built some 2000 years ago by the first settlers of New Zealand, the Waitahas, who were subsequently nearly exterminated by the Maoris."
+Product-Producer(wall,settlers)
+6172 "The associated extra output of CO2 through the lungs acts as one of the principal buffering mechanisms of the body ."
+Product-Producer(output,body)
+6173 "The deaths of Israelis caused by terror are permanent and irreversible whereas the hardships faced by the Palestinians are temporary and reversible."
+Cause-Effect(terror,deaths)
+6174 "I notice that some Indian actors from Bollywood movies sometimes star in Punjabi movies."
+Entity-Origin(actors,movies)
+6175 " Fruit is held in a chute or on pack or rotary tables prior to being loaded into a carton."
+Content-Container(Fruit,chute)
+6176 "In 1752, William Hallam sent a company of twelve actors from Britain to the colonies with his brother Lewis as their manager."
+Member-Collection(actors,company)
+6177 "The micro-machine was composed of a bulk magnet and a spiral structure."
+Component-Whole(magnet,micro-machine)
+6178 "On each occasion the search parties departed from Commissioner Tyers's headquarters at Eagle Point overlooking Lake King."
+Entity-Origin(parties,headquarters)
+6179 "The club's president saw the money that was inside a box ."
+Content-Container(money,box)
+6180 "The outsiders are moving into the pole ."
+Entity-Destination(outsiders,pole)
+6181 "This short tract , among other things, contains a description of the psychosomatic method ."
+Message-Topic(tract,method)
+6182 "The insurance cost has been added into the shipping price ."
+Entity-Destination(insurance cost,shipping price)
+6183 "Most techniques to "thicken" the eyebrow hair are actually meant to give the appearance of thicker eyebrows, without really affecting the eyebrow hair growth itself."
+Component-Whole(eyebrow,hair)
+6184 " Job dissatisfaction is one of the main causes of stress and stress is one of the main causes of illness."
+Cause-Effect(Job dissatisfaction,stress)
+6185 "There is a cluster of nerves that is located below each ear and at the hinge of the jaw ."
+Component-Whole(hinge,jaw)
+6186 "The town poured money into schools , streetscapes and new buildings for city services."
+Entity-Destination(money,schools)
+6187 "This stolen property was in a trunk which was locked, and was in her room."
+Content-Container(stolen property,trunk)
+6188 "The doctor implanted an injection into three vertical glabellar furrows ."
+Entity-Destination(injection,furrows)
+6189 "These maps are from an atlas made by the French mapmaker , Guillaume De L'Isle in about 1740."
+Product-Producer(atlas,mapmaker)
+6190 ""Know that you are in our thoughts and our prayers," the president said in a message released two days early because of Christmas."
+Product-Producer(message,president)
+6191 "For the past hundred or so years, the culverts have drained storm runoff into San Ramon creek ."
+Entity-Destination(storm runoff,creek)
+6192 "A vehicle has been delivered to the premises of EADS."
+Entity-Destination(vehicle,premises)
+6193 "We recoil at the Roman delicacy made by drowning tiny birds in wine before consuming them whole."
+Entity-Origin(delicacy,birds)
+6194 "Students express their ideas and opinions on topics of interest, and illustrate their writings with drawings and photos."
+Message-Topic(ideas,topics)
+6195 "And, even stranger, a book published by an academic press is made into a play."
+Product-Producer(book,press)
+6196 "And a third option is a cooperative of water consumers under the Cooperatives Code of the Philippines under RA 6938, with the consumers converted into shareholders, with voting rights after contributing equity to the enterprise."
+Member-Collection(consumers,cooperative)
+6197 "The stroke , which was triggered by a bout of chicken pox, also weakened her arteries so much that doctors said she had the brain 'of an 80-year-old'."
+Cause-Effect(bout,stroke)
+6198 "Commuters and holiday travellers are running into heavy delays on Route 128 in Weston this morning."
+Other(travellers,delays)
+6199 "The citizen observed the robbery through the store window and was assaulted by Chaplin as he left the store."
+Instrument-Agency(window,citizen)
+6200 "Hizb-e Wahdat, a confederacy of various Hazara mujahideen factions , was supported by Iran during the anti-Soviet resistance in the 1980s."
+Member-Collection(factions,confederacy)
+6201 "Referred to as "The Other White Meat," Pork is a meat originating from the pig that comes in a variety of cuts, and can be cooked almost any way."
+Entity-Origin(meat,pig)
+6202 "A bottle full of liquid flew out of the stands and struck visiting keeper Armando Ribeiro just below the right eye."
+Content-Container(liquid,bottle)
+6203 "He added the explanation to the comments ."
+Entity-Destination(explanation,comments)
+6204 "The US marines have landed into the port this morning."
+Entity-Destination(marines,port)
+6205 "The aerosol was generated from an oxalic acid solution containing only the tracer."
+Other(aerosol,acid solution)
+6206 "In particular, we missed the way music was a part of the everyday culture in Holland."
+Component-Whole(music,culture)
+6207 "Ensuring a stable supply of farm produce is good news to most Chinese people who spend much of their money on food."
+Product-Producer(produce,farm)
+6208 "We are a small but brave bevy of otters located in Eugene, Oregon."
+Member-Collection(otters,bevy)
+6209 "However, his company , Gordon Ramsay Holdings, issued a statement that appeared remarkably graceful at first glance."
+Product-Producer(statement,company)
+6210 "The delay in the progression of these applications has been caused by the original applicants ."
+Cause-Effect(applicants,delay)
+6211 "We have drained our toxins into Puget sound ."
+Entity-Destination(toxins,sound)
+6212 "About two hours later, officers got an anonymous tip that the gunman was inside a nearby apartment building ."
+Other(gunman,apartment building)
+6213 "The limited editions have arrived into our warehouse in time for the release date on Thursday."
+Entity-Destination(editions,warehouse)
+6214 "The executioners have carried the scholar into exile ."
+Other(scholar,exile)
+6215 "Boslough and colleagues achieved fame more than a decade ago by accurately predicting that that the fireball caused by the intersection of the comet Shoemaker-Levy 9 with Jupiter is observable from Earth."
+Cause-Effect(intersection,fireball)
+6216 "Declining oil revenues have dragged this poor country into even deeper recession ."
+Other(country,recession)
+6217 "Side play of the spindle is prevented in one direction by the crank of the handle , and in other directions by a piece of brass tube."
+Component-Whole(crank,handle)
+6218 "For example, during a chorus later in the song , the composer has interjected musical elements from the bridge."
+Product-Producer(song,composer)
+6219 "Spain, Portugal and Greece invested the EU funds into massive road construction projects ."
+Entity-Destination(funds,road construction projects)
+6220 "The government has been dumping huge amount of money into the devastated economy ."
+Entity-Destination(money,economy)
+6221 "Once outside, the python was placed in a bag , which was put inside a dog crate."
+Entity-Destination(python,bag)
+6222 "The current list includes pumpkin ale, local hops ale and an organic wheat and oats ale ."
+Entity-Origin(ale,oats)
+6223 "The fireman ran into the burning building ."
+Entity-Destination(fireman,building)
+6224 "In this section there are examples comparing possessive adjectives and pronouns."
+Message-Topic(examples,adjectives)
+6225 "The poisons were poured into his veins ."
+Entity-Destination(poisons,veins)
+6226 "Here are reside meningococcal bacilli in the vaccine and it is accessible to bolt the ache or become a carrier of the ache from the vaccine ."
+Cause-Effect(vaccine,ache)
+6227 "The game was rescheduled from its original date of September 15 due to the events of September 11."
+Entity-Origin(game,date)
+6228 "The book 's author is so historically significant that any of his or her written works may be considered notable."
+Product-Producer(book,author)
+6229 " Light was composed of corpuscles (particles of matter) which were emitted in all directions from a source."
+Component-Whole(corpuscles,Light)
+6230 "When she had her last surgery in March, her grandma got her a suitcase with new pajamas in it."
+Content-Container(pajamas,suitcase)
+6231 "The student demonstrates his/her understanding through active participation in the learning process."
+Other(student,participation)
+6232 " Sea otters often swim with a stone on their stomachs, which they use to crack abalone."
+Instrument-Agency(stone,Sea otters)
+6233 "The sailors threw tea into the Boston harbor ."
+Entity-Destination(tea,harbor)
+6234 "A lovely bauble homepage sticker has arrived into your homepage inventory ."
+Entity-Destination(homepage sticker,homepage inventory)
+6235 "The bridge tower of an MC80 was located towards the stern of the vessel ."
+Component-Whole(stern,vessel)
+6236 "HC lawyers entered into a scuffle over the division of AP."
+Other(lawyers,scuffle)
+6237 "The slope is going away from the house ."
+Other(slope,house)
+6238 "His friend accidently poured water into the gas tank ."
+Entity-Destination(water,tank)
+6239 "The newsletter of the center informs about new exhibitions , congresses, seminars and conferences."
+Message-Topic(newsletter,exhibitions)
+6240 "There are charts for all land masses on Earth, and long-distance charts for trans-oceanic travel."
+Other(charts,land masses)
+6241 "So there's a great bike of ants outside, and in dealing with such I've managed to bring some inside with me."
+Member-Collection(ants,bike)
+6242 "That's because local stations are beginning to provide digital channels devoted entirely to weather ."
+Message-Topic(digital channels,weather)
+6243 "There are guide lines under the paint that the artist used to create the pedestal in perfect perspective."
+Instrument-Agency(lines,artist)
+6244 "The initiative , called The Big Switch Off, aims to reduce energy consumption by turning off lights and unused appliances."
+Other(initiative,energy consumption)
+6245 "The fastener and delivery mechanism are core components of the EndoGastric Solutions platform , which will continue to spawn a range of innovative products for NOS."
+Component-Whole(fastener,platform)
+6246 "The tube former also cuts the tubes to length before a tube sprayer applies the brazing alloy to the tubes' OD."
+Instrument-Agency(alloy,sprayer)
+6247 "Good breeding consists of concealing how much we think of ourselves and how little we think of the other person."
+Cause-Effect(breeding,concealing)
+6248 "I dragged the files into the file sharing folder ."
+Entity-Destination(files,folder)
+6249 "As it was, the principal thing she thought of, after Mr. Wales and his wife had gone, was that the key was in the desk ."
+Content-Container(key,desk)
+6250 "The piper made many recordings, including an album called The King of the Highland Pipers."
+Product-Producer(album,piper)
+6251 " Listeners receive WBAI live over the internet (referred to as "streaming"), using one of the various audio formats below."
+Instrument-Agency(formats,Listeners)
+6252 "The first legislation specifically forbidding the production of wheat spirits for anything other than medicinal purposes appeared in 1570."
+Entity-Origin(spirits,wheat)
+6253 "The bruises are caused by the attacker's fingertips pressing into the skin."
+Cause-Effect(fingertips,bruises)
+6254 "Pressley was the member of the gang that dug the shallow grave for Nicholas."
+Product-Producer(grave,gang)
+6255 "Brazil is trying to change laws that limit political speech ."
+Message-Topic(laws,speech)
+6256 "The "E" tank assembly on the anesthesia machine contains various pins whose position is peculiar for each gas."
+Component-Whole(pins,machine)
+6257 "A statement from the campaign claimed that police knew quickly they had killed an innocent man."
+Product-Producer(statement,campaign)
+6258 "A book titled Heures de Louis le Grand that looks at the life and arts of the Sun King is showcased at the exhibition."
+Message-Topic(book,life)
+6259 " Fog , rain, darkness, and or blowing snow lead to disorientation ."
+Cause-Effect(Fog,disorientation)
+6260 "The programme is constructed from modules , and teaching consists of lectures, seminars on various themes, and project work."
+Component-Whole(modules,programme)
+6261 "Lake Oswego was home to a sord of mallards who fled south during January and February, and returned in March for breeding."
+Member-Collection(mallards,sord)
+6262 "This is a powerful novel , well and clearly written, by an experienced and compassionate observer ."
+Product-Producer(novel,observer)
+6263 "Fungal growth and aflatoxin contamination are caused by the following factors: warm temperature, high humidity and poor soil condition."
+Cause-Effect(humidity,contamination)
+6264 "The tides are caused by the gravitational force of the Moon."
+Cause-Effect(gravitational force,tides)
+6265 "By now an SEO-minded attendee has journeyed deep into advanced SEO concepts ."
+Other(attendee,concepts)
+6266 "Celebrity royalties flow into Dutch tax shelters ."
+Entity-Destination(royalties,tax shelters)
+6267 "I found a wallet once with 30 quid in it, I handed in the wallet but took the money."
+Content-Container(quid,wallet)
+6268 "Anne Grey's mind was filled with questions ."
+Content-Container(questions,mind)
+6269 "Then the king handed the key to the queen, telling her, "Be warned that whoever lets the serpent escape will be hung"."
+Entity-Origin(key,king)
+6270 "Like blood, the nanorobots deliver oxygen to each cell ."
+Entity-Destination(oxygen,cell)
+6271 "This is a wholesale forum to discuss aspects of business such as dropshipping , wholesale buying and selling, reselling, etc."
+Message-Topic(forum,dropshipping)
+6272 "Reducing the harm caused by the War on Drugs is a big task."
+Cause-Effect(War,harm)
+6273 "I recently decided to work a bit outside of Visual Studio and configure a plain text editor to work with the C# compiler ."
+Other(editor,compiler)
+6274 "For example, consonants were misplaced into consonant slots ."
+Entity-Destination(consonants,slots)
+6275 "I solder a wire onto the rivet of the chassis ground truck , run it into the searchlight, and connect the other end of the wire to the rear of the lamp socket."
+Component-Whole(rivet,truck)
+6276 "Five ancient temples have fallen into disrepair ."
+Other(temples,disrepair)
+6277 "The request to alter the voice to a great extent has resulted in exaggerated deviations from the "normally" accepted opera singer 's timbre ."
+Other(singer,timbre)
+6278 "A huge percentage of the United States government was from a Greek organization along with many presidents being from Greek organizations."
+Entity-Origin(government,organization)
+6279 "The file contains a description of the settings that can be altered."
+Message-Topic(file,settings)
+6280 "The reindeer made his television debut on NBC in 1964, when Rankin/Bass produced a stop-motion animated TV special."
+Other(reindeer,debut)
+6281 "A phalanx of umbrellas followed the casket toward the gravesite."
+Member-Collection(umbrellas,phalanx)
+6282 "The discussion here has made extensive reference to the contrasts between systems."
+Message-Topic(discussion,contrasts)
+6283 "Sotheby's yesterday in Hong Kong sold a diamond ring containing a 8.74 carat blue diamond for 3.5m pounds."
+Other(diamond,ring)
+6284 "A small piece of rock landed into the trunk ."
+Entity-Destination(piece,trunk)
+6285 "Edmund produced a small, green spiral notebook from the back pocket of his jeans ."
+Component-Whole(pocket,jeans)
+6286 "The case studies detail where refugees come from now and in the past."
+Message-Topic(case studies,refugees)
+6287 "The ice was contained in a 10 cm thick insulating foam-lined box ."
+Content-Container(ice,box)
+6288 "The set of hyperreal numbers satisfies the same first order sentences as R."
+Member-Collection(numbers,set)
+6289 "That looked like an equally impenetrable city jungle of wagons , horses, small tents, and humanity."
+Member-Collection(wagons,jungle)
+6290 "A greedy real estate developer has released toxins into the ocean ."
+Entity-Destination(toxins,ocean)
+6291 "Mr Clinton made the request in a twenty-minute phone call to the prime minister, John Howard."
+Message-Topic(phone call,request)
+6292 "The letter was contained in a stamped envelope of the type sold in the South Dakota state penitentiary commissary."
+Content-Container(letter,envelope)
+6293 "We have provided detailed instructions setting out each step you need to follow in order to carry out your own DNA sample collection."
+Message-Topic(instructions,step)
+6294 "For the present, the religious conception uprises from the human intellect ."
+Entity-Origin(conception,intellect)
+6295 "This apartment has a lounge area with 1 sofa bed and a separate bedroom with 1 double bed (twin beds not available)."
+Component-Whole(lounge area,apartment)
+6296 "People walk past a poster advertising a luxury fashion brand on a main street in Shanghai."
+Message-Topic(poster,fashion brand)
+6297 "The newspaper gave extensive coverage to a broad range of feminist issues ."
+Message-Topic(newspaper,feminist issues)
+6298 "Scientists have put sensors into mobile phones ."
+Entity-Destination(sensors,mobile phones)
+6299 "The parable related the rewards for those who invested successfully and the punishment for those who did not."
+Message-Topic(parable,rewards)
+6300 "In the film, Howell plays a cop who gets involved with a murder witness, only to find out that she's part of an international ring of sex-for-hire beauties ."
+Member-Collection(beauties,ring)
+6301 "When these fuels are burned, they create air pollution that contributes to global warming and causes smog, acid rain and respiratory disease ."
+Cause-Effect(pollution,disease)
+6302 "The car kit has a GPS receiver built in that is better than the iPhone's."
+Component-Whole(receiver,car kit)
+6303 "The Financial Regulator today amended the code of conduct of mortgage arrears by increasing the moratorium from six months to 12 months."
+Other(moratorium,months)
+6304 "This issue has been sent to the printer ."
+Entity-Destination(issue,printer)
+6305 "He put a sample into a funnel and, after giving it three years to settle, sealed everything in a glass jar."
+Entity-Destination(sample,funnel)
+6306 " Remains from ancient epochs are discernible in the village vicinities - to the north of the village, in the location of "Gradishteto", lie the ruins of a Thracian and late antique fortresses, Thracian mounds and objects, bearing witness to ancient metallurgy."
+Entity-Origin(Remains,epochs)
+6307 "Norway sent a delegation to the Madagascar government ."
+Entity-Destination(delegation,government)
+6308 "Today, on the way to work, I saw a shrewdness of pink apes being chased by a colony of noctiphobic bats."
+Member-Collection(apes,shrewdness)
+6309 "In psychology, Eysenck Personality Questionnaire (EPQ) is a questionnaire to assess the personality traits of a person."
+Other(questionnaire,traits)
+6310 "My friend got a rash from a mosquito bite and Westcort helped her but it left a scar so she also put on Mederma after the rash went away."
+Cause-Effect(bite,rash)
+6311 "It really underscores everything in the pro-life movement, that abortion is part of a very sad story for women."
+Other(abortion,story)
+6312 " Engineers manually manufacture parts in the areas of applied spray coatings, finishes, and other processes that cannot economically or practically be done by a machine."
+Product-Producer(parts,Engineers)
+6313 "Second, the car was in a crate , so no one would have been able to climb into it even if he/she had found a way into the cargo hold."
+Content-Container(car,crate)
+6314 "The floating zenith telescope has come into formal observatory routine since September."
+Other(telescope,routine)
+6315 "She marked the handle of the mop used for washing with red duct tape to prevent mixing up mops when working."
+Component-Whole(handle,mop)
+6316 "An elite U.S. Army study center has devised a plan for enforcing a major Israeli-Palestinian peace accord that requires about 20000 well-armed troops."
+Product-Producer(plan,center)
+6317 "The various sensors and fuses of this coffeemaker lie in the white sheathing bridging the heating element."
+Component-Whole(sensors,coffeemaker)
+6318 "He poured flour into the tuba of an orchestra collegue."
+Entity-Destination(flour,tuba)
+6319 "These germs cause illnesses ranging from common ailments, like the cold and flu , to disabling."
+Cause-Effect(germs,flu)
+6320 "Like the Bosch, this dishwasher has a filter that must be manually emptied and does not include a built-in food disposal."
+Component-Whole(filter,dishwasher)
+6321 "The greatest impact of the tsunami was generally in an east-west direction, so the havoc caused by the tsunami along the southwestern shores of Sri Lanka was not as severe as along the eastern coast."
+Cause-Effect(tsunami,havoc)
+6322 "Operation Homefront and partners delivered toys to military children ."
+Entity-Destination(toys,children)
+6323 "The term has been used by a number of publications discussing the phenomenon ."
+Message-Topic(publications,phenomenon)
+6324 "Diane Daly, multi-talented photographer , creates magic with her camera and intuitive eye."
+Instrument-Agency(camera,photographer)
+6325 "The top of the electroscope consists of a flat, smooth plate of lacquered brass on which another plate of brass rests, separated from it by three minute fragments of glass or shellac, or a film of shellac varnish."
+Component-Whole(plate,electroscope)
+6326 "I have a strawberry tea addiction."
+Entity-Origin(tea,strawberry)
+6327 "The blisters are caused by moisture that was actually trapped in between the layers of paint."
+Other(blisters,moisture)
+6328 "Orientation is towards the future, and satisfaction is gained from feelings of progress."
+Other(satisfaction,feelings)
+6329 "I grabbed the handle of the bucket and even this small 20 second interaction was enough to make me break out in a small rash."
+Component-Whole(handle,bucket)
+6330 "The book contains short tales , it is regarded as the first book of juvenile literature."
+Component-Whole(tales,book)
+6331 " Scleroderma is a disease of the body's connective tissue that causes thickening and hardening of the skin."
+Cause-Effect(Scleroderma,hardening)
+6332 "The studio picked up the sci-fi action spec by tyro scribe Chad St. John, and set up the project with Gianni Nunnari (300) at his Hollywood Gang shingle."
+Product-Producer(spec,scribe)
+6333 "You are on the committee to select a slate of officers for the next academic year."
+Member-Collection(officers,slate)
+6334 "The developmental bureaucracy has come into being ."
+Other(bureaucracy,being)
+6335 "The man took driver 's keys until the arrival of police, thus preventing him from leaving."
+Entity-Origin(keys,driver)
+6336 "Another example is the hammered dulcimer, where the player holds the hammers ."
+Instrument-Agency(hammers,player)
+6337 "The campus comprises the most noteworthy buildings including the Rector Tower, the Central Library and the University Olympic Stadium used for the 1968 Olympic Games and the 1986 soccer World Cup."
+Component-Whole(buildings,campus)
+6338 "This generation of unregenerated vipers was still perverse, stiff-necked, and hardened in their iniquity."
+Member-Collection(vipers,generation)
+6339 "In one of the scenes when Robert and Francessca are talking in front of his truck, a reflection of one of the movie set lights is seen on the hood of the truck ."
+Component-Whole(hood,truck)
+6340 "The cramps are caused by the anxiety reaction but because the sufferer has high anxiety, they can be interpreted in other ways; fears grow and the anxiety worsens."
+Cause-Effect(anxiety reaction,cramps)
+6341 "A gift arrived from the politician's big brother ."
+Entity-Origin(gift,brother)
+6342 "The subway is now approaching the stop at City Hall."
+Entity-Destination(subway,stop)
+6343 "A less well-known debate swirls about patent and antitrust law interactions."
+Message-Topic(debate,patent)
+6344 "The present invention processes a transaction using a plurality of servers ."
+Instrument-Agency(servers,invention)
+6345 "I sent the Daily family a moving statement made by the mother of Michael Kelly."
+Product-Producer(statement,mother)
+6346 "The Dissemination grants have been awarded to three Idaho public charter schools this year."
+Entity-Destination(grants,schools)
+6347 "The photograph was from the scene of the play's climax, where the character formerly known as Shylock threatens Antonio with a knife while demanding his "pound of coins"."
+Entity-Origin(photograph,scene)
+6348 "All 18 of the men assist that season ."
+Other(men,season)
+6349 "Prairie Dog is a free newspaper produced by a Saskatchewan worker co-operative ."
+Product-Producer(newspaper,co-operative)
+6350 "Helicobacter pylori was released cysteamine into the gastric juice ."
+Entity-Destination(cysteamine,gastric juice)
+6351 "Their productions have been presented at drama festivals across the country."
+Component-Whole(productions,festivals)
+6352 "I am putting the results into a MySQL database ."
+Entity-Destination(results,database)
+6353 "The website is concerned with the dissemination and exchange of information about the EnCoRe project."
+Other(website,dissemination)
+6354 "The chicken in a bag on the floor of the bus doesn't seem to appreciate the driver's hard breaking."
+Component-Whole(floor,bus)
+6355 "Germany produced many of the bottle stopper marbles made by this method ."
+Other(marbles,method)
+6356 "Some of the movies got kicked out from the most recent list ."
+Entity-Origin(movies,list)
+6357 "A fuel leak in one of the C-17s caused a delay on the morning of Nov. 7 as the crew was preparing for departure for Cairo, Egypt."
+Cause-Effect(fuel leak,delay)
+6358 " Pinworm infestation is very rarely fatal; death and morbidity are from secondary infection."
+Cause-Effect(Pinworm,infestation)
+6359 "The money was invested into stocks ."
+Entity-Destination(money,stocks)
+6360 " Toxins are drained into the sea ."
+Entity-Destination(Toxins,sea)
+6361 "The painter 's strange, anguished figures have enthralled artists and bewildered viewers for centuries."
+Product-Producer(figures,painter)
+6362 "So if you see a solitary Dutch cyclist stopping at a red light while the others gallop on like a sneak of famished weasels , it's probably me."
+Member-Collection(weasels,sneak)
+6363 "The lava has been blown into great bubbles ."
+Other(lava,bubbles)
+6364 "Some accounts detail the routine and perfunctory nature of arrest and proceedings against the riffraff of the "criminal classes " (Friedman and Percival)."
+Other(riffraff,classes)
+6365 "An advance visit was made by staff to arrange the visits."
+Other(visit,staff)
+6366 "The drugs he sold had caused the overdose death of Matthew Lessard, 19, of Lowell."
+Cause-Effect(drugs,death)
+6367 "The jar from the fall had caused a subdural hematoma on the right front side of my brain that shows up in the CT."
+Cause-Effect(jar,hematoma)
+6368 "Gazan police have rebuilt at least one of their stations out of mud and residents throughout the territory have used mud to build simple homes."
+Instrument-Agency(mud,police)
+6369 "This money was in a trunk box as a family treasure and was deposited as Consignment to avoid much demurrage from the Security Company."
+Content-Container(money,trunk box)
+6370 "The Hip Hop National interschool is rescheduled to the 1st week of July."
+Other(interschool,week)
+6371 "Instead of plowing the land with a single furrow plow, some large-scale farmers began to use a multiple share or bukker plow ."
+Instrument-Agency(plow,farmers)
+6372 "I pulled the bags over the rim of the bucket and pulled the cord to tighten it."
+Component-Whole(rim,bucket)
+6373 "A talon is the claw of a bird of prey."
+Component-Whole(claw,bird)
+6374 "Davies, the writer behind award-winning BBC adaptations of Bleak House, Little Dorrit and Pride and Prejudice, blamed what he called a "new breed" of BBC executives."
+Other(writer,adaptations)
+6375 "In February of 1885 the news reached the city by telegraph that Indians and half breeds had massacred a number of white people at Duck Lake."
+Other(news,telegraph)
+6376 "A report by two independent medical experts has concluded that the rate of staph infections among NFL players is "low"."
+Product-Producer(report,experts)
+6377 "Some of the following quotes come from newspaper article leads ."
+Entity-Origin(quotes,leads)
+6378 "At his inauguration in November, he pledged a fresh start after an election marred by fraud and violence, but disappointed many by presenting a cabinet of familiar names ."
+Other(cabinet,names)
+6379 "The three lionesses and two cubs were electrocuted by a crop protection fence put up by a farmer near Dhari."
+Product-Producer(fence,farmer)
+6380 "The adaptive control literature focuses primarily on adaptive stabilization , adaptive tracking, and model reference adaptive control."
+Message-Topic(literature,stabilization)
+6381 "The exhibition brings together rare Chinese ceramics and paintings."
+Component-Whole(ceramics,exhibition)
+6382 "An Israeli minister sent troops into the schools to boost conscription."
+Entity-Destination(troops,schools)
+6383 "This Southern-style homemade vegetable beef soup was my very first recipe i ever made."
+Entity-Origin(soup,beef)
+6384 "Following the first definition above, parasites evolved billions of years ago from the beginning when life form was evolved from the primordial organic soup ."
+Entity-Origin(form,soup)
+6385 " Earthquakes are caused by the discharge of accumulated along geologic faults."
+Cause-Effect(discharge,Earthquakes)
+6386 "Most health related data has been developed by using animal models."
+Message-Topic(data,health)
+6387 "The students labelled the 13 colonies using a map ."
+Instrument-Agency(map,students)
+6388 "The band themselves explained the decision with a following statement on their official website."
+Product-Producer(statement,band)
+6389 "The outdoor unit is going into defrost ."
+Other(outdoor unit,defrost)
+6390 " Oscillation of the lever caused by the swinging of the pendulum."
+Cause-Effect(swinging,Oscillation)
+6391 "Method according to claim 1, characterized in that the time duration of the quality reduction is limited at least to the duration of the interference triggered by the switching process ."
+Cause-Effect(process,interference)
+6392 "The world's largest aid organisation founded by a woman celebrates 90th anniversary."
+Product-Producer(organisation,woman)
+6393 "The book was placed into every store within the past few days."
+Entity-Destination(book,store)
+6394 "Just as we were sitting down to dinner one night, someone brushed the drapes and a cloud of baby grasshoppers erupted over the dining room table and into our dinner."
+Member-Collection(grasshoppers,cloud)
+6395 "The theory explained low-temperature superconductivity almost 50 years after its discovery."
+Message-Topic(theory,superconductivity)
+6396 "Student protests are turning into a Twitter revolution in Moldova."
+Cause-Effect(protests,revolution)
+6397 "Glacial landscapes are parts of the earth that were covered by glaciers during the last Ice Age."
+Other(landscapes,earth)
+6398 "That cooperation has been explicitly described in the press in recent days."
+Message-Topic(press,cooperation)
+6399 "A favourite amulet for demoniacal possession consists of the whiskers of the tiger or leopard mixed with nail parings, some sacred root or grass and red lead and hung on the troat or the upper arm."
+Component-Whole(whiskers,tiger)
+6400 "While Twitter is a powerful social medium for spreading news and information, some government agencies fear it could also be used by terrorists as a tool for communication."
+Other(medium,news)

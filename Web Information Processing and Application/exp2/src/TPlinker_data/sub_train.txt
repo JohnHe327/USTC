@@ -1,0 +1,60 @@
+1 "The system as described above has its greatest application in an arrayed configuration of antenna elements ."
+Component-Whole(elements,configuration)
+2 "The child was carefully wrapped and bound into the cradle by means of a cord."
+Other(child,cradle)
+3 "The author of a keygen uses a disassembler to look at the raw assembly code."
+Instrument-Agency(disassembler,author)
+4 "A misty ridge uprises from the surge ."
+Other(ridge,surge)
+5 "The student association is the voice of the undergraduate student population of the State University of New York at Buffalo."
+Member-Collection(student,association)
+6 "This is the sprawling complex that is Peru's largest producer of silver."
+Other(complex,producer)
+7 "The current view is that the chronic inflammation in the distal part of the stomach caused by Helicobacter pylori infection results in an increased acid production from the non-infected upper corpus region of the stomach."
+Cause-Effect(infection,inflammation)
+8 " People have been moving back into downtown ."
+Entity-Destination(People,downtown)
+9 "The lawsonite was contained in a platinum crucible and the counter-weight was a plastic crucible with metal pieces."
+Content-Container(lawsonite,platinum crucible)
+10 "The solute was placed inside a beaker and 5 mL of the solvent was pipetted into a 25 mL glass flask for each trial."
+Entity-Destination(solvent,flask)
+11 "The fifty essays collected in this volume testify to most of the prominent themes from Professor Quispel's scholarly career."
+Member-Collection(essays,volume)
+12 "Their composer has sunk into oblivion ."
+Other(composer,oblivion)
+13 "The Pulitzer Committee issues an official citation explaining the reasons for the award."
+Message-Topic(citation,reasons)
+14 "The burst has been caused by water hammer pressure ."
+Cause-Effect(pressure,burst)
+15 "Even commercial networks have moved into high-definition broadcast ."
+Instrument-Agency(high-definition broadcast,networks)
+16 "It was a friendly call to remind them about the bill and make sure they have a copy of the invoice."
+Message-Topic(call,bill)
+17 "Texas-born virtuoso finds harmony, sophistication in Appalachian instrument ."
+Instrument-Agency(instrument,virtuoso)
+18 "The factory 's products have included flower pots, Finnish rooster-whistles, pans, trays , tea pots, ash trays and air moisturisers."
+Product-Producer(trays,factory)
+19 "The girl showed a photo of apple tree blossom on a fruit tree in the Central Valley."
+Component-Whole(blossom,tree)
+20 "They tried an assault of their own an hour later, with two columns of sixteen tanks backed by a battalion of Panzer grenadiers ."
+Member-Collection(grenadiers,battalion)
+21 "Their knowledge of the power and rank symbols of the Continental empires was gained from the numerous Germanic recruits in the Roman army, and from the Roman practice of enfeoffing various Germanic warrior groups with land in the imperial provinces."
+Entity-Origin(knowledge,recruits)
+22 "She soon had a stable of her own rescued hounds ."
+Member-Collection(hounds,stable)
+23 "The singer , who performed three of the nominated songs, also caused a commotion on the red carpet."
+Cause-Effect(singer,commotion)
+24 "His intellectually engaging books and essays remain pertinent to illuminating contemporary history ."
+Other(essays,history)
+25 "Poor hygiene controls, reports of a brace of gamey grouse and what looked like a skinned fox all amounted to a pie that was unfit for human consumption."
+Member-Collection(grouse,brace)
+26 "This sweet dress is made with a blend of cotton and silk, and the crochet flower necklace is the perfect accessory."
+Other(dress,blend)
+27 " Suicide is one of the leading causes of death among pre-adolescents and teens, and victims of bullying are at an increased risk for committing suicide."
+Cause-Effect(Suicide,death)
+28 "This article gives details on 2004 in music in the United Kingdom, including the official charts from that year."
+Message-Topic(article,music)
+29 "We have therefore taken the initiative to convene the first international open meeting dedicated solely to rural history ."
+Message-Topic(meeting,rural history)
+30 "The timer of the device automatically eliminates wasted "standby power" consumption by automatically turn off electronics plugged into the "auto off" outlets."
+Component-Whole(timer,device)
