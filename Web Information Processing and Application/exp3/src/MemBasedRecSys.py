@@ -10,6 +10,9 @@ MAX_UID = 2185  # 总用户数
 MAX_MID = 74683 # 总电影数
 NEAREST = 20    # 采用k近邻
 
+alpha = 0.2     # user based 权重
+beta = 1-alpha  # item based 权重
+
 def read_train_data(train_file):
     """
     Args:
@@ -58,6 +61,7 @@ if __name__ == "__main__":
     avg_movie = np.mean(rank_matrix, axis=1).A.flatten()
 
     previous_id = -1
+    # user based
     for (test_uid, test_mid) in sorted(tasks.keys(), key=lambda d: d[0]):
         # sorted by user
         # TODO: remove this to test all
@@ -80,7 +84,7 @@ if __name__ == "__main__":
                     if np.sometrue(vec0) and np.sometrue(vec1):
                         # 计算相似度
                         sim[i] = np.inner(vec0,vec1)/(np.linalg.norm(vec0)*np.linalg.norm(vec1))
-            # 排序并获得索引
+            # 排序并获得原索引
             sim_index = np.argsort(-sim)
             sim = np.flip(np.sort(sim))
         # 使用排好序的相似度向量
@@ -106,7 +110,7 @@ if __name__ == "__main__":
         # 存储
         # print('(', test_uid, ',', test_mid, '):', pred)
         tasks[(test_uid,test_mid)] = pred
-    
+    # 输出文件
     with open(TEST_DATA_PATH, 'r', encoding='UTF-8') as test_file:
         with open(USER_BASED_OUTPUT_PATH, 'w') as output_file:
             line = test_file.readline()
@@ -116,11 +120,57 @@ if __name__ == "__main__":
                 mid = int(line[1])
                 output_file.write(str(int(round(tasks[(uid,mid)]))) + '\n')
                 line = test_file.readline()
-    
+    # TODO: rank matrix 转行优先 np.reshape
+    # item based
     for (test_uid, test_mid) in sorted(tasks.keys(), key=lambda d: d[1]):
         # sorted by movie
-        pass
-"""
+        # TODO: remove this to test all
+        if test_mid != 0:
+            break
+        if test_mid != previous_id:
+            # 重新计算关于 test_mid 的相关性向量
+            previous_id = test_mid
+            vec0 = rank_matrix[test_mid, :].A.flatten()
+            vec0[vec0.nonzero()] = vec0[vec0.nonzero()] - avg_movie[test_mid]
+            sim = np.zeros(MAX_MID)
+            for i in range(MAX_MID):
+                # 避免自身相关性排第一
+                if i != test_mid:
+                    # 取第i行
+                    vec1 = rank_matrix[i,:].A.flatten()
+                    # 非零项减平均值，去中心化
+                    vec1[vec1.nonzero()] = vec1[vec1.nonzero()] - avg_movie[i]
+                    # 避免 NaN
+                    if np.sometrue(vec0) and np.sometrue(vec1):
+                        # 计算相似度
+                        sim[i] = np.inner(vec0,vec1)/(np.linalg.norm(vec0)*np.linalg.norm(vec1))
+            # 排序并获得原索引
+            sim_index = np.argsort(-sim)
+            sim = np.flip(np.sort(sim))
+        # 使用排好序的相似度向量
+        # 选取前 k 个有评分且正相关的邻居
+        positive_count = 0
+        ranks = 0
+        weights = 0
+        for i in range(MAX_MID):
+            # 忽略负相关
+            if sim[i] <= 0 or positive_count >= NEAREST:
+                break
+            # 跳过无评分
+            if rank_matrix[sim_index[i], test_uid] == 0:
+                continue
+            ranks = ranks + sim[i] * rank_matrix[sim_index[i], test_uid]
+            weights = weights + sim[i]
+            positive_count = positive_count + 1
+        # 预测
+        if positive_count != 0:
+            pred = ranks / weights
+        else:
+            pred = avg_movie[test_mid]
+        # 存储
+        # print('(', test_uid, ',', test_mid, '):', pred)
+        tasks[(test_uid,test_mid)] = alpha*tasks[(test_uid,test_mid)] + beta*pred
+    # 输出文件
     with open(TEST_DATA_PATH, 'r', encoding='UTF-8') as test_file:
         with open(MEM_BASED_OUTPUT_PATH, 'w') as output_file:
             line = test_file.readline()
@@ -130,4 +180,3 @@ if __name__ == "__main__":
                 mid = int(line[1])
                 output_file.write(str(int(round(tasks[(uid,mid)]))) + '\n')
                 line = test_file.readline()
-"""
